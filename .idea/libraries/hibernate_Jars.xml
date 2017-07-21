@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="hibernate_Jars">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.42-bin.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/hibernate_Jars" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/hibernate_Jars" recursive="false" />
+  </library>
+</component>
