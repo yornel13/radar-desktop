@@ -1,0 +1,23 @@
+
+
+.jfx-list-cell:selected {
+    -fx-background-color: #fce72a;
+}
+
+.jfx-list-cell:hover {
+    -fx-background-color:  #38abc3;
+}
+
+.jfx-list-cell .jfx-rippler {
+    -fx-rippler-fill: #fce72a;
+}
+
+
+.button {
+        -fx-background-radius: 6em;
+        -fx-min-width: 80px;
+        -fx-min-height: 80px;
+        -fx-max-width: 80px;
+        -fx-max-height: 80px;
+
+}
