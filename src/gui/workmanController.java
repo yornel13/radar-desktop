@@ -62,9 +62,10 @@ public class workmanController implements Initializable {
             VBox labelsVbox = new VBox();
             Label imgLabel  = new Label();
             imgLabel.setGraphic(new ImageView(new Image(new FileInputStream("src/gui/policeman32.png"))));
-            Label nameLabel = new Label("\t  "+user.getLastname()+" "+user.getName()+"\n");
-            Label dniLabel  = new Label("\t"+user.getDni());
-            dniLabel.setFont( new Font(null, 14));
+            Label nameLabel = new Label("\t"+user.getLastname()+" "+user.getName()+"\n");
+            nameLabel.setFont( new Font(null, 15));
+            Label dniLabel  = new Label("\t  "+user.getDni());
+            //dniLabel.setFont( new Font(null, 14));
             dniLabel.setTextFill(Color.valueOf("#aaaaaa"));
             imgHbox.getChildren().add(imgLabel);
             labelsVbox.getChildren().addAll(nameLabel, dniLabel);
