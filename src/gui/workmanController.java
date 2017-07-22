@@ -69,12 +69,8 @@ public class workmanController implements Initializable {
             imgHbox.getChildren().add(imgLabel);
             labelsVbox.getChildren().addAll(nameLabel, dniLabel);
             hbox.getChildren().addAll(imgHbox, labelsVbox);
-
             data.addAll(hbox);
-
-
-
-        }
+       }
         listView.setItems(data);
         listView.setExpanded(true);
         listView.setVerticalGap(6.0);
