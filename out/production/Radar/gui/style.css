@@ -5,19 +5,19 @@
 }
 
 .jfx-list-cell:hover {
-    -fx-background-color:  #38abc3;
+    -fx-background-color:  #e8ebef;
+    //-fx-background-color:  #38abc3;
 }
 
 .jfx-list-cell .jfx-rippler {
     -fx-rippler-fill: #fce72a;
 }
 
-
 .button {
         -fx-background-radius: 6em;
-        -fx-min-width: 80px;
-        -fx-min-height: 80px;
-        -fx-max-width: 80px;
-        -fx-max-height: 80px;
-
+        -fx-min-width: 90px;
+        -fx-min-height: 90px;
+        -fx-max-width: 90px;
+        -fx-max-height: 90px;
+        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }

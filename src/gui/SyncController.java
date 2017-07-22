@@ -18,7 +18,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class syncController implements Initializable {
+public class SyncController implements Initializable {
 
     @FXML
     private JFXButton btnImport;
@@ -28,6 +28,7 @@ public class syncController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         HibernateSessionFactory.getConfiguration().configure();
     }
 
@@ -47,7 +48,6 @@ public class syncController implements Initializable {
         try {
             fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-
             String line;
 
             if(file.exists()) {
@@ -55,10 +55,8 @@ public class syncController implements Initializable {
                while((line = br.readLine()) != null) {
                    json += line+"\n";
                 }
-
-            }else{
-
             }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -2,19 +2,17 @@ package gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import util.HibernateSessionFactory;
 
 public class StartApp extends Application {
 
-
+    static Stage stage = new Stage();
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public  void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sync.fxml"));
         primaryStage.setTitle("Panel de Control");
         String css = StartApp.class.getResource("style.css").toExternalForm();
@@ -22,6 +20,7 @@ public class StartApp extends Application {
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.show();
+        stage = primaryStage;
         primaryStage.setOnCloseRequest(event -> {
             HibernateSessionFactory.closeSession();
             Platform.exit();

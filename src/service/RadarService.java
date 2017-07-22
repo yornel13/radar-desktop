@@ -37,6 +37,7 @@ public class RadarService {
             Import imp = gson.fromJson(json, Import.class);
 
             for (ControlPosition control: imp.getControlPositions()) {
+
                 ControlPosition controlDB = cpDao.findByLatitudeLongitude(
                         control.getLatitude(), control.getLongitude());
                 if (controlDB == null) {
