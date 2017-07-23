@@ -1,9 +1,11 @@
 package gui;
 
+import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -18,19 +20,27 @@ import service.RadarService;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class WorkmanController  implements Initializable {
 
     @FXML
     JFXListView<HBox> listView;
+    @FXML
+    JFXDrawer drawer;
 
     List<User> users;
+
     ObservableList<HBox> data;
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,18 +56,34 @@ public class WorkmanController  implements Initializable {
             e.printStackTrace();
         }
     }
-    HBox hboxBack;
+
     public void loadListView() throws FileNotFoundException {
+        //Drawer content
+        HBox drawerBox = new HBox();
+
+        drawer.setSidePane(drawerBox);
+        VBox vBoxHead = new VBox();
+        vBoxHead.setStyle("-fx-background-color: #ffffff");
+        vBoxHead.setPrefWidth(300);
+        vBoxHead.setPadding(new Insets(20));
+        Label iconHeader = new Label();
+        iconHeader.setGraphic(new ImageView(new Image(new FileInputStream("src/img/map_64.png"))));
+
+        VBox vBoxDetail = new VBox();
+        vBoxDetail.setStyle("-fx-background-color: #f2f2f2");
+        vBoxDetail.setPrefHeight(200);
+        vBoxHead.getChildren().add(iconHeader);
+        drawerBox.getChildren().addAll(vBoxHead, vBoxDetail);
+        drawer.setVisible(false);
 
         int i = 0;
         data = FXCollections.observableArrayList();
         for (User user: users) {
 
             while (i < 1){
-                hboxBack  = new HBox();
+                HBox hboxBack  = new HBox();
                 Label backbtn = new Label();
                 backbtn.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrows-Back-icon16.png"))));
-                //hboxBack.setStyle("-fx-background-color: #fce72a");
                 hboxBack.getChildren().add(backbtn);
                 data.add(hboxBack);
                 i++;
@@ -79,9 +105,7 @@ public class WorkmanController  implements Initializable {
             imgHbox.getChildren().addAll(guardImg, nameLabel);
             imgHbox.setPrefHeight(4);
             labelsVbox.getChildren().addAll(nameLabel, dniLabel);
-            labelsVbox.setPadding(new Insets(-1,3,-1,3));
             hbox.getChildren().addAll(imgHbox, labelsVbox);
-            //hbox.setStyle("-fx-background-color: #fce72a");
 
             data.addAll(hbox);
        }
@@ -90,13 +114,26 @@ public class WorkmanController  implements Initializable {
         listView.setExpanded(true);
         listView.setVerticalGap(2.0);
         listView.depthProperty().set(1);
+        listView.setOnMouseClicked(event -> {
+            if (listView.getSelectionModel().getSelectedIndex() == 0) {//Back button
 
-        StartApp sa = new StartApp();
-        hboxBack.setOnMouseClicked(event -> {
-            try {
-                sa.start(StartApp.stage);
-            } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    StartApp sa = new StartApp();
+                    sa.start(StartApp.stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {  //  Drawer
+                drawer.open();
+                drawer.setVisible(true);
+
+                    User user = users.get(listView.getSelectionModel().getSelectedIndex() - 1);
+
+
+
+
+
+
             }
         });
     }

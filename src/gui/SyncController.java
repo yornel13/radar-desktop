@@ -1,6 +1,7 @@
 package gui;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDrawer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,8 @@ public class SyncController implements Initializable {
     private JFXButton btnImport;
     @FXML
     private TextArea txtArea;
+    @FXML
+    JFXDrawer drawer;
 
 
     @Override
@@ -110,6 +113,7 @@ public class SyncController implements Initializable {
         stage.hide();
         stage.setScene(sceneControl);
         stage.show();
+
     }
 }
 
