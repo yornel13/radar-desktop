@@ -33,7 +33,6 @@ public class SyncController implements Initializable {
     }
 
     public void importFile(ActionEvent actionEvent) {
-
         final FileChooser chooser = new FileChooser();
         File file = chooser.showOpenDialog(null);
         chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("extension", ".json"));
