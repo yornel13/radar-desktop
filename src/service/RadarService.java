@@ -1,6 +1,7 @@
 package service;
 
 import com.google.gson.Gson;
+import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.ControlPositionDAO;
 import dao.PositionDAO;
 import dao.UserDAO;
@@ -85,5 +86,34 @@ public class RadarService {
         List<User> users = userDao.findAll();
         return users;
 
+    }
+
+    public List<ControlPosition> getAllControlActive() {
+        List<ControlPosition> control = cpDao.findAll();
+        return control;
+
+    }
+
+    public List<Watch> getAllUserWatches(Long id) {
+        List<Watch> watches = watchDAO.findAllByUserId(id);
+        return watches;
+
+    }
+
+    public ControlPosition findCPByLatLong(Double latitude, Double longitude) {
+        ControlPosition controlPosition = cpDao.findByLatitudeLongitude(latitude, longitude);
+        return controlPosition;
+    }
+
+    public ControlPosition findCPByLatLong(LatLong latLong) {
+        ControlPosition controlPosition =
+                cpDao.findByLatitudeLongitude(latLong.getLatitude(), latLong.getLongitude());
+        return controlPosition;
+
+    }
+
+    public List<Position> findAllPositionsByWatch(Watch watch) {
+        List<Position> positions = posDAO.findAllByWatchId(watch.getId());
+        return positions;
     }
 }
