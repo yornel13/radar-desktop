@@ -2,8 +2,10 @@ package gui;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.events.JFXDrawerEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -75,6 +77,7 @@ public class WorkmanController  implements Initializable {
         vBoxHead.getChildren().add(iconHeader);
         drawerBox.getChildren().addAll(vBoxHead, vBoxDetail);
         drawer.setVisible(false);
+        drawer.setOnDrawerClosed(event -> drawer.setVisible(false));
 
         int i = 0;
         data = FXCollections.observableArrayList();
@@ -117,12 +120,15 @@ public class WorkmanController  implements Initializable {
         listView.setOnMouseClicked(event -> {
             if (listView.getSelectionModel().getSelectedIndex() == 0) {//Back button
 
-                try {
-                    StartApp sa = new StartApp();
-                    sa.start(StartApp.stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                if (drawer.isShown()) {
+                    drawer.close();
+                } else
+                    try {
+                        StartApp sa = new StartApp();
+                        sa.start(StartApp.stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
             } else {  //  Drawer
                 drawer.open();
                 drawer.setVisible(true);
