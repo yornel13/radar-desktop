@@ -3,12 +3,14 @@ package gui;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -57,7 +59,6 @@ public class WorkmanController  implements Initializable {
                 hboxBack  = new HBox();
                 Label backbtn = new Label();
                 backbtn.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrows-Back-icon16.png"))));
-                //hboxBack.setStyle("-fx-background-color: #fce72a");
                 hboxBack.getChildren().add(backbtn);
                 data.add(hboxBack);
                 i++;
@@ -81,7 +82,6 @@ public class WorkmanController  implements Initializable {
             labelsVbox.getChildren().addAll(nameLabel, dniLabel);
             labelsVbox.setPadding(new Insets(-1,3,-1,3));
             hbox.getChildren().addAll(imgHbox, labelsVbox);
-            //hbox.setStyle("-fx-background-color: #fce72a");
 
             data.addAll(hbox);
        }
@@ -90,13 +90,18 @@ public class WorkmanController  implements Initializable {
         listView.setExpanded(true);
         listView.setVerticalGap(2.0);
         listView.depthProperty().set(1);
+        listView.setOnMouseClicked(event -> {
+            if (listView.getSelectionModel().getSelectedIndex() == 0) {
+                try {
+                    StartApp sa = new StartApp();
+                    sa.start(StartApp.stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                User user = users.get(listView.getSelectionModel().getSelectedIndex()-1);
+                System.out.println(user.getName());
 
-        StartApp sa = new StartApp();
-        hboxBack.setOnMouseClicked(event -> {
-            try {
-                sa.start(StartApp.stage);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
     }

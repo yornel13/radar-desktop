@@ -6,13 +6,13 @@
 
 
 .button {
-        -fx-font-weight: bold;
-        -fx-background-radius: 6em;
-        -fx-min-width: 90px;
-        -fx-min-height: 90px;
-        -fx-max-width: 90px;
-        -fx-max-height: 90px;
-        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-font-weight: bold;
+    -fx-background-radius: 6em;
+    -fx-min-width: 90px;
+    -fx-min-height: 90px;
+    -fx-max-width: 90px;
+    -fx-max-height: 90px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 
 }
 
