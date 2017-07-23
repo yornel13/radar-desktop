@@ -1,5 +1,6 @@
 package gui.controller;
 
+import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
@@ -40,6 +41,9 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     List<User> users;
     ObservableList<HBox> data;
 
+    @FXML
+    JFXDrawer drawer;
+
     private HBox hBoxBack;
 
     @FXML
@@ -75,6 +79,23 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     }
 
     public void loadListView() throws FileNotFoundException {
+
+        HBox drawerBox = new HBox();
+
+        drawer.setSidePane(drawerBox);
+        VBox vBoxHead = new VBox();
+        vBoxHead.setStyle("-fx-background-color: #ffffff");
+        vBoxHead.setPrefWidth(300);
+        vBoxHead.setPadding(new Insets(20));
+        Label iconHeader = new Label();
+        iconHeader.setGraphic(new ImageView(new Image(new FileInputStream("src/img/map_64.png"))));
+
+        VBox vBoxDetail = new VBox();
+        vBoxDetail.setStyle("-fx-background-color: #f2f2f2");
+        vBoxDetail.setPrefHeight(200);
+        vBoxHead.getChildren().add(iconHeader);
+        drawerBox.getChildren().addAll(vBoxHead, vBoxDetail);
+        drawer.setVisible(false);
 
         int i = 0;
         data = FXCollections.observableArrayList();
@@ -124,6 +145,9 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
                     e.printStackTrace();
                 }
             } else {
+                drawer.open();
+                drawer.setVisible(true);
+
                 addMarkers();
 
                 User user = users.get(listView.getSelectionModel().getSelectedIndex()-1);
