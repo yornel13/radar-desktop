@@ -1,18 +1,16 @@
 package gui.controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import service.RadarService;
+import util.Const;
 import util.HibernateSessionFactory;
 
 import java.io.*;
@@ -20,14 +18,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SyncController implements Initializable {
-
-    @FXML
-    private JFXButton btnImport;
-    @FXML
-    private TextArea txtArea;
-    @FXML
-    JFXDrawer drawer;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,7 +31,7 @@ public class SyncController implements Initializable {
         chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("extension", ".json"));
 
         if (file == null) {
-            System.out.println("path is no selected");
+            System.err.println("path is no selected");
             return;
         }
 
@@ -78,30 +68,56 @@ public class SyncController implements Initializable {
     public void jsonToObject(String json) {
         Boolean successful;
         successful = RadarService.getInstance().saveImport(json);
+        if (successful) {
+            // TODO, show dialog successful
+        } else {
+            // TODO, show dialog process error
+        }
 
     }
 
     public void exportFile(ActionEvent actionEvent) {
-        final FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showSaveDialog(null);
 
-        if(file != null) {
-            FileWriter fw;
-            PrintWriter pw = null;
+        Boolean successful = false;
+
+        DirectoryChooser fileChooser = new DirectoryChooser();
+        fileChooser.setInitialDirectory(new File(System
+                .getProperty(Const.EXPORT_DEFAULT_DIRECTORY)));
+        File file = fileChooser.showDialog(null);
+
+        File filePath = new File(file, Const.EXPORT_FILE_NAME);
+
+        BufferedWriter bufferedWriter = null;
+        try {
+            //Construct the BufferedWriter object
+            bufferedWriter = new BufferedWriter(new FileWriter(filePath));
+
+            bufferedWriter.write(RadarService.getInstance().getExportJson());
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            //Closing the BufferedWriter
             try {
-                fw = new FileWriter("",false);
-                pw = new PrintWriter(fw);
-                String cadena = "dsdsadsadas";
-
-                pw.println(cadena);
-
-                pw.flush();
-            }catch (IOException e) {
-                e.printStackTrace();
+                if (bufferedWriter != null) {
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    successful = true;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
-    }
 
+        if (successful) {
+            // TODO, show dialog successful
+        } else {
+            // TODO, show dialog process error
+        }
+
+    }
 
     public void controlScene(ActionEvent actionEvent) throws IOException {
         Parent parentControl = FXMLLoader.load(getClass().getResource("../view/workman.fxml"));

@@ -2,10 +2,7 @@ package service;
 
 import com.google.gson.Gson;
 import com.lynden.gmapsfx.javascript.object.LatLong;
-import dao.ControlPositionDAO;
-import dao.PositionDAO;
-import dao.UserDAO;
-import dao.WatchDAO;
+import dao.*;
 import model.*;
 import util.HibernateSessionFactory;
 
@@ -13,6 +10,7 @@ import java.util.List;
 
 public class RadarService {
 
+    AdminDAO adminDAO;
     ControlPositionDAO cpDao;
     UserDAO userDao;
     WatchDAO watchDAO;
@@ -26,6 +24,7 @@ public class RadarService {
     }
 
     private RadarService() {
+        adminDAO = new AdminDAO();
         cpDao = new ControlPositionDAO();
         userDao = new UserDAO();
         watchDAO = new WatchDAO();
@@ -80,6 +79,26 @@ public class RadarService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public String getExportJson() {
+
+        String jsonExport = null;
+        try {
+            Export export = new Export();
+            export.setAdmins(adminDAO.findAll());
+            export.setControlPositions(cpDao.findAllActive());
+            for (ControlPosition control: export.getControlPositions()) {
+                // Positions(set) give stack over flow error, so this should be null
+                control.setPositions(null);
+            }
+            jsonExport = gson.toJson(export);
+
+        } catch (Exception e) {
+            System.err.println("json creation failed");
+            e.printStackTrace();
+        }
+        return jsonExport;
     }
 
     public List<User> getAllUser() {
