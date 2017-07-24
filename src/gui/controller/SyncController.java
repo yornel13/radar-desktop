@@ -108,7 +108,7 @@ public class SyncController implements Initializable {
         String css = StartApp.class.getResource("../style/style.css").toExternalForm();
         Scene sceneControl = new Scene(parentControl);
         sceneControl.getStylesheets().add(css);
-        Stage stage = (Stage)  ((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.hide();
         stage.setScene(sceneControl);
         stage.show();

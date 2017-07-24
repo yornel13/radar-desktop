@@ -2,12 +2,14 @@ package gui.controller;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.events.JFXDrawerEvent;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -96,6 +98,9 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         vBoxHead.getChildren().add(iconHeader);
         drawerBox.getChildren().addAll(vBoxHead, vBoxDetail);
         drawer.setVisible(false);
+        drawer.setOnDrawerClosed(event -> {
+            drawer.setVisible(false);
+        });
 
         int i = 0;
         data = FXCollections.observableArrayList();
@@ -138,12 +143,15 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         listView.depthProperty().set(1);
         listView.setOnMouseClicked(event -> {
             if (listView.getSelectionModel().getSelectedIndex() == 0) {
-                try {
-                    StartApp sa = new StartApp();
-                    sa.start(StartApp.stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                if (drawer.isShown()) {
+                    drawer.close();
+                } else
+                    try {
+                        StartApp sa = new StartApp();
+                        sa.start(StartApp.stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
             } else {
                 drawer.open();
                 drawer.setVisible(true);
