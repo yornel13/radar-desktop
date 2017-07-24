@@ -70,7 +70,6 @@ public class WorkmanController  implements Initializable {
         vBoxHead.setPadding(new Insets(20));
         Label iconHeader = new Label();
         iconHeader.setGraphic(new ImageView(new Image(new FileInputStream("src/img/map_64.png"))));
-
         VBox vBoxDetail = new VBox();
         vBoxDetail.setStyle("-fx-background-color: #f2f2f2");
         vBoxDetail.setPrefHeight(200);
