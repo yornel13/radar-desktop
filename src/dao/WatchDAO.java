@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -70,6 +71,16 @@ public class WatchDAO extends BaseHibernateDAO {
 
 		Object result = query.uniqueResult();
 		return (Watch) result;
+	}
+
+	public List<Watch> findAllByUserId(Long userId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM watch WHERE " +
+				"user_id = :user_id")
+				.addEntity(Watch.class)
+				.setParameter("user_id", userId);
+
+		Object result = query.list();
+		return (List<Watch>) result;
 	}
 
 	public List findByExample(Watch instance) {

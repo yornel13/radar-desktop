@@ -129,6 +129,15 @@ public class ControlPositionDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public List<ControlPosition> findAllActive() {
+		Query query = getSession().createSQLQuery("SELECT * FROM control_position WHERE " +
+				"active = true")
+				.addEntity(ControlPosition.class);
+
+		Object result = query.list();
+		return (List<ControlPosition>) result;
+	}
+
 	public ControlPosition merge(ControlPosition detachedInstance) {
 		log.debug("merging ControlPosition instance");
 		try {
