@@ -4,7 +4,6 @@
     -fx-scale-x: 1.1
 }
 
-
 .button {
     -fx-font-size: 14px;
     -fx-background-radius: 6em;
@@ -13,7 +12,6 @@
     -fx-max-width: 100px;
     -fx-max-height: 100px;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-
 }
 
 .jfx-list-cell:selected {

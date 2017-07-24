@@ -2,15 +2,14 @@ package gui.controller;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.events.JFXDrawerEvent;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -25,7 +24,9 @@ import model.Position;
 import model.User;
 import model.Watch;
 import netscape.javascript.JSObject;
+import org.joda.time.DateTime;
 import service.RadarService;
+import util.RadarDate;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,13 +39,16 @@ import java.util.ResourceBundle;
 public class WorkmanController  implements Initializable, MapComponentInitializedListener {
 
     @FXML
-    JFXListView<HBox> listView;
+    private JFXListView<HBox> listView;
 
-    List<User> users;
-    ObservableList<HBox> data;
+    private List<User> users;
+    private ObservableList<HBox> data;
+
+    private List<Watch> watchesUser;
+    private ObservableList<HBox> watchesData;
 
     @FXML
-    JFXDrawer drawer;
+    private JFXDrawer drawer;
 
     private HBox hBoxBack;
 
@@ -53,21 +57,23 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
 
     private GoogleMap map;
 
-    private List<Watch> watches;
-
     private List<ControlPosition> controlList;
 
     private List<Marker> markers;
     private List<MarkerOptions> markersOptions;
 
+    private boolean drawerFirstShow;
+    private Label drawerLabel;
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources)  {
 
         //mapView.addMapInializedListener(this);
 
         controlList = RadarService.getInstance().getAllControlActive();
 
         users = RadarService.getInstance().getAllUser();
+
         if(users == null) {
             System.out.println("No users");
             users = new ArrayList<>();
@@ -75,6 +81,7 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
 
         try {
             loadListView();
+            setDrawer();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -82,29 +89,14 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
 
     public void loadListView() throws FileNotFoundException {
 
-        HBox drawerBox = new HBox();
-
-        drawer.setSidePane(drawerBox);
-        VBox vBoxHead = new VBox();
-        vBoxHead.setStyle("-fx-background-color: #ffffff");
-        vBoxHead.setPrefWidth(300);
-        vBoxHead.setPadding(new Insets(20));
-        Label iconHeader = new Label();
-        iconHeader.setGraphic(new ImageView(new Image(new FileInputStream("src/img/map_64.png"))));
-
-        VBox vBoxDetail = new VBox();
-        vBoxDetail.setStyle("-fx-background-color: #f2f2f2");
-        vBoxDetail.setPrefHeight(200);
-        vBoxHead.getChildren().add(iconHeader);
-        drawerBox.getChildren().addAll(vBoxHead, vBoxDetail);
-        drawer.setVisible(false);
-        drawer.setOnDrawerClosed(event -> {
-            drawer.setVisible(false);
-        });
-
         int i = 0;
         data = FXCollections.observableArrayList();
         for (User user: users) {
+
+
+            HBox hBox = new HBox();
+            HBox imageHBox = new HBox();
+            VBox labelsVBox = new VBox();
 
             while (i < 1){
                 hBoxBack  = new HBox();
@@ -114,11 +106,7 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
                 data.add(hBoxBack);
                 i++;
             }
-
-            HBox hBox = new HBox();
-            HBox imageHBox = new HBox();
-            VBox labelsVBox = new VBox();
-
+            // ListCells
             Label nameLabel = new Label("   "+user.getLastname()+" "+user.getName());
             nameLabel.setFont(new Font(null, 16));
             Label dniLabel  = new Label("   "+user.getDni());
@@ -135,12 +123,40 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
             hBox.getChildren().addAll(imageHBox, labelsVBox);
 
             data.addAll(hBox);
+
        }
 
         listView.setItems(data);
         listView.setExpanded(true);
         listView.setVerticalGap(2.0);
         listView.depthProperty().set(1);
+
+
+    }
+
+    public void setDrawer() throws FileNotFoundException {
+        //Drawer
+        VBox drawerBox = new VBox();
+        HBox hBoxHead = new HBox();
+        VBox vBoxDetail = new VBox();
+        hBoxHead.setStyle("-fx-background-color: #ffffff");
+        hBoxHead.setPrefWidth(300);
+        hBoxHead.setPadding(new Insets(20));
+
+        vBoxDetail.setStyle("-fx-background-color: #f2f2f2");
+        vBoxDetail.setPrefHeight(400);
+        vBoxDetail.setPadding(new Insets(10));
+
+        Label titleDetail = new Label("   Detalles");
+        Label iconHeader = new Label();
+        iconHeader.setGraphic(new ImageView(new Image(new FileInputStream("src/img/map_64.png"))));
+
+        drawer.setSidePane(drawerBox);
+        vBoxDetail.getChildren().addAll(titleDetail);
+        drawerBox.getChildren().addAll(hBoxHead, vBoxDetail);
+        drawer.setVisible(false);
+        drawer.setOnDrawerClosed(event ->  drawer.setVisible(false));
+
         listView.setOnMouseClicked(event -> {
             if (listView.getSelectionModel().getSelectedIndex() == 0) {
                 if (drawer.isShown()) {
@@ -153,16 +169,38 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
                         e.printStackTrace();
                     }
             } else {
+
                 drawer.open();
                 drawer.setVisible(true);
 
                 //addMarkers();
 
                 User user = users.get(listView.getSelectionModel().getSelectedIndex()-1);
+
+                if(!drawerFirstShow) {
+                    drawerLabel = new Label("   "+user.getLastname()+" "+user.getName());
+                    drawerLabel.setFont(new Font(null, 16));
+                    hBoxHead.getChildren().addAll(iconHeader, drawerLabel);
+                    drawerFirstShow = true;
+
+                }else{
+                    drawerLabel.setText("   "+user.getLastname()+" "+user.getName());
+                }
+                watchesUser = RadarService.getInstance().getAllUserWatches(user.getId());
+                watchesData = FXCollections.observableArrayList();
+                for(Watch watch: watchesUser){
+                    System.out.println("Guardias "+watch);
+                    Label watchLabel = new Label();
+                    watchLabel.setText(RadarDate.getFechaConMes(new DateTime(watch.getStartTime())));
+                    vBoxDetail.getChildren().add(watchLabel);
+                }
+
+/*
                 watches =  RadarService.getInstance().getAllUserWatches(user.getId());
                 if (!watches.isEmpty()) {
-                    //addMarkersRoute(watches.get(0));
+                    addMarkersRoute(watches.get(0));
                 }
+*/
 
             }
         });
