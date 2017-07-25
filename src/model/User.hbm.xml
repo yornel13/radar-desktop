@@ -19,6 +19,18 @@
         <property name="lastname" type="java.lang.String">
             <column name="lastname" length="50" not-null="true" />
         </property>
+        <property name="password" type="java.lang.String">
+            <column name="password" length="50" not-null="true" />
+        </property>
+        <property name="create" type="java.lang.Long">
+            <column name="create" not-null="true" />
+        </property>
+        <property name="update" type="java.lang.Long">
+            <column name="update" not-null="true" />
+        </property>
+        <property name="active" type="java.lang.Boolean">
+            <column name="active" not-null="true" />
+        </property>
         <set name="watchs" inverse="true">
             <key>
                 <column name="user_id" not-null="true" />

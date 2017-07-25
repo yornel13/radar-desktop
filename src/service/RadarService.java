@@ -36,27 +36,29 @@ public class RadarService {
         try {
             Import imp = gson.fromJson(json, Import.class);
 
-            for (ControlPosition control: imp.getControlPositions()) {
+            if (imp.getControlPositions() != null)
+                for (ControlPosition control: imp.getControlPositions()) {
 
-                ControlPosition controlDB = cpDao.findByLatitudeLongitude(
-                        control.getLatitude(), control.getLongitude());
-                if (controlDB == null) {
-                    cpDao.save(control);
-                }else{
-                    controlDB.setActive(control.getActive());
-                    controlDB.setPlaceName(control.getPlaceName());
-                    HibernateSessionFactory.getSession().flush();
+                    ControlPosition controlDB = cpDao.findByLatitudeLongitude(
+                            control.getLatitude(), control.getLongitude());
+                    if (controlDB == null) {
+                        cpDao.save(control);
+                    }else{
+                        controlDB.setActive(control.getActive());
+                        controlDB.setPlaceName(control.getPlaceName());
+                        HibernateSessionFactory.getSession().flush();
+                    }
                 }
-            }
 
-            for (Watch watch: imp.getWatches()) {
-                User user = userDao.findByDni(watch.getUser().getDni());
-                if (user == null){
-                    user = watch.getUser();
-                    userDao.save(user);
+            if (imp.getWatches() != null)
+                for (Watch watch: imp.getWatches()) {
+                    User user = userDao.findByDni(watch.getUser().getDni());
+                    if (user == null){
+                        user = watch.getUser();
+                        userDao.save(user);
+                    }
+                    watch.setUser(user);
                 }
-                watch.setUser(user);
-            }
 
             for (Watch watch: imp.getWatches()) {
 
@@ -86,7 +88,12 @@ public class RadarService {
         String jsonExport = null;
         try {
             Export export = new Export();
-            export.setAdmins(adminDAO.findAll());
+            export.setAdmins(adminDAO.findAllActive());
+            export.setUsers(userDao.findAllActive());
+            for (User user: export.getUsers()) {
+                // Watchs(set) give stack over flow error, so this should be null
+                user.setWatchs(null);
+            }
             export.setControlPositions(cpDao.findAllActive());
             for (ControlPosition control: export.getControlPositions()) {
                 // Positions(set) give stack over flow error, so this should be null

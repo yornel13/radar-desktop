@@ -6,11 +6,13 @@
 
 <AnchorPane prefHeight="485.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SyncController">
    <children>
-      <Pane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #38abc3;">
+      <Pane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #03a9f4;">
          <children>
-            <JFXButton fx:id="btnImport" layoutX="184.0" layoutY="174.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #fce72a;" text="Importar" />
-            <JFXButton fx:id="btnExport" layoutX="333.0" layoutY="174.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #fce72a;" text="Exportar" />
-            <JFXButton fx:id="btnControl" layoutX="481.0" layoutY="174.0" onAction="#controlScene" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #fce72a;" text="Control" />
+            <JFXButton fx:id="btnImport" layoutX="184.0" layoutY="174.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Importar" />
+            <JFXButton fx:id="btnExport" layoutX="333.0" layoutY="174.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Exportar" />
+            <JFXButton fx:id="btnControl" layoutX="481.0" layoutY="174.0" onAction="#controlScene" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Control" />
+            <JFXButton layoutX="530.0" layoutY="14.0" style="-fx-background-color: #03a9f4;" stylesheets="@../style/admUserBtn.css" text="Empleado" />
+            <JFXButton layoutX="624.0" layoutY="14.0" style="-fx-background-color: #03a9f4;" text="Admin" />
          </children>
       </Pane>
    </children>
