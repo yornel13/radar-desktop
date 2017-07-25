@@ -8,11 +8,11 @@
 
 <AnchorPane prefHeight="485.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SyncController">
    <children>
-      <Pane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #03a9f4;">
+      <Pane prefHeight="585.0" prefWidth="861.0" style="-fx-background-color: #03a9f4;">
          <children>
-            <JFXButton fx:id="btnImport" buttonType="RAISED" focusTraversable="false" layoutX="184.0" layoutY="174.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" styleClass="circlebutton" text="Importar" />
-            <JFXButton fx:id="btnExport" buttonType="RAISED" focusTraversable="false" layoutX="333.0" layoutY="174.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" styleClass="circlebutton" text="Exportar" />
-            <JFXButton fx:id="btnControl" buttonType="RAISED" focusTraversable="false" layoutX="481.0" layoutY="174.0" onAction="#controlScene" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" styleClass="circlebutton" text="Control" />
+            <JFXButton fx:id="btnImport" buttonType="RAISED" focusTraversable="false" layoutX="234.0" layoutY="210.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" styleClass="circlebutton" text="Importar" />
+            <JFXButton fx:id="btnExport" buttonType="RAISED" focusTraversable="false" layoutX="383.0" layoutY="210.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" styleClass="circlebutton" text="Exportar" />
+            <JFXButton fx:id="btnControl" buttonType="RAISED" focusTraversable="false" layoutX="531.0" layoutY="210.0" onAction="#controlScene" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" styleClass="circlebutton" text="Control" />
             <JFXButton fx:id="employeeBtn" focusTraversable="false" layoutX="134.0" layoutY="15.0" style="-fx-background-color: #03a9f4;" text="Empleado" textFill="WHITE">
                <font>
                   <Font size="14.0" />

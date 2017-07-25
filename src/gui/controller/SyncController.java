@@ -10,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import service.RadarService;
@@ -34,7 +36,14 @@ public class SyncController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+        /*
+        try {
+            employeeBtn.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_64.png"))));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        */
         HibernateSessionFactory.getConfiguration().configure();
     }
 

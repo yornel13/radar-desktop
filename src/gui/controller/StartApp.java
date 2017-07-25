@@ -16,8 +16,8 @@ public class StartApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../view/sync.fxml"));
         primaryStage.setTitle("Panel de Control");
         primaryStage.setResizable(false);
-        primaryStage.setWidth(761.0);
-        primaryStage.setHeight(485.0);
+        primaryStage.setWidth(861.0);
+        primaryStage.setHeight(585.0);
         String css = StartApp.class.getResource("../style/style.css").toExternalForm();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(css);
