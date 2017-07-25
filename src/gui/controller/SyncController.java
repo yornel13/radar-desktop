@@ -130,5 +130,9 @@ public class SyncController implements Initializable {
         stage.show();
 
     }
+
+    public void markerScene(ActionEvent actionEvent) {
+
+    }
 }
 

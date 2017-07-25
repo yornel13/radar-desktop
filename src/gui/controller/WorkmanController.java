@@ -87,14 +87,14 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
 
-        //mapView.addMapInializedListener(this);
+        mapView.addMapInializedListener(this);
 
         controlList = RadarService.getInstance().getAllControlActive();
 
         users = RadarService.getInstance().getAllUser();
 
         if(users == null) {
-            System.out.println("No users");
+            System.err.println("No users");
             users = new ArrayList<>();
         }
 
@@ -236,33 +236,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         drawerListView.depthProperty().set(1);
     }
 
-    public void addMarkersRoute(Watch watch) {
-        for (Position position:
-                RadarService.getInstance().findAllPositionsByWatch(watch)) {
-
-            ControlPosition control = null;
-            for (ControlPosition controlPosition: controlList) {
-                if (position.getControlPosition().getId().equals(controlPosition.getId())) {
-                    control = controlPosition;
-                }
-            }
-
-            if (control != null) {
-                map.removeMarker(markers.get(controlList.indexOf(control)));
-                LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLong);
-                markerOptions.animation(Animation.DROP);
-                markerOptions.icon("flag_blue_32.png");
-                Marker marker = new Marker(markerOptions);
-                marker.setTitle(control.getPlaceName());
-                map.addMarker(marker);
-            } else {
-                System.err.println("The control position didn't has match");
-            }
-        }
-    }
-
     @Override
     public void mapInitialized() {
 
@@ -304,7 +277,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
             markers.add(marker);
             markersOptions.add(markerOptions);
 
-
             map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
                 System.out.println("You clicked the line at LatLong: lat: " +
                         control.getLatitude() + " lng: " + control.getLongitude());
@@ -313,6 +285,33 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         }
 
         centerMap();
+    }
+
+    public void addMarkersRoute(Watch watch) {
+        for (Position position:
+                RadarService.getInstance().findAllPositionsByWatch(watch)) {
+
+            ControlPosition control = null;
+            for (ControlPosition controlPosition: controlList) {
+                if (position.getControlPosition().getId().equals(controlPosition.getId())) {
+                    control = controlPosition;
+                }
+            }
+
+            if (control != null) {
+                map.removeMarker(markers.get(controlList.indexOf(control)));
+                LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLong);
+                markerOptions.animation(Animation.DROP);
+                markerOptions.icon("flag_blue_32.png");
+                Marker marker = new Marker(markerOptions);
+                marker.setTitle(control.getPlaceName());
+                map.addMarker(marker);
+            } else {
+                System.err.println("The control position didn't has match");
+            }
+        }
     }
 
     public void centerMap() {
