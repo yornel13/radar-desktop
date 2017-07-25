@@ -133,6 +133,14 @@ public class AdminDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public List<Admin> findAllActive() {
+		Query query = getSession().
+				createSQLQuery("SELECT * FROM admin where active = true")
+				.addEntity(Admin.class);
+		Object result = query.list();
+		return (List<Admin>) result;
+	}
+
 	public Admin merge(Admin detachedInstance) {
 		log.debug("merging Admin instance");
 		try {

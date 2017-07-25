@@ -1,10 +1,8 @@
 package service;
 
 import com.google.gson.Gson;
-import dao.ControlPositionDAO;
-import dao.PositionDAO;
-import dao.UserDAO;
-import dao.WatchDAO;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import dao.*;
 import model.*;
 import util.HibernateSessionFactory;
 
@@ -12,6 +10,7 @@ import java.util.List;
 
 public class RadarService {
 
+    AdminDAO adminDAO;
     ControlPositionDAO cpDao;
     UserDAO userDao;
     WatchDAO watchDAO;
@@ -25,6 +24,7 @@ public class RadarService {
     }
 
     private RadarService() {
+        adminDAO = new AdminDAO();
         cpDao = new ControlPositionDAO();
         userDao = new UserDAO();
         watchDAO = new WatchDAO();
@@ -36,26 +36,29 @@ public class RadarService {
         try {
             Import imp = gson.fromJson(json, Import.class);
 
-            for (ControlPosition control: imp.getControlPositions()) {
-                ControlPosition controlDB = cpDao.findByLatitudeLongitude(
-                        control.getLatitude(), control.getLongitude());
-                if (controlDB == null) {
-                    cpDao.save(control);
-                }else{
-                    controlDB.setActive(control.getActive());
-                    controlDB.setPlaceName(control.getPlaceName());
-                    HibernateSessionFactory.getSession().flush();
-                }
-            }
+            if (imp.getControlPositions() != null)
+                for (ControlPosition control: imp.getControlPositions()) {
 
-            for (Watch watch: imp.getWatches()) {
-                User user = userDao.findByDni(watch.getUser().getDni());
-                if (user == null){
-                    user = watch.getUser();
-                    userDao.save(user);
+                    ControlPosition controlDB = cpDao.findByLatitudeLongitude(
+                            control.getLatitude(), control.getLongitude());
+                    if (controlDB == null) {
+                        cpDao.save(control);
+                    }else{
+                        controlDB.setActive(control.getActive());
+                        controlDB.setPlaceName(control.getPlaceName());
+                        HibernateSessionFactory.getSession().flush();
+                    }
                 }
-                watch.setUser(user);
-            }
+
+            if (imp.getWatches() != null)
+                for (Watch watch: imp.getWatches()) {
+                    User user = userDao.findByDni(watch.getUser().getDni());
+                    if (user == null){
+                        user = watch.getUser();
+                        userDao.save(user);
+                    }
+                    watch.setUser(user);
+                }
 
             for (Watch watch: imp.getWatches()) {
 
@@ -80,9 +83,63 @@ public class RadarService {
         }
     }
 
+    public String getExportJson() {
+
+        String jsonExport = null;
+        try {
+            Export export = new Export();
+            export.setAdmins(adminDAO.findAllActive());
+            export.setUsers(userDao.findAllActive());
+            for (User user: export.getUsers()) {
+                // Watchs(set) give stack over flow error, so this should be null
+                user.setWatchs(null);
+            }
+            export.setControlPositions(cpDao.findAllActive());
+            for (ControlPosition control: export.getControlPositions()) {
+                // Positions(set) give stack over flow error, so this should be null
+                control.setPositions(null);
+            }
+            jsonExport = gson.toJson(export);
+
+        } catch (Exception e) {
+            System.err.println("json creation failed");
+            e.printStackTrace();
+        }
+        return jsonExport;
+    }
+
     public List<User> getAllUser() {
         List<User> users = userDao.findAll();
         return users;
 
+    }
+
+    public List<ControlPosition> getAllControlActive() {
+        List<ControlPosition> control = cpDao.findAll();
+        return control;
+
+    }
+
+    public List<Watch> getAllUserWatches(Long id) {
+        List<Watch> watches = watchDAO.findAllByUserId(id);
+        return watches;
+
+    }
+
+    public ControlPosition findCPByLatLong(Double latitude, Double longitude) {
+        ControlPosition controlPosition = cpDao.findByLatitudeLongitude(latitude, longitude);
+        return controlPosition;
+    }
+
+    public ControlPosition findCPByLatLong(LatLong latLong) {
+        ControlPosition controlPosition =
+                cpDao.findByLatitudeLongitude(latLong.getLatitude(), latLong.getLongitude());
+        return controlPosition;
+
+    }
+
+    public List<Position> findAllPositionsByWatch(Watch watch) {
+        List<Position> positions = posDAO.findAllByWatchId(watch.getId());
+        return positions;
     }
 }

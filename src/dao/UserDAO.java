@@ -122,6 +122,14 @@ public class UserDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public List<User> findAllActive() {
+		Query query = getSession().
+				createSQLQuery("SELECT * FROM user where active = true")
+				.addEntity(User.class);
+		Object result = query.list();
+		return (List<User>) result;
+	}
+
 	public User merge(User detachedInstance) {
 		log.debug("merging User instance");
 		try {
