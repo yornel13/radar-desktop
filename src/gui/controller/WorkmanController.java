@@ -8,13 +8,16 @@ import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -36,7 +39,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class WorkmanController  implements Initializable, MapComponentInitializedListener {
+public class WorkmanController  implements Initializable, MapComponentInitializedListener, EventHandler<MouseEvent> {
 
     @FXML
     private JFXListView<HBox> listView;
@@ -45,12 +48,21 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     private ObservableList<HBox> data;
 
     private List<Watch> watchesUser;
-    private ObservableList<HBox> watchesData;
+    @FXML
+    private JFXListView<VBox> drawerListView;
+    private ObservableList<VBox> watchesData;
+
+    @FXML
+    private HBox headHBox;
+
+    private HBox hBoxBack;
 
     @FXML
     private JFXDrawer drawer;
-
-    private HBox hBoxBack;
+    @FXML
+    private VBox drawerBox;
+    @FXML
+    private HBox detailHBox;
 
     @FXML
     private GoogleMapView mapView;
@@ -62,7 +74,8 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     private List<Marker> markers;
     private List<MarkerOptions> markersOptions;
 
-    private boolean drawerFirstShow;
+    private boolean drawerFirstShow = true;
+
     private Label drawerLabel;
 
     @Override
@@ -92,7 +105,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         int i = 0;
         data = FXCollections.observableArrayList();
         for (User user: users) {
-
 
             HBox hBox = new HBox();
             HBox imageHBox = new HBox();
@@ -125,86 +137,100 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
             data.addAll(hBox);
 
        }
-
         listView.setItems(data);
         listView.setExpanded(true);
         listView.setVerticalGap(2.0);
         listView.depthProperty().set(1);
 
-
     }
 
-    public void setDrawer() throws FileNotFoundException {
+    public void setDrawer() {
+
         //Drawer
-        VBox drawerBox = new VBox();
-        HBox hBoxHead = new HBox();
-        VBox vBoxDetail = new VBox();
-        hBoxHead.setStyle("-fx-background-color: #ffffff");
-        hBoxHead.setPrefWidth(300);
-        hBoxHead.setPadding(new Insets(20));
-
-        vBoxDetail.setStyle("-fx-background-color: #f2f2f2");
-        vBoxDetail.setPrefHeight(400);
-        vBoxDetail.setPadding(new Insets(10));
-
-        Label titleDetail = new Label("   Detalles");
-        Label iconHeader = new Label();
-        iconHeader.setGraphic(new ImageView(new Image(new FileInputStream("src/img/map_64.png"))));
+        headHBox.setStyle("-fx-background-color: #ffffff");
+        headHBox.setPrefWidth(300);
+        headHBox.setPadding(new Insets(20));
 
         drawer.setSidePane(drawerBox);
-        vBoxDetail.getChildren().addAll(titleDetail);
-        drawerBox.getChildren().addAll(hBoxHead, vBoxDetail);
         drawer.setVisible(false);
-        drawer.setOnDrawerClosed(event ->  drawer.setVisible(false));
+        drawer.setOnDrawerClosed(event  ->  drawer.setVisible(false));
 
-        listView.setOnMouseClicked(event -> {
-            if (listView.getSelectionModel().getSelectedIndex() == 0) {
-                if (drawer.isShown()) {
-                    drawer.close();
-                } else
-                    try {
-                        StartApp sa = new StartApp();
-                        sa.start(StartApp.stage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-            } else {
-
-                drawer.open();
-                drawer.setVisible(true);
-
-                //addMarkers();
-
-                User user = users.get(listView.getSelectionModel().getSelectedIndex()-1);
-
-                if(!drawerFirstShow) {
-                    drawerLabel = new Label("   "+user.getLastname()+" "+user.getName());
-                    drawerLabel.setFont(new Font(null, 16));
-                    hBoxHead.getChildren().addAll(iconHeader, drawerLabel);
-                    drawerFirstShow = true;
-
-                }else{
-                    drawerLabel.setText("   "+user.getLastname()+" "+user.getName());
-                }
-                watchesUser = RadarService.getInstance().getAllUserWatches(user.getId());
-                watchesData = FXCollections.observableArrayList();
-                for(Watch watch: watchesUser){
-                    System.out.println("Guardias "+watch);
-                    Label watchLabel = new Label();
-                    watchLabel.setText(RadarDate.getFechaConMes(new DateTime(watch.getStartTime())));
-                    vBoxDetail.getChildren().add(watchLabel);
-                }
-
-/*
-                watches =  RadarService.getInstance().getAllUserWatches(user.getId());
-                if (!watches.isEmpty()) {
-                    addMarkersRoute(watches.get(0));
-                }
-*/
-
-            }
-        });
+        listView.setOnMouseClicked(this);
     }
+
+    @Override
+    public void handle(MouseEvent event) {
+
+        if (listView.getSelectionModel().getSelectedIndex() == 0) {
+            onBackPress();
+        } else {
+            openDrawer();
+        }
+    }
+
+    void onBackPress() {
+        if (drawer.isShown()) {
+            drawer.close();
+        } else {
+            try {
+                StartApp sa = new StartApp();
+                sa.start(StartApp.stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void createDrawer() {
+        Label iconHeader = new Label();
+        try {
+            iconHeader.setGraphic(new ImageView(new Image(new FileInputStream("src/img/map_64.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Label titleDetail = new Label("   Detalles");
+        detailHBox.setStyle("-fx-background-color: #f2f2f2");
+        detailHBox.setPrefHeight(20);
+        detailHBox.setPadding(new Insets(8));
+        detailHBox.getChildren().addAll(titleDetail);
+        drawerLabel = new Label();
+        drawerLabel.setFont(new Font(null, 16));
+        headHBox.getChildren().addAll(iconHeader, drawerLabel);
+        drawerFirstShow = false;
+    }
+
+    public void openDrawer() {
+
+        drawer.open();
+        drawer.setVisible(true);
+
+        User user = users.get(listView.getSelectionModel().getSelectedIndex()-1);
+
+        if(drawerFirstShow)
+            createDrawer();
+
+        drawerLabel.setText("   "+user.getLastname()+" "+user.getName());
+
+        watchesUser = RadarService.getInstance().getAllUserWatches(user.getId());
+        watchesData = FXCollections.observableArrayList();
+
+        for (Watch watch: watchesUser) {
+            VBox vDetail = new VBox();
+            Label watchLabel = new Label();
+            watchLabel.setText(RadarDate
+                    .getFechaConMes(new DateTime(watch.getStartTime())));
+            vDetail.getChildren().add(watchLabel);
+            watchesData.add(vDetail);
+        }
+
+        drawerListView.setItems(watchesData);
+        drawerListView.setExpanded(true);
+        drawerListView.setVerticalGap(2.0);
+        drawerListView.depthProperty().set(1);
+    }
+
+
 
     public void addMarkersRoute(Watch watch) {
         for (Position position:
@@ -293,5 +319,4 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         }
         map.fitBounds(latLongBounds);
     }
-
 }

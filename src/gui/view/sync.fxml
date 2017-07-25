@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="485.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SyncController">
    <children>
       <Pane prefHeight="485.0" prefWidth="761.0" style="-fx-background-color: #03a9f4;">
          <children>
-            <JFXButton fx:id="btnImport" layoutX="184.0" layoutY="174.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Importar" />
-            <JFXButton fx:id="btnExport" layoutX="333.0" layoutY="174.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Exportar" />
-            <JFXButton fx:id="btnControl" layoutX="481.0" layoutY="174.0" onAction="#controlScene" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Control" />
-            <JFXButton layoutX="530.0" layoutY="14.0" style="-fx-background-color: #03a9f4;" stylesheets="@../style/admUserBtn.css" text="Empleado" />
-            <JFXButton layoutX="624.0" layoutY="14.0" style="-fx-background-color: #03a9f4;" text="Admin" />
+            <JFXButton fx:id="btnImport" focusTraversable="false" layoutX="184.0" layoutY="174.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Importar" />
+            <JFXButton fx:id="btnExport" focusTraversable="false" layoutX="333.0" layoutY="174.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Exportar" />
+            <JFXButton fx:id="btnControl" focusTraversable="false" layoutX="481.0" layoutY="174.0" onAction="#controlScene" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Control" />
+            <Label fx:id="adminLabel" accessibleRole="HYPERLINK" layoutX="31.0" layoutY="14.0" text="Administrador " textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="userLabel" accessibleRole="HYPERLINK" layoutX="151.0" layoutY="14.0" text="Empleado" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
          </children>
       </Pane>
    </children>
