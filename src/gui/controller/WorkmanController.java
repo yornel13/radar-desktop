@@ -1,5 +1,6 @@
 package gui.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
 import com.lynden.gmapsfx.GoogleMapView;
@@ -41,6 +42,8 @@ import java.util.ResourceBundle;
 
 public class WorkmanController  implements Initializable, MapComponentInitializedListener, EventHandler<MouseEvent> {
 
+
+
     @FXML
     private JFXListView<HBox> listView;
 
@@ -48,21 +51,26 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     private ObservableList<HBox> data;
 
     private List<Watch> watchesUser;
-    @FXML
-    private JFXListView<VBox> drawerListView;
-    private ObservableList<VBox> watchesData;
 
-    @FXML
-    private HBox headHBox;
-
-    private HBox hBoxBack;
 
     @FXML
     private JFXDrawer drawer;
     @FXML
+    private HBox hBoxBack;
+    @FXML
     private VBox drawerBox;
     @FXML
+    private HBox headHBox;
+    @FXML
     private HBox detailHBox;
+    @FXML
+    private JFXListView<VBox> drawerListView;
+    private ObservableList<VBox> watchesData;
+
+    private boolean drawerFirstShow = true;
+
+    private Label drawerNameLabel;
+
 
     @FXML
     private GoogleMapView mapView;
@@ -74,9 +82,7 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     private List<Marker> markers;
     private List<MarkerOptions> markersOptions;
 
-    private boolean drawerFirstShow = true;
 
-    private Label drawerLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
@@ -194,9 +200,9 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         detailHBox.setPrefHeight(20);
         detailHBox.setPadding(new Insets(8));
         detailHBox.getChildren().addAll(titleDetail);
-        drawerLabel = new Label();
-        drawerLabel.setFont(new Font(null, 16));
-        headHBox.getChildren().addAll(iconHeader, drawerLabel);
+        drawerNameLabel = new Label();
+        drawerNameLabel.setFont(new Font(null, 16));
+        headHBox.getChildren().addAll(iconHeader, drawerNameLabel);
         drawerFirstShow = false;
     }
 
@@ -210,7 +216,7 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         if(drawerFirstShow)
             createDrawer();
 
-        drawerLabel.setText("   "+user.getLastname()+" "+user.getName());
+        drawerNameLabel.setText("   "+user.getLastname()+" "+user.getName());
 
         watchesUser = RadarService.getInstance().getAllUserWatches(user.getId());
         watchesData = FXCollections.observableArrayList();
@@ -229,8 +235,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         drawerListView.setVerticalGap(2.0);
         drawerListView.depthProperty().set(1);
     }
-
-
 
     public void addMarkersRoute(Watch watch) {
         for (Position position:

@@ -20,7 +20,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SyncController implements Initializable {
-
+    @FXML
+    private JFXButton employeeBtn;
     @FXML
     private JFXButton btnImport;
     @FXML
@@ -29,9 +30,11 @@ public class SyncController implements Initializable {
     JFXDrawer drawer;
 
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        
         HibernateSessionFactory.getConfiguration().configure();
     }
 
