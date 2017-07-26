@@ -25,25 +25,28 @@ public class SyncController implements Initializable {
     @FXML
     private JFXButton employeeBtn;
     @FXML
+    private JFXButton adminBtn;
+    @FXML
     private JFXButton btnImport;
     @FXML
-    private TextArea txtArea;
+    private JFXButton btnExport;
     @FXML
-    JFXDrawer drawer;
+    private JFXButton btnControl;
 
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*
+
         try {
-            employeeBtn.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_64.png"))));
+            adminBtn.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_32.png"))));
+            employeeBtn.setGraphic(new ImageView(new Image(new FileInputStream("src/img/employee_32.png"))));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        */
+
         HibernateSessionFactory.getConfiguration().configure();
     }
 
