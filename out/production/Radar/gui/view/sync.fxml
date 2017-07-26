@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="485.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SyncController">
+   <children>
+      <Pane prefHeight="585.0" prefWidth="861.0" style="-fx-background-color: #03a9f4;">
+         <children>
+            <JFXButton fx:id="btnImport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="172.0" layoutY="210.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Importar" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="circle_button" />
+                  <String fx:value="buttonHoverMenu" />
+               </styleClass></JFXButton>
+            <JFXButton fx:id="btnExport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="382.0" layoutY="210.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Exportar" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="circle_button" />
+                  <String fx:value="buttonHoverMenu" />
+               </styleClass></JFXButton>
+            <JFXButton fx:id="btnControl" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="587.0" layoutY="210.0" onAction="#controlScene" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Control" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="circle_button" />
+                  <String fx:value="buttonHoverMenu" />
+               </styleClass></JFXButton>
+            <JFXButton fx:id="employeeBtn" focusTraversable="false" layoutX="207.0" layoutY="12.0" onAction="#employeeScene" prefHeight="30.0" prefWidth="139.0" text="Empleados" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="adminBtn" focusTraversable="false" layoutX="20.0" layoutY="11.0" onAction="#adminScene" prefHeight="30.0" prefWidth="172.0" text="Administradores" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

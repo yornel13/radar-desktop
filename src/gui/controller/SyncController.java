@@ -33,7 +33,6 @@ public class SyncController implements Initializable {
 
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -147,7 +146,7 @@ public class SyncController implements Initializable {
     }
 
     public void employeeScene(ActionEvent actionEvent) throws IOException {
-        Parent parentControl = FXMLLoader.load(getClass().getResource("../view/employee.fxml"));
+        Parent parentControl = FXMLLoader.load(getClass().getResource("../view/user.fxml"));
         String css = StartApp.class.getResource("../style/style.css").toExternalForm();
         Scene sceneControl = new Scene(parentControl);
         sceneControl.getStylesheets().add(css);

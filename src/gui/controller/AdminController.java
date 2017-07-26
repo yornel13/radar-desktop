@@ -3,12 +3,14 @@ package gui.controller;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,13 +19,12 @@ import model.Admin;
 import service.RadarService;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AdminController implements Initializable {
+public class AdminController implements Initializable, EventHandler<MouseEvent> {
 
     @FXML
     private JFXListView<HBox> adminListView;
@@ -45,19 +46,17 @@ public class AdminController implements Initializable {
 
         try {
             loadAdminListView();
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    private void loadAdminListView() throws FileNotFoundException {
+    private void loadAdminListView() throws Exception {
 
         dataAdmin = FXCollections.observableArrayList();
 
         int i = 0;
         for(Admin admin: admins) {
-
 
             HBox hBox = new HBox();
             HBox imageHBox = new HBox();
@@ -77,7 +76,7 @@ public class AdminController implements Initializable {
             Label dniLabel  = new Label("   "+admin.getDni());
             dniLabel.setFont( new Font(null, 14));
             dniLabel.setTextFill(Color.valueOf("#aaaaaa"));
-            ImageView guardImg = new ImageView(new Image(new FileInputStream("src/img/policeman64.png")));
+            ImageView guardImg = new ImageView(new Image(new FileInputStream("src/img/user_64.png")));
             guardImg.setFitHeight(55);
             guardImg.setFitWidth(60);
 
@@ -90,11 +89,26 @@ public class AdminController implements Initializable {
             dataAdmin.addAll(hBox);
 
         }
-
         adminListView.setItems(dataAdmin);
         adminListView.setExpanded(true);
         adminListView.setVerticalGap(2.0);
         adminListView.depthProperty().set(1);
+
+        adminListView.setOnMouseClicked(this::handle);
+
     }
+
+    @Override
+    public void handle(MouseEvent event) {
+        if (adminListView.getSelectionModel().getSelectedIndex() == 0){
+            StartApp startApp = new StartApp();
+            try {
+                startApp.start(StartApp.stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }

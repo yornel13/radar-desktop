@@ -1,0 +1,33 @@
+
+
+.buttonHoverMenu:hover {
+    -fx-background-color: #d6d6d6;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1
+}
+
+.circle_button {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6em;
+    -fx-min-width: 120px;
+    -fx-min-height: 120px;
+    -fx-max-width: 120px;
+    -fx-max-height: 120px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.jfx-list-cell:selected {
+    -fx-background-color: #d6d6d6;
+}
+
+.jfx-list-cell:hover {
+    -fx-background-color:  #e8ebef;
+}
+
+.jfx-list-cell .jfx-rippler {
+    -fx-rippler-fill: #fce72a;
+}
+
+
+
