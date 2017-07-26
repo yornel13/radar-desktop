@@ -1,7 +1,6 @@
 package gui.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -38,6 +36,13 @@ public class SyncController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        btnImport.setOnMouseEntered(event ->  btnImport.setStyle(" -fx-background-color: #d6d6d6"));
+        btnImport.setOnMouseExited( event ->  btnImport.setStyle(" -fx-background-color: #ffc107"));
+        btnExport.setOnMouseEntered(event ->  btnExport.setStyle(" -fx-background-color: #d6d6d6"));
+        btnExport.setOnMouseExited( event ->  btnExport.setStyle(" -fx-background-color: #ffc107"));
+        btnControl.setOnMouseEntered(event -> btnControl.setStyle(" -fx-background-color: #d6d6d6"));
+        btnControl.setOnMouseExited( event -> btnControl.setStyle(" -fx-background-color: #ffc107"));
 
         try {
             adminBtn.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_32.png"))));
@@ -128,6 +133,29 @@ public class SyncController implements Initializable {
         stage.setScene(sceneControl);
         stage.show();
 
+    }
+
+    public void adminScene(ActionEvent actionEvent) throws IOException {
+        Parent parentControl = FXMLLoader.load(getClass().getResource("../view/admin.fxml"));
+        String css = StartApp.class.getResource("../style/style.css").toExternalForm();
+        Scene sceneControl = new Scene(parentControl);
+        sceneControl.getStylesheets().add(css);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.hide();
+        stage.setScene(sceneControl);
+        stage.show();
+
+    }
+
+    public void employeeScene(ActionEvent actionEvent) throws IOException {
+        Parent parentControl = FXMLLoader.load(getClass().getResource("../view/employee.fxml"));
+        String css = StartApp.class.getResource("../style/style.css").toExternalForm();
+        Scene sceneControl = new Scene(parentControl);
+        sceneControl.getStylesheets().add(css);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.hide();
+        stage.setScene(sceneControl);
+        stage.show();
     }
 }
 

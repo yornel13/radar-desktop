@@ -1,17 +1,19 @@
 
+
 .buttonHoverMenu:hover {
+    -fx-background-color: #d6d6d6;
     -fx-scale-y: 1.1;
     -fx-scale-x: 1.1
 }
 
-.circlebutton {
-    -fx-font-size: 15px;
+.circle_button {
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-background-radius: 6em;
-    -fx-min-width: 100px;
-    -fx-min-height: 100px;
-    -fx-max-width: 100px;
-    -fx-max-height: 100px;
+    -fx-min-width: 120px;
+    -fx-min-height: 120px;
+    -fx-max-width: 120px;
+    -fx-max-height: 120px;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
 
