@@ -2,10 +2,7 @@ package service;
 
 import com.google.gson.Gson;
 import com.lynden.gmapsfx.javascript.object.LatLong;
-import dao.ControlPositionDAO;
-import dao.PositionDAO;
-import dao.UserDAO;
-import dao.WatchDAO;
+import dao.*;
 import model.*;
 import util.HibernateSessionFactory;
 
@@ -14,6 +11,7 @@ import java.util.List;
 public class RadarService {
 
     ControlPositionDAO cpDao;
+    AdminDAO adminDAO;
     UserDAO userDao;
     WatchDAO watchDAO;
     PositionDAO posDAO;
@@ -28,6 +26,7 @@ public class RadarService {
     private RadarService() {
         cpDao = new ControlPositionDAO();
         userDao = new UserDAO();
+        adminDAO = new AdminDAO();
         watchDAO = new WatchDAO();
         posDAO = new PositionDAO();
         gson = new Gson();
@@ -88,6 +87,11 @@ public class RadarService {
 
     }
 
+    public List<Admin> getAllAdmin() {
+        List<Admin> admins = adminDAO.findAll();
+        return admins;
+    }
+
     public List<ControlPosition> getAllControlActive() {
         List<ControlPosition> control = cpDao.findAll();
         return control;
@@ -116,4 +120,6 @@ public class RadarService {
         List<Position> positions = posDAO.findAllByWatchId(watch.getId());
         return positions;
     }
+
+
 }

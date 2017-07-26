@@ -46,12 +46,11 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
 
     @FXML
     private JFXListView<HBox> listView;
-
-    private List<User> users;
     private ObservableList<HBox> data;
 
-    private List<Watch> watchesUser;
+    private List<User> users;
 
+    private List<Watch> watchesUser;
 
     @FXML
     private JFXDrawer drawer;
@@ -70,7 +69,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     private boolean drawerFirstShow = true;
 
     private Label drawerNameLabel;
-
 
     @FXML
     private GoogleMapView mapView;

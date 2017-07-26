@@ -122,7 +122,6 @@ public class SyncController implements Initializable {
         }
     }
 
-
     public void controlScene(ActionEvent actionEvent) throws IOException {
         Parent parentControl = FXMLLoader.load(getClass().getResource("../view/workman.fxml"));
         String css = StartApp.class.getResource("../style/style.css").toExternalForm();
