@@ -57,37 +57,34 @@ public class AdminController implements Initializable, EventHandler<MouseEvent> 
 
         int i = 0;
         for(Admin admin: admins) {
-
-            HBox hBox = new HBox();
+            HBox parentHBox = new HBox();
             HBox imageHBox = new HBox();
-            VBox labelsVBox = new VBox();
+            VBox nameDniVBox = new VBox();
 
-            while (i < 1){
-                hBoxBack  = new HBox();
+            while (i < 1) {
+                HBox backButtonHBox = new HBox();
                 Label backButton = new Label();
-                backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrows-Back-icon16.png"))));
-                hBoxBack.getChildren().add(backButton);
-                dataAdmin.add(hBoxBack);
+                backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/Arrow-Back-icon16.png"))));
+                backButtonHBox.getChildren().add(backButton);
+                dataAdmin.add(backButtonHBox);
                 i++;
             }
-            // ListCells
-            Label nameLabel = new Label("   "+admin.getLastname()+" "+admin.getName());
-            nameLabel.setFont(new Font(null, 16));
-            Label dniLabel  = new Label("   "+admin.getDni());
-            dniLabel.setFont( new Font(null, 14));
-            dniLabel.setTextFill(Color.valueOf("#aaaaaa"));
-            ImageView guardImg = new ImageView(new Image(new FileInputStream("src/img/user_64.png")));
-            guardImg.setFitHeight(55);
-            guardImg.setFitWidth(60);
 
-            imageHBox.getChildren().addAll(guardImg, nameLabel);
-            imageHBox.setPrefHeight(4);
-            labelsVBox.getChildren().addAll(nameLabel, dniLabel);
-            labelsVBox.setPadding(new Insets(-1,3,-1,3));
-            hBox.getChildren().addAll(imageHBox, labelsVBox);
+            ImageView iconUser = new ImageView(new Image(new FileInputStream("src/img/user_64.png")));
+            iconUser.setFitHeight(55);
+            iconUser.setFitWidth(55);
+            Label fullNameUser = new Label("    "+admin.getLastname()+"  "+admin.getName());
+            Label dniUser = new Label("    "+admin.getDni());
+            fullNameUser.setFont(new Font(null,16));
+            dniUser.setFont(new Font(null,14));
+            dniUser.setTextFill(Color.valueOf("#aaaaaa"));
 
-            dataAdmin.addAll(hBox);
+            imageHBox.getChildren().add(iconUser);
+            nameDniVBox.getChildren().add(fullNameUser);
+            nameDniVBox.getChildren().add(dniUser);
+            parentHBox.getChildren().addAll(imageHBox, nameDniVBox);
 
+            dataAdmin.add(parentHBox);
         }
         adminListView.setItems(dataAdmin);
         adminListView.setExpanded(true);
@@ -95,7 +92,6 @@ public class AdminController implements Initializable, EventHandler<MouseEvent> 
         adminListView.depthProperty().set(1);
 
         adminListView.setOnMouseClicked(this::handle);
-
     }
 
     @Override

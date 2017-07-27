@@ -55,8 +55,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     @FXML
     private JFXDrawer drawer;
     @FXML
-    private HBox hBoxBack;
-    @FXML
     private VBox drawerBox;
     @FXML
     private HBox headHBox;
@@ -115,9 +113,10 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
             VBox labelsVBox = new VBox();
 
             while (i < 1){
-                hBoxBack  = new HBox();
+                HBox hBoxBack  = new HBox();
                 Label backButton = new Label();
-                backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrows-Back-icon16.png"))));
+                backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrow-Back-icon16.png"))));
+                backButton.setPrefHeight(25);
                 hBoxBack.getChildren().add(backButton);
                 data.add(hBoxBack);
                 i++;
