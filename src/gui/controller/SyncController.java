@@ -113,7 +113,6 @@ public class SyncController implements Initializable {
                 String cadena = "dsdsadsadas";
 
                 pw.println(cadena);
-
                 pw.flush();
             }catch (IOException e) {
                 e.printStackTrace();

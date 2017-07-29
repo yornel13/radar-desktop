@@ -2,6 +2,7 @@ package model;
 
 import org.hibernate.Query;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  * User entity. @author MyEclipse Persistence Tools
  */
 
-public class User implements java.io.Serializable {
+public class User extends ArrayList<User> implements java.io.Serializable {
 
 	// Fields
 

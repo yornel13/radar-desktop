@@ -84,7 +84,6 @@ public class RadarService {
     public List<User> getAllUser() {
         List<User> users = userDao.findAll();
         return users;
-
     }
 
     public List<Admin> getAllAdmin() {
@@ -113,7 +112,6 @@ public class RadarService {
         ControlPosition controlPosition =
                 cpDao.findByLatitudeLongitude(latLong.getLatitude(), latLong.getLongitude());
         return controlPosition;
-
     }
 
     public List<Position> findAllPositionsByWatch(Watch watch) {

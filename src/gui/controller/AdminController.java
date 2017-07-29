@@ -32,9 +32,6 @@ public class AdminController implements Initializable, EventHandler<MouseEvent> 
 
     private List<Admin> admins;
 
-    @FXML
-    private HBox hBoxBack;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         admins = RadarService.getInstance().getAllAdmin();

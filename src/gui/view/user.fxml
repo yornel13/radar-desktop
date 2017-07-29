@@ -1,16 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.userController">
-   <children>
-      <JFXListView fx:id="userListView" prefHeight="553.0" prefWidth="290.0" />
-      <JFXTextField alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="212.0" promptText="Filtrar">
-         <font>
-            <Font size="13.0" />
-         </font></JFXTextField>
-   </children>
-</AnchorPane>
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.userController">
+    <AnchorPane fx:id="anchorPane">
+       <children>
+          <JFXListView fx:id="userListView" prefHeight="567.0" prefWidth="290.0" />
+          <JFXTextField alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="212.0" promptText="Buscar" unFocusColor="#909090">
+             <font>
+                <Font size="13.0" />
+             </font></JFXTextField>
+         <Pane layoutX="274.0" layoutY="14.0" prefHeight="553.0" prefWidth="486.0">
+            <children>
+                <JFXTextField fx:id="nameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="141.0" layoutY="105.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre">
+                  <cursor>
+                     <Cursor fx:constant="TEXT" />
+                  </cursor>
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </JFXTextField>
+                <JFXTextField fx:id="lastNameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="141.0" layoutY="185.0" prefHeight="28.0" prefWidth="320.0" promptText="Apellido">
+                  <cursor>
+                     <Cursor fx:constant="TEXT" />
+                  </cursor>
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </JFXTextField>
+                <JFXPasswordField fx:id="passwordField" alignment="TOP_LEFT" disable="true" labelFloat="true" layoutX="141.0" layoutY="264.0" prefHeight="28.0" prefWidth="320.0" promptText="Contraseña">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+                  <cursor>
+                     <Cursor fx:constant="TEXT" />
+                  </cursor>
+               </JFXPasswordField>
+                <JFXButton fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="141.0" layoutY="341.0" prefHeight="35.0" prefWidth="320.0" style="-fx-background-color: #4059a9;" text="Modificar" textFill="WHITE">
+                   <font>
+                      <Font size="14.0" />
+                   </font>
+               </JFXButton>
+                <JFXButton fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="141.0" layoutY="400.0" prefHeight="35.0" prefWidth="320.0" style="-fx-background-color: #4059a9;" text="Guardar" textFill="WHITE">
+                   <font>
+                      <Font size="14.0" />
+                   </font>
+                </JFXButton>
+               <Label fx:id="employeeLabel" alignment="CENTER" layoutX="243.0" layoutY="26.0" text="Empleados" visible="false">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label fx:id="editLabel" alignment="CENTER" layoutX="199.0" layoutY="26.0" prefHeight="35.0" prefWidth="203.0" text="Modificar usuario" visible="false">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label fx:id="addLabel" alignment="CENTER" layoutX="216.0" layoutY="26.0" text="Ingresar usuario" visible="false">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+       </children>
+    </AnchorPane>
+</StackPane>
