@@ -1,21 +1,25 @@
 package gui.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import io.datafx.controller.ViewController;
+import io.datafx.controller.flow.FlowException;
+import io.datafx.controller.flow.FlowHandler;
+import io.datafx.controller.flow.context.ActionHandler;
+import io.datafx.controller.flow.context.FXMLViewFlowContext;
+import io.datafx.controller.flow.context.FlowActionHandler;
+import io.datafx.controller.flow.context.ViewFlowContext;
+import io.datafx.controller.util.VetoException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,17 +36,15 @@ import org.joda.time.DateTime;
 import service.RadarService;
 import util.RadarDate;
 
+import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Objects;
 
-
-public class WorkmanController  implements Initializable, MapComponentInitializedListener, EventHandler<MouseEvent> {
-
-
+@ViewController(value = "../view/workman.fxml")
+public class WorkmanController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
 
     @FXML
     private JFXListView<HBox> listView;
@@ -51,7 +53,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
     private ObservableList<HBox> data;
 
     private List<Watch> watchesUser;
-
 
     @FXML
     private JFXDrawer drawer;
@@ -84,8 +85,8 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
 
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources)  {
+    @PostConstruct
+    public void init() {
 
         mapView.addMapInializedListener(this);
 
@@ -147,6 +148,7 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         listView.setExpanded(true);
         listView.setVerticalGap(2.0);
         listView.depthProperty().set(1);
+        listView.setOnMouseClicked(this);
 
     }
 
@@ -160,8 +162,6 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         drawer.setSidePane(drawerBox);
         drawer.setVisible(false);
         drawer.setOnDrawerClosed(event  ->  drawer.setVisible(false));
-
-        listView.setOnMouseClicked(this);
     }
 
     @Override
@@ -178,12 +178,7 @@ public class WorkmanController  implements Initializable, MapComponentInitialize
         if (drawer.isShown()) {
             drawer.close();
         } else {
-            try {
-                StartApp sa = new StartApp();
-                sa.start(StartApp.stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            onBackController();
         }
     }
 

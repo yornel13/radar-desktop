@@ -1,8 +1,11 @@
 package gui.controller;
 
+import com.jfoenix.controls.JFXButton;
+import io.datafx.controller.ViewController;
+import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,18 +14,23 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import service.RadarService;
 import util.Const;
-import util.HibernateSessionFactory;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class SyncController implements Initializable {
+@ViewController("../view/sync.fxml")
+public class SyncController extends BaseController {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
-        HibernateSessionFactory.getConfiguration().configure();
+    @FXML
+    @ActionTrigger("map")
+    private JFXButton buttonMap;
+
+    @FXML
+    @ActionTrigger("control")
+    private JFXButton buttonControl;
+
+    @PostConstruct
+    public void init() {
     }
 
     public void importFile(ActionEvent actionEvent) {
@@ -128,11 +136,17 @@ public class SyncController implements Initializable {
         stage.hide();
         stage.setScene(sceneControl);
         stage.show();
-
     }
 
-    public void markerScene(ActionEvent actionEvent) {
-
+    public void markersScene(ActionEvent actionEvent) throws IOException {
+        Parent parentControl = FXMLLoader.load(getClass().getResource("../view/control_points.fxml"));
+        String css = StartApp.class.getResource("../style/style.css").toExternalForm();
+        Scene sceneControl = new Scene(parentControl);
+        sceneControl.getStylesheets().add(css);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.hide();
+        stage.setScene(sceneControl);
+        stage.show();
     }
 }
 

@@ -26,5 +26,18 @@
     -fx-rippler-fill: #fce72a;
 }
 
+.jfx-decorator {
+    -fx-decorator-color: derive(#0288D1, -20%);
+}
+
+.jfx-decorator .jfx-decorator-buttons-container {
+    -fx-background-color: -fx-decorator-color;
+}
+
+.jfx-decorator .resize-border {
+    -fx-border-color: -fx-decorator-color;
+    -fx-border-width: 0 4 4 4;
+}
+
 
 

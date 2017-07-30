@@ -55,7 +55,7 @@ public class ControlPositionDAO extends BaseHibernateDAO {
 		log.debug("getting ControlPosition instance with id: " + id);
 		try {
 			ControlPosition instance = (ControlPosition) getSession().get(
-					"modelo.ControlPosition", id);
+					"model.ControlPosition", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -79,7 +79,7 @@ public class ControlPositionDAO extends BaseHibernateDAO {
 		log.debug("finding ControlPosition instance by example");
 		try {
 			List results = getSession()
-					.createCriteria("modelo.ControlPosition")
+					.createCriteria("model.ControlPosition")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -132,6 +132,15 @@ public class ControlPositionDAO extends BaseHibernateDAO {
 	public List<ControlPosition> findAllActive() {
 		Query query = getSession().createSQLQuery("SELECT * FROM control_position WHERE " +
 				"active = true")
+				.addEntity(ControlPosition.class);
+
+		Object result = query.list();
+		return (List<ControlPosition>) result;
+	}
+
+	public List<ControlPosition> findAllOrder() {
+		Query query = getSession().createSQLQuery("SELECT * FROM control_position ORDER " +
+				"by active DESC")
 				.addEntity(ControlPosition.class);
 
 		Object result = query.list();

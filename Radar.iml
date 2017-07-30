@@ -46,5 +46,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="GMapsFX" />
+    <orderEntry type="library" name="io.datafx:flow:8.0.1" level="project" />
   </component>
 </module>

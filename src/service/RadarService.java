@@ -32,6 +32,10 @@ public class RadarService {
         gson = new Gson();
     }
 
+    public void doEdit() {
+        HibernateSessionFactory.getSession().flush();
+    }
+
     public Boolean saveImport(String json){
         try {
             Import imp = gson.fromJson(json, Import.class);
@@ -46,7 +50,7 @@ public class RadarService {
                     }else{
                         controlDB.setActive(control.getActive());
                         controlDB.setPlaceName(control.getPlaceName());
-                        HibernateSessionFactory.getSession().flush();
+                        doEdit();
                     }
                 }
 
@@ -115,9 +119,13 @@ public class RadarService {
     }
 
     public List<ControlPosition> getAllControlActive() {
-        List<ControlPosition> control = cpDao.findAll();
+        List<ControlPosition> control = cpDao.findAllActive();
         return control;
+    }
 
+    public List<ControlPosition> getAllControl() {
+        List<ControlPosition> control = cpDao.findAllOrder();
+        return control;
     }
 
     public List<Watch> getAllUserWatches(Long id) {
@@ -128,6 +136,11 @@ public class RadarService {
 
     public ControlPosition findCPByLatLong(Double latitude, Double longitude) {
         ControlPosition controlPosition = cpDao.findByLatitudeLongitude(latitude, longitude);
+        return controlPosition;
+    }
+
+    public ControlPosition findCPById(Long id) {
+        ControlPosition controlPosition = cpDao.findById(id);
         return controlPosition;
     }
 
