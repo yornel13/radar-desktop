@@ -1,5 +1,6 @@
 package gui.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import io.datafx.controller.flow.FlowException;
 import io.datafx.controller.flow.context.ActionHandler;
@@ -27,7 +28,13 @@ public class BaseController {
     @FXML
     protected Label dialogContent;
 
-    protected Integer dialogType;
+    @FXML
+    protected JFXButton acceptButton;
+
+    @FXML
+    protected JFXButton cancelButton;
+
+    protected int dialogType;
 
     @ActionHandler
     protected FlowActionHandler actionHandler;
@@ -47,6 +54,17 @@ public class BaseController {
         dialogContent.setText(content);
         dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         dialog.show(root);
+        this.cancelButton.setVisible(true);
+        this.acceptButton.setVisible(true);
+    }
+
+    protected void showDialog(String title, String content, Boolean cancelButton, Boolean acceptButton) {
+        dialogTitle.setText(title);
+        dialogContent.setText(content);
+        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        dialog.show(root);
+        this.cancelButton.setVisible(cancelButton);
+        this.acceptButton.setVisible(acceptButton);
     }
 
     @FXML

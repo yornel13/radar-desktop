@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,13 +33,11 @@ import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-@ViewController("../view/control_points.fxml")
-public class ControlsController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
+@ViewController("../view/marker.fxml")
+public class MarkerController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
 
     @FXML
     public TextField nameField;
@@ -149,7 +146,7 @@ public class ControlsController extends BaseController implements MapComponentIn
         HBox hBoxBack = new HBox();
         Label backButton = new Label();
         backButton.setGraphic(new ImageView(new Image(
-                new FileInputStream("src/img/arrows-Back-icon16.png"))));
+                new FileInputStream("src/img/arrow_back_icon16.png"))));
         hBoxBack.getChildren().add(backButton);
         data.add(hBoxBack);
 
@@ -349,11 +346,11 @@ public class ControlsController extends BaseController implements MapComponentIn
         @FXML
         private JFXListView<?> toolbarPopupList;
 
-        private ControlsController principal;
+        private MarkerController principal;
 
         private JFXPopup popup;
 
-        public InputController(ControlsController principal) {
+        public InputController(MarkerController principal) {
             this.principal = principal;
         }
 

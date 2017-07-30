@@ -6,21 +6,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="585.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <JFXListView fx:id="listView" layoutX="-2.0" prefHeight="585.0" prefWidth="275.0" />
-      <GoogleMapView fx:id="mapView" layoutX="273.0" prefHeight="585.0" prefWidth="588.0" />
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="300.0" layoutX="-1.0" layoutY="37.0" prefHeight="549.0" prefWidth="273.0">
-         <children>
-            <VBox fx:id="drawerBox" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <HBox fx:id="headHBox" prefHeight="100.0" prefWidth="200.0" />
-                  <HBox fx:id="detailHBox" prefHeight="41.0" prefWidth="273.0" />
-                  <JFXListView fx:id="drawerListView" focusTraversable="false" prefHeight="411.0" prefWidth="282.0" />
-               </children>
-            </VBox>
-         </children>
-      </JFXDrawer>
-   </children>
-</AnchorPane>
+<StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane prefHeight="585.0" prefWidth="860.0">
+      <children>
+         <JFXListView fx:id="listView" layoutX="-2.0" prefHeight="585.0" prefWidth="275.0" />
+         <GoogleMapView fx:id="mapView" layoutX="273.0" prefHeight="585.0" prefWidth="585.0"/>
+         <JFXDrawer fx:id="drawer" defaultDrawerSize="300.0" layoutX="-1.0" layoutY="45.0" prefHeight="540.0" prefWidth="273.0">
+            <children>
+               <VBox fx:id="drawerBox" prefHeight="200.0" prefWidth="100.0">
+                  <children>
+                     <HBox fx:id="headHBox" prefHeight="100.0" prefWidth="200.0" />
+                     <HBox fx:id="detailHBox" prefHeight="41.0" prefWidth="273.0" />
+                     <JFXListView fx:id="drawerListView" focusTraversable="false" prefHeight="411.0" prefWidth="282.0" />
+                  </children>
+               </VBox>
+            </children>
+         </JFXDrawer>
+      </children>
+   </AnchorPane>
+</StackPane>

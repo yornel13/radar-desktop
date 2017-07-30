@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -22,15 +24,40 @@ import java.io.*;
 public class SyncController extends BaseController {
 
     @FXML
+    private JFXButton buttonImport;
+    @FXML
+    private JFXButton buttonExport;
+    @FXML
     @ActionTrigger("map")
     private JFXButton buttonMap;
 
     @FXML
+    @ActionTrigger("admin")
+    private JFXButton optionAdmin;
+    @FXML
+    @ActionTrigger("employee")
+    private JFXButton optionEmployee;
+    @FXML
     @ActionTrigger("control")
-    private JFXButton buttonControl;
+    private JFXButton optionControl;
+
 
     @PostConstruct
     public void init() {
+        buttonImport.setOnMouseEntered(event ->  buttonImport.setStyle(" -fx-background-color: #d6d6d6"));
+        buttonImport.setOnMouseExited( event ->  buttonImport.setStyle(" -fx-background-color: #ffc107"));
+        buttonExport.setOnMouseEntered(event ->  buttonExport.setStyle(" -fx-background-color: #d6d6d6"));
+        buttonExport.setOnMouseExited( event ->  buttonExport.setStyle(" -fx-background-color: #ffc107"));
+        buttonMap.setOnMouseEntered(event -> buttonMap.setStyle(" -fx-background-color: #d6d6d6"));
+        buttonMap.setOnMouseExited( event -> buttonMap.setStyle(" -fx-background-color: #ffc107"));
+
+        try {
+            optionAdmin.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_32.png"))));
+            optionEmployee.setGraphic(new ImageView(new Image(new FileInputStream("src/img/employee_32.png"))));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void importFile(ActionEvent actionEvent) {
@@ -125,28 +152,6 @@ public class SyncController extends BaseController {
             // TODO, show dialog process error
         }
 
-    }
-
-    public void controlScene(ActionEvent actionEvent) throws IOException {
-        Parent parentControl = FXMLLoader.load(getClass().getResource("../view/workman.fxml"));
-        String css = StartApp.class.getResource("../style/style.css").toExternalForm();
-        Scene sceneControl = new Scene(parentControl);
-        sceneControl.getStylesheets().add(css);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.hide();
-        stage.setScene(sceneControl);
-        stage.show();
-    }
-
-    public void markersScene(ActionEvent actionEvent) throws IOException {
-        Parent parentControl = FXMLLoader.load(getClass().getResource("../view/control_points.fxml"));
-        String css = StartApp.class.getResource("../style/style.css").toExternalForm();
-        Scene sceneControl = new Scene(parentControl);
-        sceneControl.getStylesheets().add(css);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.hide();
-        stage.setScene(sceneControl);
-        stage.show();
     }
 }
 

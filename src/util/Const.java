@@ -8,4 +8,5 @@ public class Const {
     public static final int DIALOG_SAVE_EDIT = 1;
     public static final int DIALOG_DISABLE = 2;
     public static final int DIALOG_ENABLE = 3;
+    public static final int DIALOG_NOTIFICATION = 9;
 }

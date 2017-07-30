@@ -48,16 +48,14 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     @FXML
     private JFXListView<HBox> listView;
+    private ObservableList<HBox> data;
 
     private List<User> users;
-    private ObservableList<HBox> data;
 
     private List<Watch> watchesUser;
 
     @FXML
     private JFXDrawer drawer;
-    @FXML
-    private HBox hBoxBack;
     @FXML
     private VBox drawerBox;
     @FXML
@@ -71,7 +69,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
     private boolean drawerFirstShow = true;
 
     private Label drawerNameLabel;
-
 
     @FXML
     private GoogleMapView mapView;
@@ -118,9 +115,10 @@ public class WorkmanController extends BaseController implements MapComponentIni
             VBox labelsVBox = new VBox();
 
             while (i < 1){
-                hBoxBack  = new HBox();
+                HBox hBoxBack  = new HBox();
                 Label backButton = new Label();
-                backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrows-Back-icon16.png"))));
+                backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
+                backButton.setPrefHeight(25);
                 hBoxBack.getChildren().add(backButton);
                 data.add(hBoxBack);
                 i++;
