@@ -34,7 +34,7 @@ public class BaseController {
 
     protected void onBackController() {
         try {
-            actionHandler.handle("back");
+            actionHandler.navigateBack();
         } catch (VetoException e) {
             e.printStackTrace();
         } catch (FlowException e) {
