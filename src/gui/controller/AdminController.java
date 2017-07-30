@@ -91,6 +91,8 @@ public class AdminController implements Initializable, EventHandler<MouseEvent> 
         adminListView.setOnMouseClicked(this::handle);
     }
 
+
+
     @Override
     public void handle(MouseEvent event) {
         if (adminListView.getSelectionModel().getSelectedIndex() == 0){

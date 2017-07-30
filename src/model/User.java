@@ -1,7 +1,5 @@
 package model;
 
-import org.hibernate.Query;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +11,7 @@ import java.util.Set;
 public class User extends ArrayList<User> implements java.io.Serializable {
 
 	// Fields
+
 
 	private Long id;
 	private String dni;

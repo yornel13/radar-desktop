@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -21,7 +22,7 @@
              </font></JFXTextField>
          <Pane layoutX="274.0" layoutY="14.0" prefHeight="553.0" prefWidth="486.0">
             <children>
-                <JFXTextField fx:id="nameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="141.0" layoutY="105.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre">
+                <JFXTextField fx:id="nameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="141.0" layoutY="139.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre">
                   <cursor>
                      <Cursor fx:constant="TEXT" />
                   </cursor>
@@ -29,7 +30,7 @@
                      <Font size="18.0" />
                   </font>
                </JFXTextField>
-                <JFXTextField fx:id="lastNameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="141.0" layoutY="185.0" prefHeight="28.0" prefWidth="320.0" promptText="Apellido">
+                <JFXTextField fx:id="lastNameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="141.0" layoutY="200.0" prefHeight="28.0" prefWidth="320.0" promptText="Apellido">
                   <cursor>
                      <Cursor fx:constant="TEXT" />
                   </cursor>
@@ -37,7 +38,7 @@
                      <Font size="18.0" />
                   </font>
                </JFXTextField>
-                <JFXPasswordField fx:id="passwordField" alignment="TOP_LEFT" disable="true" labelFloat="true" layoutX="141.0" layoutY="264.0" prefHeight="28.0" prefWidth="320.0" promptText="Contraseña">
+                <JFXPasswordField fx:id="passwordField" alignment="TOP_LEFT" disable="true" labelFloat="true" layoutX="141.0" layoutY="262.0" prefHeight="28.0" prefWidth="320.0" promptText="Contraseña">
                   <font>
                      <Font size="18.0" />
                   </font>
@@ -45,31 +46,38 @@
                      <Cursor fx:constant="TEXT" />
                   </cursor>
                </JFXPasswordField>
-                <JFXButton fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="141.0" layoutY="341.0" prefHeight="35.0" prefWidth="320.0" style="-fx-background-color: #4059a9;" text="Modificar" textFill="WHITE">
+                <JFXButton fx:id="editButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="141.0" layoutY="360.0" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Modificar" textFill="WHITE">
                    <font>
                       <Font size="14.0" />
                    </font>
                </JFXButton>
-                <JFXButton fx:id="saveButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="141.0" layoutY="400.0" prefHeight="35.0" prefWidth="320.0" style="-fx-background-color: #4059a9;" text="Guardar" textFill="WHITE">
+                <JFXButton fx:id="saveButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="141.0" layoutY="420.0" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Guardar" textFill="WHITE">
                    <font>
                       <Font size="14.0" />
                    </font>
                 </JFXButton>
-               <Label fx:id="employeeLabel" alignment="CENTER" layoutX="243.0" layoutY="26.0" text="Empleados" visible="false">
-                  <font>
-                     <Font size="24.0" />
-                  </font>
-               </Label>
-               <Label fx:id="editLabel" alignment="CENTER" layoutX="199.0" layoutY="26.0" prefHeight="35.0" prefWidth="203.0" text="Modificar usuario" visible="false">
-                  <font>
-                     <Font size="24.0" />
-                  </font>
-               </Label>
-               <Label fx:id="addLabel" alignment="CENTER" layoutX="216.0" layoutY="26.0" text="Ingresar usuario" visible="false">
-                  <font>
-                     <Font size="24.0" />
-                  </font>
-               </Label>
+               <Pane layoutX="16.0" layoutY="-12.0" prefHeight="80.0" prefWidth="565.0" style="-fx-background-color: #03a9f4;">
+                  <children>
+                     <Label fx:id="employeeLabel" alignment="CENTER" layoutX="230.0" layoutY="25.0" text="Empleados" textFill="WHITE" visible="false">
+                        <font>
+                           <Font size="25.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="editLabel" alignment="CENTER" layoutX="176.0" layoutY="25.0" prefHeight="35.0" prefWidth="223.0" text="Modificar empleado" textFill="WHITE" visible="false">
+                        <font>
+                           <Font size="25.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="addLabel" alignment="CENTER" layoutX="188.0" layoutY="25.0" text="Ingresar empleado" textFill="WHITE" visible="false">
+                        <font>
+                           <Font size="25.0" />
+                        </font>
+                     </Label>
+                  </children>
+                  <effect>
+                     <DropShadow blurType="GAUSSIAN" color="#a3a2a2eb" height="62.41" offsetY="1.0" radius="15.1025" width="0.0" />
+                  </effect>
+               </Pane>
             </children>
          </Pane>
        </children>

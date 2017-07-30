@@ -23,9 +23,7 @@ import service.RadarService;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static javafx.scene.paint.Color.valueOf;
 
@@ -40,6 +38,7 @@ public class userController implements Initializable {
     private JFXTextField filterField;
     @FXML
     private JFXListView<HBox> userListView;
+
     private ObservableList<HBox> dataUser;
     @FXML
     private Label employeeLabel;
@@ -48,16 +47,15 @@ public class userController implements Initializable {
     @FXML
     private Label addLabel;
     @FXML
-    private JFXTextField nameField;
-    @FXML
     private JFXTextField lastNameField;
     @FXML
     private JFXPasswordField passwordField;
     @FXML
+    private JFXTextField nameField;
+    @FXML
     private JFXButton editButton;
     @FXML
     private JFXButton saveButton;
-
 
 
 
@@ -78,6 +76,8 @@ public class userController implements Initializable {
     }
 
     public void loadUserListView() throws FileNotFoundException {
+
+        editButton.setDisable(true);
         employeeLabel.setVisible(true);
         dataUser = FXCollections.observableArrayList();
 
@@ -122,6 +122,7 @@ public class userController implements Initializable {
 
     private void loadSelectedUser() {
         userListView.setOnMouseClicked(event -> {
+
             employeeLabel.setVisible(true);
             editLabel.setVisible(false);
             addLabel.setVisible(false);
@@ -132,6 +133,7 @@ public class userController implements Initializable {
             lastNameField.setDisable(true);
             passwordField.setEditable(false);
             passwordField.setDisable(true);
+
             editButton.setDisable(false);
             saveButton.setDisable(true);
 
@@ -144,7 +146,7 @@ public class userController implements Initializable {
             try {
                 nameField.setText(userIndex.get(index).getName());
                 lastNameField.setText(userIndex.get(index).getLastname());
-                passwordField.setText(userIndex.get(index).getPassword());
+                passwordField.setText("1234");
                 saveChanges(userIndex.get(index).getName(), userIndex.get(index).getLastname());
 
             }catch (IndexOutOfBoundsException ex) {
@@ -186,6 +188,7 @@ public class userController implements Initializable {
                 lastNameField.setDisable(false);
                 passwordField.setEditable(true);
                 passwordField.setDisable(false);
+
                 editButton.setDisable(true);
                 saveButton.setDisable(false);
             }
@@ -201,7 +204,7 @@ public class userController implements Initializable {
                                                    || passwordField.getText().isEmpty()){
                     JFXDialogLayout dialogLayout = new JFXDialogLayout();
                     dialogLayout.setHeading(new Label("Existen campos vacios!"));
-                    dialogLayout.setBody(new Text("Debe llenar todos los campos para el modificacion de usuario"));
+                    dialogLayout.setBody(new Text("Debe llenar todos los campos para la modificacion de usuario"));
                     JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.CENTER);
                     JFXButton okeyButton = new JFXButton();
                     okeyButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -230,10 +233,7 @@ public class userController implements Initializable {
                     });
                     dialogLayout.setActions(okeyButton);
                     dialog.show();
-
                 }
-
-
             }
         });
     }
@@ -252,6 +252,7 @@ public class userController implements Initializable {
                 employeeLabel.setVisible(false);
                 editLabel.setVisible(false);
                 addLabel.setVisible(true);
+
                 nameField.clear();
                 lastNameField.clear();
                 passwordField.clear();
@@ -264,10 +265,8 @@ public class userController implements Initializable {
                 passwordField.setDisable(false);
                 editButton.setDisable(true);
                 saveButton.setDisable(false);
-
             }
         });
-
     }
 
     private void filterUser() {
