@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import service.RadarService;
 import util.Const;
 
 import java.beans.Transient;
@@ -38,6 +39,8 @@ public class BaseController {
 
     @ActionHandler
     protected FlowActionHandler actionHandler;
+
+    protected RadarService service = RadarService.getInstance();
 
     protected void onBackController() {
         try {

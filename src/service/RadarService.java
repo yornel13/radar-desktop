@@ -95,7 +95,7 @@ public class RadarService {
             export.setAdmins(adminDAO.findAllActive());
             export.setUsers(userDao.findAllActive());
             for (User user: export.getUsers()) {
-                // Watchs(set) give stack over flow error, so this should be null
+                // Watch(set) give stack over flow error, so this should be null
                 user.setWatchs(null);
             }
             export.setControlPositions(cpDao.findAllActive());

@@ -7,13 +7,6 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import io.datafx.controller.ViewController;
-import io.datafx.controller.flow.FlowException;
-import io.datafx.controller.flow.FlowHandler;
-import io.datafx.controller.flow.context.ActionHandler;
-import io.datafx.controller.flow.context.FXMLViewFlowContext;
-import io.datafx.controller.flow.context.FlowActionHandler;
-import io.datafx.controller.flow.context.ViewFlowContext;
-import io.datafx.controller.util.VetoException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -33,7 +26,6 @@ import model.User;
 import model.Watch;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
-import service.RadarService;
 import util.RadarDate;
 
 import javax.annotation.PostConstruct;
@@ -41,7 +33,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @ViewController(value = "../view/workman.fxml")
 public class WorkmanController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
@@ -87,9 +78,9 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         mapView.addMapInializedListener(this);
 
-        controlList = RadarService.getInstance().getAllControlActive();
+        controlList = service.getAllControlActive();
 
-        users = RadarService.getInstance().getAllUser();
+        users = service.getAllUser();
 
         if(users == null) {
             System.err.println("No users");
@@ -143,6 +134,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
        }
         listView.setItems(data);
+
         listView.setExpanded(true);
         listView.setVerticalGap(2.0);
         listView.depthProperty().set(1);
@@ -211,7 +203,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         drawerNameLabel.setText("   "+user.getLastname()+" "+user.getName());
 
-        watchesUser = RadarService.getInstance().getAllUserWatches(user.getId());
+        watchesUser = service.getAllUserWatches(user.getId());
         watchesData = FXCollections.observableArrayList();
 
         for (Watch watch: watchesUser) {
@@ -282,7 +274,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     public void addMarkersRoute(Watch watch) {
         for (Position position:
-                RadarService.getInstance().findAllPositionsByWatch(watch)) {
+                service.findAllPositionsByWatch(watch)) {
 
             ControlPosition control = null;
             for (ControlPosition controlPosition: controlList) {

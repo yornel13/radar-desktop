@@ -40,6 +40,7 @@ public class StartApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
+        primaryStage.setResizable(false);
         stage = primaryStage;
         decorator.setOnCloseButtonAction(() -> {
             HibernateSessionFactory.closeSession();
