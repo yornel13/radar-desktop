@@ -26,7 +26,6 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.ControlPosition;
 import netscape.javascript.JSObject;
-import service.RadarService;
 import util.Const;
 
 import javax.annotation.PostConstruct;
@@ -73,14 +72,8 @@ public class MarkerController extends BaseController implements MapComponentInit
 
     private static Boolean editing;
 
-    private RadarService service;
-
     @PostConstruct
     public void init()  {
-
-        service = RadarService.getInstance();
-
-        //root.getChildren().remove(dialog);
 
         bar.setVisible(false);
 

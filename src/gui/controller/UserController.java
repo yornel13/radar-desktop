@@ -19,7 +19,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.User;
-import service.RadarService;
 import util.Const;
 
 import javax.annotation.PostConstruct;
@@ -64,7 +63,7 @@ public class UserController extends BaseController {
     @PostConstruct
     public void init() {
 
-        users = RadarService.getInstance().getAllUser();
+        users = service.getAllUser();
         try {
             loadUserListView();
         } catch (FileNotFoundException e) {

@@ -6,8 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,14 +16,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.Admin;
-import service.RadarService;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 @ViewController(value = "../view/admin.fxml")
 public class AdminController extends BaseController implements EventHandler<MouseEvent> {
@@ -38,7 +33,7 @@ public class AdminController extends BaseController implements EventHandler<Mous
 
     @PostConstruct
     public void init() {
-        admins = RadarService.getInstance().getAllAdmin();
+        admins = service.getAllAdmin();
 
         if(admins == null) {
             System.out.println("No admins");

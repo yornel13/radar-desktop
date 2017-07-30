@@ -5,16 +5,10 @@ import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import service.RadarService;
 import util.Const;
 
 import javax.annotation.PostConstruct;
@@ -102,7 +96,7 @@ public class SyncController extends BaseController {
 
     public void jsonToObject(String json) {
         Boolean successful;
-        successful = RadarService.getInstance().saveImport(json);
+        successful = service.saveImport(json);
         if (successful) {
             // TODO, show dialog successful
         } else {
@@ -127,7 +121,7 @@ public class SyncController extends BaseController {
             //Construct the BufferedWriter object
             bufferedWriter = new BufferedWriter(new FileWriter(filePath));
 
-            bufferedWriter.write(RadarService.getInstance().getExportJson());
+            bufferedWriter.write(service.getExportJson());
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
