@@ -229,6 +229,10 @@ public class WorkmanController extends BaseController implements MapComponentIni
         drawerListView.depthProperty().set(1);
     }
 
+    private void showWatchesDetail() {
+        
+    }
+
     @Override
     public void mapInitialized() {
 
