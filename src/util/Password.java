@@ -36,15 +36,4 @@ public class Password {
         return s.matches("[a-fA-F0-9]{32}");
     }
 
-    public static EventHandler<KeyEvent> numberLetterFilter() {
-
-        EventHandler<KeyEvent> aux = (KeyEvent keyEvent) -> {
-            if (!"0123456789abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    .contains(keyEvent.getCharacter())) {
-                keyEvent.consume();
-
-            }
-        };
-        return aux;
-    }
 }

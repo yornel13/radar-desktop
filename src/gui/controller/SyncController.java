@@ -5,6 +5,7 @@ import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
@@ -46,8 +47,14 @@ public class SyncController extends BaseController {
         buttonMap.setOnMouseExited( event -> buttonMap.setStyle(" -fx-background-color: #ffc107"));
 
         try {
+            optionControl.setGraphic(new ImageView(new Image(new FileInputStream("src/img/pointer_32.png"))));
             optionAdmin.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_32.png"))));
             optionEmployee.setGraphic(new ImageView(new Image(new FileInputStream("src/img/employee_32.png"))));
+
+            ImageView mapImage = new ImageView(new Image(new FileInputStream("src/img/map_icon_full.png")));
+            mapImage.setFitHeight(62);
+            mapImage.setFitWidth(110);
+            buttonMap.setGraphic(mapImage);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

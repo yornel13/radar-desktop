@@ -1,23 +1,22 @@
 package gui.controller;
 
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import io.datafx.controller.ViewController;
+import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -27,11 +26,12 @@ import model.User;
 import org.joda.time.DateTime;
 import util.Const;
 import util.Password;
+import util.RadarFilters;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import static javafx.scene.paint.Color.valueOf;
@@ -45,6 +45,9 @@ public class UserController extends BaseController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
+    @ActionTrigger("back")
+    private JFXButton backButton;
+    @FXML
     private JFXTextField filterField;
     @FXML
     private JFXListView<HBox> userListView;
@@ -57,6 +60,8 @@ public class UserController extends BaseController {
     @FXML
     private Label addLabel;
     @FXML
+    private JFXTextField dniField;
+    @FXML
     private JFXTextField lastNameField;
     @FXML
     private JFXPasswordField passwordField;
@@ -67,49 +72,50 @@ public class UserController extends BaseController {
     @FXML
     private JFXButton saveButton;
 
+    private User selectUser;
+
     private boolean editingPassword = false;
 
     @PostConstruct
-    public void init() {
+    public void init() throws FileNotFoundException {
 
-        users = service.getAllUser();
-        try {
-            loadUserListView();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        loadListView();
         loadSelectedUser();
         editUser();
         addUser();
 
-        filterUser();
-
-        passwordField.addEventFilter(KeyEvent.KEY_TYPED, Password.numberLetterFilter());
+        passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
+        dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
+        backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
     }
 
-    public void loadUserListView() throws FileNotFoundException {
+    public void loadListView() {
+        users = service.getAllUser();
+        try {
+            loadUserListView();
+            nonUserInfo();
+            filterUser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        editButton.setDisable(true);
-        employeeLabel.setVisible(true);
+    }
+
+    public void loadUserListView() throws IOException {
+
         dataUser = FXCollections.observableArrayList();
 
-        int i = 0;
         for(User user: users) {
             HBox parentHBox = new HBox();
             HBox imageHBox = new HBox();
             VBox nameDniVBox = new VBox();
 
-            while (i < 1) {
-                HBox backButtonHBox = new HBox();
-                Label backButton = new Label();
-                backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
-                backButtonHBox.setPrefHeight(25);
-                backButtonHBox.getChildren().add(backButton);
-                dataUser.add(backButtonHBox);
-                i++;
-            }
-
             ImageView iconUser = new ImageView(new Image(new FileInputStream("src/img/policeman_64.png")));
+            if (!user.getActive()) {
+                ColorAdjust desaturate = new ColorAdjust();
+                desaturate.setSaturation(-1);
+                iconUser.setEffect(desaturate);
+            }
             iconUser.setFitHeight(55);
             iconUser.setFitWidth(55);
             Label fullNameUser = new Label("    "+user.getLastname()+"  "+user.getName());
@@ -124,6 +130,25 @@ public class UserController extends BaseController {
 
             parentHBox.setUserData(user);
             dataUser.add(parentHBox);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/popup.fxml"));
+            InputController inputController = new InputController(this);
+            loader.setController(inputController);
+            JFXPopup popup = new JFXPopup(loader.load());
+            inputController.setPopup(popup);
+            if (user.getActive()) {
+                inputController.setText("Borrar");
+            } else {
+                inputController.setText("Activar");
+            }
+
+            parentHBox.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    nonUserInfo();
+                    selectUser = user;
+                    popup.show(parentHBox, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT);
+                }
+            });
         }
         userListView.setItems(dataUser);
         userListView.setExpanded(true);
@@ -131,51 +156,121 @@ public class UserController extends BaseController {
         userListView.depthProperty().set(1);
     }
 
+    void editableUser() {
+
+        editLabel.setVisible(true);
+        employeeLabel.setVisible(false);
+        addLabel.setVisible(false);
+
+        dniField.setEditable(true);
+        dniField.setDisable(false);
+        nameField.setEditable(true);
+        nameField.setDisable(false);
+        lastNameField.setEditable(true);
+        lastNameField.setDisable(false);
+        passwordField.setEditable(true);
+        passwordField.setDisable(false);
+
+        editButton.setDisable(true);
+        saveButton.setDisable(false);
+    }
+
+    void nonEditableUser() {
+
+        employeeLabel.setVisible(true);
+        editLabel.setVisible(false);
+        addLabel.setVisible(false);
+
+        dniField.setEditable(false);
+        dniField.setDisable(true);
+        nameField.setEditable(false);
+        nameField.setDisable(true);
+        lastNameField.setEditable(false);
+        lastNameField.setDisable(true);
+        passwordField.setEditable(false);
+        passwordField.setDisable(true);
+
+        editButton.setDisable(false);
+        saveButton.setDisable(true);
+    }
+
+    void createUser() {
+
+        employeeLabel.setVisible(false);
+        editLabel.setVisible(false);
+        addLabel.setVisible(true);
+
+        dniField.clear();
+        nameField.clear();
+        lastNameField.clear();
+        passwordField.clear();
+
+        dniField.setEditable(true);
+        dniField.setDisable(false);
+        nameField.setEditable(true);
+        nameField.setDisable(false);
+        lastNameField.setEditable(true);
+        lastNameField.setDisable(false);
+        passwordField.setEditable(true);
+        passwordField.setDisable(false);
+        editButton.setDisable(true);
+        saveButton.setDisable(false);
+    }
+
+    void nonUserInfo() {
+
+        employeeLabel.setVisible(true);
+        editLabel.setVisible(false);
+        addLabel.setVisible(false);
+
+        dniField.clear();
+        nameField.clear();
+        lastNameField.clear();
+        passwordField.clear();
+
+        dniField.setEditable(false);
+        dniField.setDisable(true);
+        nameField.setEditable(false);
+        nameField.setDisable(true);
+        lastNameField.setEditable(false);
+        lastNameField.setDisable(true);
+        passwordField.setEditable(false);
+        passwordField.setDisable(true);
+
+        editButton.setDisable(true);
+        saveButton.setDisable(true);
+    }
+
     private void loadSelectedUser() {
         userListView.setOnMouseClicked(event -> {
 
-            editingPassword = false;
+            if (event.getButton() == MouseButton.PRIMARY
+                    && userListView.getSelectionModel().getSelectedItem() != null) {
+                editingPassword = false;
 
-            employeeLabel.setVisible(true);
-            editLabel.setVisible(false);
-            addLabel.setVisible(false);
+                nonEditableUser();
 
-            nameField.setEditable(false);
-            nameField.setDisable(true);
-            lastNameField.setEditable(false);
-            lastNameField.setDisable(true);
-            passwordField.setEditable(false);
-            passwordField.setDisable(true);
+                User user = (User) userListView
+                        .getSelectionModel().getSelectedItem().getUserData();
 
-            editButton.setDisable(false);
-            saveButton.setDisable(true);
-
-            int index = userListView.getSelectionModel().getSelectedIndex()-1;
-            ArrayList<User> userIndex = new ArrayList();
-            for(User user : users) {
-                userIndex.add(user);
-            }
-
-            try {
-                nameField.setText(userIndex.get(index).getName());
-                lastNameField.setText(userIndex.get(index).getLastname());
-                passwordField.setText(userIndex.get(index).getPassword());
-                saveChanges(userIndex.get(index).getName(), userIndex.get(index).getLastname());
-
-            }catch (IndexOutOfBoundsException ex) {
-                if (index == -2) {
-
-                } else {
-                    onBackController();
+                if (!user.getActive()) {
+                    nonUserInfo();
+                    return;
                 }
-            }
 
-            passwordField.setOnMousePressed(event1 -> {
-                if (!editingPassword) {
-                    editingPassword = true;
-                    passwordField.setText("");
-                }
-            });
+                dniField.setText(user.getDni());
+                nameField.setText(user.getName());
+                lastNameField.setText(user.getLastname());
+                passwordField.setText(user.getPassword());
+                saveChanges(user.getDni(), user.getName(), user.getLastname());
+
+                passwordField.setOnMousePressed(event1 -> {
+                    if (!editingPassword) {
+                        editingPassword = true;
+                        passwordField.setText("");
+                    }
+                });
+            }
         });
     }
 
@@ -185,43 +280,34 @@ public class UserController extends BaseController {
             if((nameField.getText().isEmpty() && lastNameField.getText().isEmpty())
                                               && passwordField.getText().isEmpty()) {
                 dialogType = Const.DIALOG_NOTIFICATION;
-                showDialog("Debe seleccionar un usuario!",
-                        "Seleccione un usuario de la lista para modificar",
-                        false,
-                        true);
+                showDialogNotification("Debe seleccionar un usuario!",
+                        "Seleccione un usuario de la lista para modificar");
+            } else {
+                editableUser();
             }
-            editLabel.setVisible(true);
-            employeeLabel.setVisible(false);
-            addLabel.setVisible(false);
-
-            nameField.setEditable(true);
-            nameField.setDisable(false);
-            lastNameField.setEditable(true);
-            lastNameField.setDisable(false);
-            passwordField.setEditable(true);
-            passwordField.setDisable(false);
-
-            editButton.setDisable(true);
-            saveButton.setDisable(false);
         });
     }
 
-    private void saveChanges(String name, String lastName) {
+    private void saveChanges(String dni, String name, String lastName) {
         saveButton.setOnAction(event -> {
             if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
                                                || passwordField.getText().isEmpty()){
 
                 dialogType = Const.DIALOG_NOTIFICATION;
-                showDialog("Campo vacio",
-                        "Debe llenar todos los campos para la modificacion de usuario",
-                        false,
-                        true);
-
-            }else if (editingPassword && passwordField.getText().length() < 4) {
-                showDialog("Error de contraseña",
-                        "La contraseña debe tener al menos 4 caracteres",
-                        false,
-                        true);
+                showDialogNotification("Campo vacio",
+                        "Debe llenar todos los campos para la modificacion de usuario");
+            } else if (editingPassword && passwordField.getText().length() < 4) {
+                dialogType = Const.DIALOG_NOTIFICATION;
+                showDialogNotification("Error de contraseña",
+                        "La contraseña debe tener al menos 4 caracteres");
+            } else if (dniField.getText().length() < 5) {
+                dialogType = Const.DIALOG_NOTIFICATION;
+                showDialogNotification("Error de dni",
+                        "La dni es muy corto");
+            } else if (!dniField.getText().equals(dni) && service.findUserByDni(dniField.getText()) != null) {
+                dialogType = Const.DIALOG_NOTIFICATION;
+                showDialogNotification("Error de dni",
+                        "El dni ya esta siendo usado para otro empleado");
             } else {
                 dialogType = Const.DIALOG_SAVE_EDIT;
                 showDialog("¿Desea Guardar los cambios?",
@@ -230,74 +316,128 @@ public class UserController extends BaseController {
         });
     }
 
+    private  void addUser() {
+        JFXButton floatingButton = new JFXButton("+");
+        floatingButton.setButtonType(JFXButton.ButtonType.RAISED);
+        floatingButton.getStyleClass().addAll("floatingButton");
+        floatingButton.setLayoutX(230);
+        floatingButton.setLayoutY(525);
+        anchorPane.getChildren().add(floatingButton);
+
+        floatingButton.setOnAction(eventAction -> {
+            createUser();
+            saveButton.setOnAction(event -> {
+                if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
+                        || passwordField.getText().isEmpty()){
+
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Campo vacio",
+                            "Debe llenar todos los campos para crear un empleado");
+                } else if (passwordField.getText().length() < 4) {
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Error de contraseña",
+                            "La contraseña debe tener al menos 4 caracteres");
+                } else if (dniField.getText().length() < 5) {
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Error de dni",
+                            "La dni es muy corto");
+                } else if (service.findUserByDni(dniField.getText()) != null) {
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Error de dni",
+                            "El dni ya esta siendo usado para otro empleado");
+                } else {
+                    dialogType = Const.DIALOG_SAVE;
+                    showDialog("Confirmacion",
+                            "¿Seguro que desea crear el empleado: "
+                                    +lastNameField.getText()+" "+nameField.getText()+"?");
+                }
+            });
+        });
+    }
+
     @Override
     public void onDialogAccept(ActionEvent actionEvent) {
         super.onDialogAccept(actionEvent);
+        User user;
         switch (dialogType) {
             case Const.DIALOG_SAVE_EDIT:
-                User user = service.findUserById(((User)
+                user = service.findUserById(((User)
                         userListView.getSelectionModel().getSelectedItem().getUserData()).getId());
+                user.setDni(dniField.getText());
                 user.setName(nameField.getText());
                 user.setLastname(lastNameField.getText());
                 if (editingPassword) {
                     editingPassword = false;
                     user.setPassword(Password.MD5(passwordField.getText()));
                 }
-                user.setUpdate(new DateTime().getMillis());
+                user.setLastUpdate(new DateTime().getMillis());
                 service.doEdit();
-
-                try {
-                    loadUserListView();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                loadListView();
+                showSnackBar("Empleado modificado con exito");
+                break;
+            case Const.DIALOG_SAVE:
+                user = new User();
+                user.setDni(dniField.getText());
+                user.setName(nameField.getText());
+                user.setLastname(lastNameField.getText());
+                user.setPassword(Password.MD5(passwordField.getText()));
+                user.setCreateDate(new DateTime().getMillis());
+                user.setLastUpdate(new DateTime().getMillis());
+                user.setActive(true);
+                service.saveUser(user);
+                loadListView();
+                showSnackBar("Empleado creado con exito");
+                break;
+            case Const.DIALOG_DELETE:
+                user = service.findUserById(selectUser.getId());
+                if (service.deleteUser(user)) {
+                    showSnackBar("Empleado borrado con exito");
+                } else {
+                    showSnackBar("No se puede borrar porque " +
+                            "tiene registros, el empleado ha sido desactivado.");
                 }
+                loadListView();
+                break;
+            case Const.DIALOG_ENABLE:
+                user = service.findUserById(selectUser.getId());
+                user.setActive(true);
+                service.doEdit();
+                loadListView();
+                showSnackBar("Empleado activado con exito");
                 break;
         }
     }
 
-    private  void addUser() {
-        JFXButton floatingButton = new JFXButton("+");
-        floatingButton.setButtonType(JFXButton.ButtonType.RAISED);
-        floatingButton.getStyleClass().addAll("floatingButton");
-        floatingButton.setLayoutX(230);
-        floatingButton.setLayoutY(495);
-        anchorPane.getChildren().add(floatingButton);
-
-        floatingButton.setOnAction(event -> {
-            employeeLabel.setVisible(false);
-            editLabel.setVisible(false);
-            addLabel.setVisible(true);
-
-            nameField.clear();
-            lastNameField.clear();
-            passwordField.clear();
-
-            nameField.setEditable(true);
-            nameField.setDisable(false);
-            lastNameField.setEditable(true);
-            lastNameField.setDisable(false);
-            passwordField.setEditable(true);
-            passwordField.setDisable(false);
-            editButton.setDisable(true);
-            saveButton.setDisable(false);
-        });
+    public void deleteUser() {
+        User user = selectUser;
+        if (selectUser.getActive()) {
+            dialogType = Const.DIALOG_DELETE;
+            showDialog("Confirmacion",
+                    "¿Seguro que desea eliminar el empleado: "
+                            + user.getLastname() + " " + user.getName() + "?");
+        } else {
+            dialogType = Const.DIALOG_ENABLE;
+            showDialog("Confirmacion",
+                    "¿Seguro que desea reactivar el empleado: "
+                            + user.getLastname() + " " + user.getName() + "?");
+        }
     }
 
     private void filterUser() {
         FilteredList<HBox> filteredData = new FilteredList<>(dataUser, p -> true);
         filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            nonUserInfo();
             filteredData.setPredicate(hBox -> {
                 // If filter text is empty, display all persons.
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
-                if (dataUser.indexOf(hBox) == 0)
-                    return true;
-
                 User user = (User) hBox.getUserData();
+                if (user == null)
+                    return false;
                 // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
+                String lowerCaseFilter = filterField.getText().toLowerCase();
 
                 String fullName = user.getLastname()+" "+user.getName();
                 if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
@@ -315,10 +455,65 @@ public class UserController extends BaseController {
 
         SortedList<HBox> sortedData = new SortedList<>(filteredData);
         userListView.setItems(sortedData);
+        checkFilter(filteredData);
     }
 
+    void checkFilter(FilteredList<HBox> filteredData) {
+        filteredData.setPredicate(hBox -> {
+            // If filter text is empty, display all persons.
+            if (filterField.getText() == null || filterField.getText().isEmpty()) {
+                return true;
+            }
 
+            User user = (User) hBox.getUserData();
+            // Compare first name and last name of every person with filter text.
+            String lowerCaseFilter = filterField.getText().toLowerCase();
 
+            String fullName = user.getLastname()+" "+user.getName();
+            if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches first name.
+            } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            }
+            return false; // Does not match.
+        });
+    }
 
+    public class InputController {
+
+        @FXML
+        private JFXListView<?> toolbarPopupList;
+
+        @FXML
+        private Label popupLabel;
+
+        private UserController principal;
+
+        private JFXPopup popup;
+
+        public InputController(UserController principal) {
+            this.principal = principal;
+        }
+
+        @FXML
+        private void submit() {
+            popup.hide();
+            if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 0) {
+                principal.deleteUser();
+            }
+        }
+
+        public void setPopup(JFXPopup popup) {
+            this.popup = popup;
+        }
+
+        public void setText(String content) {
+            popupLabel.setText(content);
+        }
+    }
 
 }
