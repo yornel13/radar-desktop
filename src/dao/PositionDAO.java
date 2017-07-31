@@ -65,7 +65,7 @@ public class PositionDAO extends BaseHibernateDAO {
 
 	public List<Position> findAllByWatchId(Long watchId) {
 		Query query = getSession().createSQLQuery("SELECT * FROM position WHERE " +
-				"watch_id = :watch_id")
+				"watch_id = :watch_id ORDER BY time DESC")
 				.addEntity(Position.class)
 				.setParameter("watch_id", watchId);
 

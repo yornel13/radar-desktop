@@ -103,6 +103,16 @@ public class RadarDate {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mma");
         return formatter.format(getLocalFromTime(time));
     }
+    public static String getHora(DateTime dateTime) {
+        String fecha = "a las "+dateTime.toString("HH:mm:ss");
+        return fecha;
+    }
+
+    public static String getHora(Long longDate) {
+        DateTime dateTime = new DateTime(longDate);
+        String date = "a las "+dateTime.toString("HH:mm");
+        return date;
+    }
     
     public static String differenceBetweenHours(Time time1, Time time2) {
         DateTime dateTime1 = new DateTime(time1.getTime());

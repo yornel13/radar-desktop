@@ -75,7 +75,7 @@ public class WatchDAO extends BaseHibernateDAO {
 
 	public List<Watch> findAllByUserId(Long userId) {
 		Query query = getSession().createSQLQuery("SELECT * FROM watch WHERE " +
-				"user_id = :user_id")
+				"user_id = :user_id ORDER BY start_time DESC")
 				.addEntity(Watch.class)
 				.setParameter("user_id", userId);
 
