@@ -9,19 +9,26 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import io.datafx.controller.ViewController;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Callback;
 import model.ControlPosition;
 import model.Position;
 import model.User;
@@ -56,8 +63,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
     @FXML
     private HBox detailHBox;
     @FXML
-    private JFXListView<JFXNodesList> drawerListView;
-    private ObservableList<JFXNodesList> watchesData;
+    private JFXListView<VBox> drawerListView;
+    private ObservableList<VBox> watchesData;
 
     private boolean drawerFirstShow = true;
 
@@ -210,21 +217,15 @@ public class WorkmanController extends BaseController implements MapComponentIni
         watchesData = FXCollections.observableArrayList();
 
         for (Watch watch: watchesUser) {
-      /*
-            VBox vDetail = new VBox();
+
+            VBox wDetail = new VBox();
             Label watchLabel = new Label();
             watchLabel.setText(RadarDate
                     .getFechaConMes(new DateTime(watch.getStartTime())));
-            vDetail.getChildren().add(watchLabel);
-            watchesData.add(vDetail);
-      */  VBox vDetail = new VBox();
-            JFXButton buttonList = new JFXButton(RadarDate
-                   .getFechaConMes(new DateTime(watch.getStartTime())));
+            wDetail.getChildren().add(watchLabel);
 
-            JFXNodesList nodesList = new JFXNodesList();
-            nodesList.addAnimatedNode(buttonList);
-            drawerBox.getChildren().add(nodesList);
-            //watchesData.add(nodesList);
+           watchesData.add(wDetail);
+            
         }
 
         drawerListView.setItems(watchesData);
