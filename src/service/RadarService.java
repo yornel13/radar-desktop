@@ -159,5 +159,9 @@ public class RadarService {
         return positions;
     }
 
+    public User findUserById(Long id) {
+        User user = userDao.findById(id);
+        return user;
+    }
 
 }

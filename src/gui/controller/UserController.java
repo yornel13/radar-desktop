@@ -8,18 +8,25 @@ import com.jfoenix.controls.JFXTextField;
 import io.datafx.controller.ViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.User;
+import org.joda.time.DateTime;
 import util.Const;
+import util.Password;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
@@ -60,6 +67,8 @@ public class UserController extends BaseController {
     @FXML
     private JFXButton saveButton;
 
+    private boolean editingPassword = false;
+
     @PostConstruct
     public void init() {
 
@@ -69,11 +78,13 @@ public class UserController extends BaseController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        filterUser();
         loadSelectedUser();
         editUser();
         addUser();
 
+        filterUser();
+
+        passwordField.addEventFilter(KeyEvent.KEY_TYPED, Password.numberLetterFilter());
     }
 
     public void loadUserListView() throws FileNotFoundException {
@@ -106,23 +117,24 @@ public class UserController extends BaseController {
             fullNameUser.setFont(new Font(null,16));
             dniUser.setFont(new Font(null,14));
             dniUser.setTextFill(valueOf("#aaaaaa"));
-
             imageHBox.getChildren().add(iconUser);
             nameDniVBox.getChildren().add(fullNameUser);
             nameDniVBox.getChildren().add(dniUser);
             parentHBox.getChildren().addAll(imageHBox, nameDniVBox);
 
+            parentHBox.setUserData(user);
             dataUser.add(parentHBox);
         }
         userListView.setItems(dataUser);
         userListView.setExpanded(true);
         userListView.setVerticalGap(2.0);
         userListView.depthProperty().set(1);
-
     }
 
     private void loadSelectedUser() {
         userListView.setOnMouseClicked(event -> {
+
+            editingPassword = false;
 
             employeeLabel.setVisible(true);
             editLabel.setVisible(false);
@@ -147,7 +159,7 @@ public class UserController extends BaseController {
             try {
                 nameField.setText(userIndex.get(index).getName());
                 lastNameField.setText(userIndex.get(index).getLastname());
-                passwordField.setText("1234");
+                passwordField.setText(userIndex.get(index).getPassword());
                 saveChanges(userIndex.get(index).getName(), userIndex.get(index).getLastname());
 
             }catch (IndexOutOfBoundsException ex) {
@@ -157,6 +169,13 @@ public class UserController extends BaseController {
                     onBackController();
                 }
             }
+
+            passwordField.setOnMousePressed(event1 -> {
+                if (!editingPassword) {
+                    editingPassword = true;
+                    passwordField.setText("");
+                }
+            });
         });
     }
 
@@ -193,15 +212,20 @@ public class UserController extends BaseController {
                                                || passwordField.getText().isEmpty()){
 
                 dialogType = Const.DIALOG_NOTIFICATION;
-                showDialog("¿Desea Guardar los cambios?",
+                showDialog("Campo vacio",
                         "Debe llenar todos los campos para la modificacion de usuario",
                         false,
                         true);
 
-            }else{
+            }else if (editingPassword && passwordField.getText().length() < 4) {
+                showDialog("Error de contraseña",
+                        "La contraseña debe tener al menos 4 caracteres",
+                        false,
+                        true);
+            } else {
                 dialogType = Const.DIALOG_SAVE_EDIT;
-                showDialog("Existen campos vacios!",
-                        "Algunos datos seran modificados para el usuario: "+lastName+" "+name);
+                showDialog("¿Desea Guardar los cambios?",
+                        "¿Seguro que desea modificar el usuario: "+lastName+" "+name+"?");
             }
         });
     }
@@ -211,7 +235,22 @@ public class UserController extends BaseController {
         super.onDialogAccept(actionEvent);
         switch (dialogType) {
             case Const.DIALOG_SAVE_EDIT:
-                // TODO, code here
+                User user = service.findUserById(((User)
+                        userListView.getSelectionModel().getSelectedItem().getUserData()).getId());
+                user.setName(nameField.getText());
+                user.setLastname(lastNameField.getText());
+                if (editingPassword) {
+                    editingPassword = false;
+                    user.setPassword(Password.MD5(passwordField.getText()));
+                }
+                user.setUpdate(new DateTime().getMillis());
+                service.doEdit();
+
+                try {
+                    loadUserListView();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -245,7 +284,37 @@ public class UserController extends BaseController {
     }
 
     private void filterUser() {
+        FilteredList<HBox> filteredData = new FilteredList<>(dataUser, p -> true);
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(hBox -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
 
+                if (dataUser.indexOf(hBox) == 0)
+                    return true;
+
+                User user = (User) hBox.getUserData();
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                String fullName = user.getLastname()+" "+user.getName();
+                if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        SortedList<HBox> sortedData = new SortedList<>(filteredData);
+        userListView.setItems(sortedData);
     }
 
 

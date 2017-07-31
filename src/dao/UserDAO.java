@@ -27,8 +27,13 @@ import javax.jws.soap.SOAPBinding;
 public class UserDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(UserDAO.class);
 	// property constants
+	public static final String DNI = "dni";
 	public static final String NAME = "name";
 	public static final String LASTNAME = "lastname";
+	public static final String PASSWORD = "password";
+	public static final String CREATE = "create";
+	public static final String UPDATE = "update";
+	public static final String ACTIVE = "active";
 
 	public void save(User transientInstance) {
 		log.debug("saving User instance");
@@ -55,7 +60,7 @@ public class UserDAO extends BaseHibernateDAO {
 	public User findById(java.lang.Long id) {
 		log.debug("getting User instance with id: " + id);
 		try {
-			User instance = (User) getSession().get("modelo.User", id);
+			User instance = (User) getSession().get("model.User", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -76,7 +81,7 @@ public class UserDAO extends BaseHibernateDAO {
 	public List findByExample(User instance) {
 		log.debug("finding User instance by example");
 		try {
-			List results = getSession().createCriteria("modelo.User")
+			List results = getSession().createCriteria("model.User")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -102,12 +107,32 @@ public class UserDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public List findByDni(Object dni) {
+		return findByProperty(DNI, dni);
+	}
+
 	public List findByName(Object name) {
 		return findByProperty(NAME, name);
 	}
 
 	public List findByLastname(Object lastname) {
 		return findByProperty(LASTNAME, lastname);
+	}
+
+	public List findByPassword(Object password) {
+		return findByProperty(PASSWORD, password);
+	}
+
+	public List findByCreate(Object create) {
+		return findByProperty(CREATE, create);
+	}
+
+	public List findByUpdate(Object update) {
+		return findByProperty(UPDATE, update);
+	}
+
+	public List findByActive(Object active) {
+		return findByProperty(ACTIVE, active);
 	}
 
 	public List findAll() {
