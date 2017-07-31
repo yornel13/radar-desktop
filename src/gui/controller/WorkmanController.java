@@ -1,7 +1,9 @@
 package gui.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXNodesList;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
@@ -54,8 +56,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
     @FXML
     private HBox detailHBox;
     @FXML
-    private JFXListView<VBox> drawerListView;
-    private ObservableList<VBox> watchesData;
+    private JFXListView<JFXNodesList> drawerListView;
+    private ObservableList<JFXNodesList> watchesData;
 
     private boolean drawerFirstShow = true;
 
@@ -93,6 +95,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        showWatchesDetail();
     }
 
     public void loadListView() throws FileNotFoundException {
@@ -160,7 +163,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         if (listView.getSelectionModel().getSelectedIndex() == 0) {
             onBackPress();
         } else {
-            openDrawer();
+            openedDrawer();
         }
     }
 
@@ -180,7 +183,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             e.printStackTrace();
         }
 
-        Label titleDetail = new Label("   Detalles");
+        Label titleDetail = new Label("   Guardias");
         detailHBox.setStyle("-fx-background-color: #f2f2f2");
         detailHBox.setPrefHeight(20);
         detailHBox.setPadding(new Insets(8));
@@ -191,7 +194,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         drawerFirstShow = false;
     }
 
-    public void openDrawer() {
+    public void openedDrawer() {
 
         drawer.open();
         drawer.setVisible(true);
@@ -207,22 +210,37 @@ public class WorkmanController extends BaseController implements MapComponentIni
         watchesData = FXCollections.observableArrayList();
 
         for (Watch watch: watchesUser) {
+      /*
             VBox vDetail = new VBox();
             Label watchLabel = new Label();
             watchLabel.setText(RadarDate
                     .getFechaConMes(new DateTime(watch.getStartTime())));
             vDetail.getChildren().add(watchLabel);
             watchesData.add(vDetail);
+      */  VBox vDetail = new VBox();
+            JFXButton buttonList = new JFXButton(RadarDate
+                   .getFechaConMes(new DateTime(watch.getStartTime())));
+
+            JFXNodesList nodesList = new JFXNodesList();
+            nodesList.addAnimatedNode(buttonList);
+            drawerBox.getChildren().add(nodesList);
+            //watchesData.add(nodesList);
         }
 
         drawerListView.setItems(watchesData);
         drawerListView.setExpanded(true);
         drawerListView.setVerticalGap(2.0);
         drawerListView.depthProperty().set(1);
+
+
     }
 
     private void showWatchesDetail() {
-        
+        drawerListView.setOnMouseClicked(event -> {
+            int index = drawerListView.getSelectionModel().getSelectedIndex();
+
+        });
+
     }
 
     @Override
