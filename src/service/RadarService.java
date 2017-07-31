@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.*;
 import model.*;
+import org.hibernate.exception.ConstraintViolationException;
 import util.HibernateSessionFactory;
 
 import java.util.List;
@@ -113,7 +114,12 @@ public class RadarService {
     }
 
     public List<User> getAllUser() {
-        List<User> users = userDao.findAll();
+        List<User> users = userDao.findAllOrder();
+        return users;
+    }
+
+    public List<User> getAllUserActive() {
+        List<User> users = userDao.findAllActive();
         return users;
     }
 
@@ -159,8 +165,30 @@ public class RadarService {
         return positions;
     }
 
+    public void saveUser(User user) {
+        userDao.save(user);
+    }
+
+    public Boolean deleteUser(User user) {
+        Boolean isDeleted = true;
+        if (getAllUserWatches(user.getId()).isEmpty()) {
+            userDao.delete(user);
+            isDeleted = true;
+        } else {
+            user.setActive(false);
+            isDeleted = false;
+        }
+        doEdit();
+        return isDeleted;
+    }
+
     public User findUserById(Long id) {
         User user = userDao.findById(id);
+        return user;
+    }
+
+    public User findUserByDni(String dni) {
+        User user = userDao.findByDni(dni);
         return user;
     }
 

@@ -2,6 +2,7 @@ package gui.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXSnackbar;
 import io.datafx.controller.flow.FlowException;
 import io.datafx.controller.flow.context.ActionHandler;
 import io.datafx.controller.flow.context.FlowActionHandler;
@@ -57,17 +58,19 @@ public class BaseController {
         dialogContent.setText(content);
         dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         dialog.show(root);
-        this.cancelButton.setVisible(true);
-        this.acceptButton.setVisible(true);
+        cancelButton.setText("CANCELAR");
+        cancelButton.setVisible(true);
+        acceptButton.setVisible(true);
     }
 
-    protected void showDialog(String title, String content, Boolean cancelButton, Boolean acceptButton) {
+    protected void showDialogNotification(String title, String content) {
         dialogTitle.setText(title);
         dialogContent.setText(content);
         dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         dialog.show(root);
-        this.cancelButton.setVisible(cancelButton);
-        this.acceptButton.setVisible(acceptButton);
+        cancelButton.setText("ACEPTAR");
+        cancelButton.setVisible(true);
+        acceptButton.setVisible(false);
     }
 
     @FXML
@@ -78,6 +81,11 @@ public class BaseController {
     @FXML
     public void onDialogAccept(ActionEvent actionEvent) {
         dialog.close();
+    }
+
+    protected void showSnackBar(String content) {
+        JFXSnackbar bar = new JFXSnackbar(root);
+        bar.enqueue(new JFXSnackbar.SnackbarEvent(content));
     }
 
 }

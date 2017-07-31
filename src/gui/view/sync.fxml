@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane prefHeight="585.0" prefWidth="860.0" style="-fx-background-color: #03a9f4;">
          <children>
-            <JFXButton fx:id="buttonImport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="172.0" layoutY="210.0" onAction="#importFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Importar" textFill="WHITE">
+            <JFXButton fx:id="buttonImport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="160.0" layoutY="210.0" onAction="#importFile" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #ffc107;" text="Importar" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -19,15 +19,15 @@
                   <String fx:value="circle_button" />
                   <String fx:value="buttonHoverMenu" />
                </styleClass></JFXButton>
-            <JFXButton fx:id="buttonExport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="382.0" layoutY="210.0" onAction="#exportFile" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Exportar" textFill="WHITE">
+            <JFXButton fx:id="buttonMap" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" focusTraversable="false" layoutX="360.0" layoutY="200.0" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #ffc107;" text="Control" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
                <styleClass>
-                  <String fx:value="circle_button" />
+                  <String fx:value="circle_button_center" />
                   <String fx:value="buttonHoverMenu" />
                </styleClass></JFXButton>
-            <JFXButton fx:id="buttonMap" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="587.0" layoutY="210.0" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #ffc107;" text="Control" textFill="WHITE">
+            <JFXButton fx:id="buttonExport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="580.0" layoutY="210.0" onAction="#exportFile" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #ffc107;" text="Exportar" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -51,7 +51,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="optionControl" focusTraversable="false" layoutX="400.0" layoutY="14.0" text="Marcadores" textFill="WHITE">
+            <JFXButton fx:id="optionControl" focusTraversable="false" layoutX="380.0" layoutY="14.0" text="Marcadores" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

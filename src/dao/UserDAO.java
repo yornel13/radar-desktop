@@ -31,8 +31,8 @@ public class UserDAO extends BaseHibernateDAO {
 	public static final String NAME = "name";
 	public static final String LASTNAME = "lastname";
 	public static final String PASSWORD = "password";
-	public static final String CREATE = "create";
-	public static final String UPDATE = "update";
+	public static final String CREATE_DATE = "create_date";
+	public static final String LAST_UPDATE = "last_update";
 	public static final String ACTIVE = "active";
 
 	public void save(User transientInstance) {
@@ -124,11 +124,11 @@ public class UserDAO extends BaseHibernateDAO {
 	}
 
 	public List findByCreate(Object create) {
-		return findByProperty(CREATE, create);
+		return findByProperty(CREATE_DATE, create);
 	}
 
 	public List findByUpdate(Object update) {
-		return findByProperty(UPDATE, update);
+		return findByProperty(LAST_UPDATE, update);
 	}
 
 	public List findByActive(Object active) {
@@ -145,6 +145,14 @@ public class UserDAO extends BaseHibernateDAO {
 			log.error("find all failed", re);
 			throw re;
 		}
+	}
+
+	public List<User> findAllOrder() {
+		Query query = getSession().
+				createSQLQuery("SELECT * FROM user ORDER BY active DESC")
+				.addEntity(User.class);
+		Object result = query.list();
+		return (List<User>) result;
 	}
 
 	public List<User> findAllActive() {
