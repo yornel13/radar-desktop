@@ -23,10 +23,10 @@
             <column name="password" length="50" not-null="true" />
         </property>
         <property name="create" type="java.lang.Long">
-            <column name="create" not-null="true" />
+            <column name="create" length="20" not-null="true" />
         </property>
         <property name="update" type="java.lang.Long">
-            <column name="update" not-null="true" />
+            <column name="update" length="20" not-null="true" />
         </property>
         <property name="active" type="java.lang.Boolean">
             <column name="active" not-null="true" />

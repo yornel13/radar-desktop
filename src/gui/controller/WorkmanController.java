@@ -2,6 +2,7 @@ package gui.controller;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXRippler;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;

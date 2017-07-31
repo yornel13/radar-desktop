@@ -2,8 +2,8 @@
   <library name="hibernate_Jars">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/gson-2.2.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.42-bin.jar!/" />
       <root url="file://$PROJECT_DIR$/lib/hibernate_Jars" />
+      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.42-bin.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
