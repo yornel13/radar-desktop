@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GMapsFX/GMapsFX.iml" filepath="$PROJECT_DIR$/GMapsFX/GMapsFX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GMapsFX/GMapsFX.iml" filepath="$PROJECT_DIR$/GMapsFX/GMapsFX.iml" />
       <module fileurl="file://$PROJECT_DIR$/Radar.iml" filepath="$PROJECT_DIR$/Radar.iml" />
     </modules>
   </component>
