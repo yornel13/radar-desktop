@@ -169,6 +169,10 @@ public class RadarService {
         userDao.save(user);
     }
 
+    public void saveAdmin(Admin admin) {
+        adminDAO.save(admin);
+    }
+
     public Boolean deleteUser(User user) {
         Boolean isDeleted = true;
         if (getAllUserWatches(user.getId()).isEmpty()) {
@@ -181,6 +185,11 @@ public class RadarService {
         doEdit();
         return isDeleted;
     }
+    public void deleteAdmin(Admin admin) {
+        adminDAO.delete(admin);
+        doEdit();
+    }
+
 
     public User findUserById(Long id) {
         User user = userDao.findById(id);
@@ -191,5 +200,22 @@ public class RadarService {
         User user = userDao.findByDni(dni);
         return user;
     }
+
+    public Admin findAdminById(Long id) {
+        Admin admin = adminDAO.findById(id);
+        return admin;
+    }
+
+    public Admin findAdminByDni(String dni) {
+        Admin admin = adminDAO.findByDni(dni);
+        return  admin;
+    }
+
+    public Admin findAdminByUserName(String userName){
+        Admin admin = adminDAO.findByUserName(userName);
+        return admin;
+    }
+
+
 
 }

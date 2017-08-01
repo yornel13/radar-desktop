@@ -25,15 +25,16 @@
         <property name="lastname" type="java.lang.String">
             <column name="lastname" length="20" not-null="true" />
         </property>
-        <property name="create" type="java.lang.Long">
-            <column name="create" not-null="true" />
+        <property name="createDate" type="java.lang.Long">
+            <column name="create_date" not-null="true" />
         </property>
-        <property name="update" type="java.lang.Long">
-            <column name="update" not-null="true" />
+        <property name="lastUpdate" type="java.lang.Long">
+            <column name="last_update" not-null="true" />
         </property>
         <property name="active" type="java.lang.Boolean">
             <column name="active" not-null="true" />
         </property>
+
 
     </class>
 </hibernate-mapping>
