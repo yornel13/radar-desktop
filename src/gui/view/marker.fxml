@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.lynden.gmapsfx.GoogleMapView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
-<StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="585.0" prefWidth="860.0">
         <children>
-            <JFXListView fx:id="listView" layoutX="-2.0" prefHeight="585.0" prefWidth="275.0" />
-            <GoogleMapView fx:id="mapView" layoutX="273.0" prefHeight="585.0" prefWidth="585.0"/>
+         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="275.0" />
+         <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
+            <JFXListView fx:id="listView" layoutX="-2.0" layoutY="45.0" prefHeight="540.0" prefWidth="275.0" />
+            <GoogleMapView fx:id="mapView" layoutX="273.0" prefHeight="585.0" prefWidth="585.0" />
             <Pane layoutX="273.0" layoutY="485.0" prefHeight="100.0" prefWidth="585.0">
                 <children>
                     <Pane fx:id="bar" prefHeight="100.0" prefWidth="585.0">
@@ -18,8 +31,8 @@
                             <Pane layoutX="0.0" layoutY="0.0" prefHeight="100.0" prefWidth="585.0" style="-fx-background-color: white;">
                                 <children>
                                     <TextField fx:id="nameField" layoutX="27.0" layoutY="38.0" prefHeight="25.0" prefWidth="372.0" />
-                                    <JFXButton fx:id="editButton" onAction="#editControl" layoutX="425.0" layoutY="38.0" mnemonicParsing="false" text="Editar" />
-                                    <JFXButton fx:id="disableButton" onAction="#disableControl" layoutX="491.0" layoutY="38.0" mnemonicParsing="false" text="Desactivar" />
+                                    <JFXButton fx:id="editButton" layoutX="425.0" layoutY="38.0" mnemonicParsing="false" onAction="#editControl" text="Editar" />
+                                    <JFXButton fx:id="disableButton" layoutX="491.0" layoutY="38.0" mnemonicParsing="false" onAction="#disableControl" text="Desactivar" />
                                     <Label layoutX="29.0" layoutY="17.0" text="Nombre del punto de control:" />
                                     <JFXButton layoutX="559.0" layoutY="2.0" maxHeight="15.0" minHeight="15.0" prefHeight="15.0" prefWidth="20.0" text="x" />
                                     <JFXButton layoutX="557.0" layoutY="-1.0" onAction="#closeMarkerBar" text="x">
