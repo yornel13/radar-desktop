@@ -295,7 +295,7 @@ public class UserController extends BaseController {
 
                 dialogType = Const.DIALOG_NOTIFICATION;
                 showDialogNotification("Campo vacio",
-                        "Debe llenar todos los campos para la modificacion de usuario");
+                        "Debe llenar todos los campos para la modificacion del usuario");
             } else if (editingPassword && passwordField.getText().length() < 4) {
                 dialogType = Const.DIALOG_NOTIFICATION;
                 showDialogNotification("Error de contraseña",

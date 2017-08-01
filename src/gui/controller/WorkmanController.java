@@ -102,7 +102,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        showWatchesDetail();
+
     }
 
     public void loadListView() throws FileNotFoundException {
@@ -224,7 +224,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
                     .getFechaConMes(new DateTime(watch.getStartTime())));
             wDetail.getChildren().add(watchLabel);
 
-           watchesData.add(wDetail);
+            watchesData.add(wDetail);
             
         }
 
@@ -236,13 +236,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     }
 
-    private void showWatchesDetail() {
-        drawerListView.setOnMouseClicked(event -> {
-            int index = drawerListView.getSelectionModel().getSelectedIndex();
-
-        });
-
-    }
 
     @Override
     public void mapInitialized() {

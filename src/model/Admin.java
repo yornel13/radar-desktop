@@ -14,8 +14,8 @@ public class Admin implements java.io.Serializable {
 	private String password;
 	private String name;
 	private String lastname;
-	private Long create;
-	private Long update;
+	private Long createDate;
+	private Long lastUpdate;
 	private Boolean active;
 
 	// Constructors
@@ -26,13 +26,13 @@ public class Admin implements java.io.Serializable {
 
 	/** full constructor */
 	public Admin(String username, String password, String name,
-			String lastname, Long create, Long update, Boolean active) {
+			String lastname, Long create, Long lastUpdate, Boolean active) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.lastname = lastname;
-		this.create = create;
-		this.update = update;
+		this.createDate = create;
+		this.lastUpdate = lastUpdate;
 		this.active = active;
 	}
 
@@ -86,20 +86,20 @@ public class Admin implements java.io.Serializable {
 		this.lastname = lastname;
 	}
 
-	public Long getCreate() {
-		return this.create;
+	public Long getCreateDate() {
+		return this.createDate;
 	}
 
-	public void setCreate(Long create) {
-		this.create = create;
+	public void setCreateDate(Long createDate) {
+		this.createDate = createDate;
 	}
 
-	public Long getUpdate() {
-		return this.update;
+	public Long getLastUpdate() {
+		return this.lastUpdate;
 	}
 
-	public void setUpdate(Long update) {
-		this.update = update;
+	public void setLastUpdate(Long lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 	public Boolean getActive() {

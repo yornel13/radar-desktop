@@ -19,14 +19,14 @@
        <children>
          <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="300.0" />
           <JFXListView fx:id="userListView" layoutY="45.0" prefHeight="540.0" prefWidth="300.0" />
-          <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="220.0" promptText="Buscar" unFocusColor="#909090">
+          <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="220.0" promptText="Buscar" unFocusColor="#909090">
              <font>
                 <Font size="13.0" />
              </font>
           </JFXTextField>
          <Pane layoutX="300.0" prefHeight="585.0" prefWidth="560.0">
             <children>
-                <JFXTextField fx:id="nameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="120.0" layoutY="180.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre">
+                <JFXTextField fx:id="nameField" alignment="TOP_LEFT" disable="true" editable="false" focusColor="#0288d1" labelFloat="true" layoutX="120.0" layoutY="180.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre">
                   <cursor>
                      <Cursor fx:constant="TEXT" />
                   </cursor>
@@ -34,7 +34,7 @@
                      <Font size="18.0" />
                   </font>
                </JFXTextField>
-                <JFXTextField fx:id="lastNameField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="120.0" layoutY="240.0" prefHeight="28.0" prefWidth="320.0" promptText="Apellido">
+                <JFXTextField fx:id="lastNameField" alignment="TOP_LEFT" disable="true" editable="false" focusColor="#0288d1" labelFloat="true" layoutX="120.0" layoutY="240.0" prefHeight="28.0" prefWidth="320.0" promptText="Apellido">
                   <cursor>
                      <Cursor fx:constant="TEXT" />
                   </cursor>
@@ -42,7 +42,7 @@
                      <Font size="18.0" />
                   </font>
                </JFXTextField>
-                <JFXPasswordField fx:id="passwordField" alignment="TOP_LEFT" disable="true" labelFloat="true" layoutX="120.0" layoutY="300.0" prefHeight="28.0" prefWidth="320.0" promptText="Contraseña">
+                <JFXPasswordField fx:id="passwordField" alignment="TOP_LEFT" disable="true" focusColor="#0288d1" labelFloat="true" layoutX="120.0" layoutY="300.0" prefHeight="28.0" prefWidth="320.0" promptText="Contraseña">
                   <font>
                      <Font size="18.0" />
                   </font>
@@ -82,7 +82,7 @@
                      <DropShadow blurType="GAUSSIAN" color="#a3a2a2eb" height="62.41" offsetY="1.0" radius="15.1025" width="0.0" />
                   </effect>
                </Pane>
-               <JFXTextField fx:id="dniField" alignment="TOP_LEFT" disable="true" editable="false" labelFloat="true" layoutX="120.0" layoutY="120.0" prefHeight="28.0" prefWidth="320.0" promptText="Cedula">
+               <JFXTextField fx:id="dniField" alignment="TOP_LEFT" disable="true" editable="false" focusColor="#0288d1" labelFloat="true" layoutX="120.0" layoutY="120.0" prefHeight="28.0" prefWidth="320.0" promptText="Cedula">
                   <cursor>
                      <Cursor fx:constant="TEXT" />
                   </cursor>

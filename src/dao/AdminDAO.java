@@ -1,6 +1,7 @@
 package dao;
 
 import model.Admin;
+import model.User;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
@@ -27,8 +28,8 @@ public class AdminDAO extends BaseHibernateDAO {
 	public static final String PASSWORD = "password";
 	public static final String NAME = "name";
 	public static final String LASTNAME = "lastname";
-	public static final String CREATE = "create";
-	public static final String UPDATE = "update";
+	public static final String CREATE_DATE = "create_date";
+	public static final String LAST_UPDATE = "last_update";
 	public static final String ACTIVE = "active";
 
 	public void save(Admin transientInstance) {
@@ -56,7 +57,7 @@ public class AdminDAO extends BaseHibernateDAO {
 	public Admin findById(java.lang.Long id) {
 		log.debug("getting Admin instance with id: " + id);
 		try {
-			Admin instance = (Admin) getSession().get("modelo.Admin", id);
+			Admin instance = (Admin) getSession().get("model.Admin", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -64,10 +65,29 @@ public class AdminDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public Admin findByDni(String dni) {
+		Query query = getSession().createSQLQuery("SELECT * FROM admin WHERE " +
+				"dni = :dni")
+				.addEntity(Admin.class)
+				.setParameter("dni", dni);
+
+		Object result = query.uniqueResult();
+		return (Admin) result;
+	}
+	public Admin findByUserName(String username) {
+		Query query = getSession().createSQLQuery("SELECT * FROM admin WHERE " +
+				"username = :username")
+				.addEntity(Admin.class)
+				.setParameter("username", username);
+
+		Object result = query.uniqueResult();
+		return (Admin) result;
+	}
+
 	public List findByExample(Admin instance) {
 		log.debug("finding Admin instance by example");
 		try {
-			List results = getSession().createCriteria("modelo.Admin")
+			List results = getSession().createCriteria("model.Admin")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -110,11 +130,11 @@ public class AdminDAO extends BaseHibernateDAO {
 	}
 
 	public List findByCreate(Object create) {
-		return findByProperty(CREATE, create);
+		return findByProperty(CREATE_DATE, create);
 	}
 
 	public List findByUpdate(Object update) {
-		return findByProperty(UPDATE, update);
+		return findByProperty(LAST_UPDATE, update);
 	}
 
 	public List findByActive(Object active) {
