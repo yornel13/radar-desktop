@@ -17,6 +17,8 @@ public class ControlPosition implements java.io.Serializable {
 	private String placeName;
 	private Boolean active;
 	private Set positions = new HashSet(0);
+	private Set routePositions = new HashSet(0);
+	private Set routeMarkers = new HashSet(0);
 
 	// Constructors
 
@@ -25,19 +27,24 @@ public class ControlPosition implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public ControlPosition(Double latitude, Double longitude, String placeName) {
+	public ControlPosition(Double latitude, Double longitude, String placeName,
+			Boolean active) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.placeName = placeName;
+		this.active = active;
 	}
 
 	/** full constructor */
 	public ControlPosition(Double latitude, Double longitude, String placeName,
-			Set positions) {
+						   Boolean active, Set positions, Set routePositions, Set routeMarkers) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.placeName = placeName;
+		this.active = active;
 		this.positions = positions;
+		this.routePositions = routePositions;
+		this.routeMarkers = routeMarkers;
 	}
 
 	// Property accessors
@@ -74,6 +81,14 @@ public class ControlPosition implements java.io.Serializable {
 		this.placeName = placeName;
 	}
 
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
 	public Set getPositions() {
 		return this.positions;
 	}
@@ -82,13 +97,20 @@ public class ControlPosition implements java.io.Serializable {
 		this.positions = positions;
 	}
 
-	public Boolean getActive() {
-		return active;
+	public Set getRoutePositions() {
+		return this.routePositions;
 	}
 
-	public void setActive(Boolean active) {
-		this.active = active;
+	public void setRoutePositions(Set routePositions) {
+		this.routePositions = routePositions;
 	}
 
+	public Set getRouteMarkers() {
+		return this.routeMarkers;
+	}
+
+	public void setRouteMarkers(Set routeMarkers) {
+		this.routeMarkers = routeMarkers;
+	}
 
 }

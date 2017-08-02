@@ -24,6 +24,10 @@
 		<mapping resource="model/User.hbm.xml" />
 		<mapping resource="model/ControlPosition.hbm.xml" />
 		<mapping resource="model/Admin.hbm.xml" />
+		<mapping resource="model/Group.hbm.xml" />
+		<mapping resource="model/Route.hbm.xml" />
+		<mapping resource="model/RouteMarker.hbm.xml" />
+		<mapping resource="model/RoutePosition.hbm.xml" />
 
 	</session-factory>
 

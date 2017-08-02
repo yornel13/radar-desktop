@@ -10,7 +10,9 @@ import java.util.Set;
 public class User implements java.io.Serializable {
 
 	// Fields
+
 	private Long id;
+	private Group group;
 	private String dni;
 	private String name;
 	private String lastname;
@@ -19,6 +21,7 @@ public class User implements java.io.Serializable {
 	private Long lastUpdate;
 	private Boolean active;
 	private Set watchs = new HashSet(0);
+	private Set routeMarkers = new HashSet(0);
 
 	// Constructors
 
@@ -27,16 +30,31 @@ public class User implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public User(String name, String lastname) {
+	public User(String dni, String name, String lastname, String password,
+				Long createDate, Long lastUpdate, Boolean active) {
+		this.dni = dni;
 		this.name = name;
 		this.lastname = lastname;
+		this.password = password;
+		this.createDate = createDate;
+		this.lastUpdate = lastUpdate;
+		this.active = active;
 	}
 
 	/** full constructor */
-	public User(String name, String lastname, Set watchs) {
+	public User(Group group, String dni, String name, String lastname,
+				String password, Long createDate, Long lastUpdate, Boolean active,
+				Set watchs, Set routeMarkers) {
+		this.group = group;
+		this.dni = dni;
 		this.name = name;
 		this.lastname = lastname;
+		this.password = password;
+		this.createDate = createDate;
+		this.lastUpdate = lastUpdate;
+		this.active = active;
 		this.watchs = watchs;
+		this.routeMarkers = routeMarkers;
 	}
 
 	// Property accessors
@@ -49,8 +67,16 @@ public class User implements java.io.Serializable {
 		this.id = id;
 	}
 
+	public Group getGroup() {
+		return this.group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
 	public String getDni() {
-		return dni;
+		return this.dni;
 	}
 
 	public void setDni(String dni) {
@@ -74,7 +100,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -82,7 +108,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public Long getCreateDate() {
-		return createDate;
+		return this.createDate;
 	}
 
 	public void setCreateDate(Long createDate) {
@@ -90,7 +116,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public Long getLastUpdate() {
-		return lastUpdate;
+		return this.lastUpdate;
 	}
 
 	public void setLastUpdate(Long lastUpdate) {
@@ -98,7 +124,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public Boolean getActive() {
-		return active;
+		return this.active;
 	}
 
 	public void setActive(Boolean active) {
@@ -113,6 +139,12 @@ public class User implements java.io.Serializable {
 		this.watchs = watchs;
 	}
 
+	public Set getRouteMarkers() {
+		return this.routeMarkers;
+	}
 
+	public void setRouteMarkers(Set routeMarkers) {
+		this.routeMarkers = routeMarkers;
+	}
 
 }
