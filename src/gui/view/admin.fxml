@@ -62,17 +62,17 @@
                </JFXButton>
                <Pane prefHeight="80.0" prefWidth="560.0" style="-fx-background-color: #03a9f4;">
                   <children>
-                     <Label fx:id="adminLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefWidth="460.0" text="Empleados" textAlignment="CENTER" textFill="WHITE" visible="false">
+                     <Label fx:id="adminLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefWidth="460.0" text="Administradores" textAlignment="CENTER" textFill="WHITE" visible="false">
                         <font>
                            <Font size="25.0" />
                         </font>
                      </Label>
-                     <Label fx:id="editLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="35.0" prefWidth="460.0" text="Modificar empleado" textAlignment="CENTER" textFill="WHITE" visible="false">
+                     <Label fx:id="editLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="35.0" prefWidth="460.0" text="Modificar administrador" textAlignment="CENTER" textFill="WHITE" visible="false">
                         <font>
                            <Font size="25.0" />
                         </font>
                      </Label>
-                     <Label fx:id="addLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefWidth="460.0" text="Ingresar empleado" textAlignment="CENTER" textFill="WHITE" visible="false">
+                     <Label fx:id="addLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefWidth="460.0" text="Ingresar administrador" textAlignment="CENTER" textFill="WHITE" visible="false">
                         <font>
                            <Font size="25.0" />
                         </font>

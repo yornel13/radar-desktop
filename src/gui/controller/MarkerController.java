@@ -6,9 +6,12 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import io.datafx.controller.ViewController;
+import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.ControlPosition;
+import model.User;
 import netscape.javascript.JSObject;
 import util.Const;
 
@@ -37,6 +41,13 @@ import java.util.List;
 
 @ViewController("../view/marker.fxml")
 public class MarkerController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
+
+    @FXML
+    @ActionTrigger("back")
+    private JFXButton backButton;
+
+    @FXML
+    private JFXTextField filterField;
 
     @FXML
     public TextField nameField;
@@ -68,24 +79,31 @@ public class MarkerController extends BaseController implements MapComponentInit
 
     private MapOptions mapOptions;
 
-    private static Integer controlIndex;
+    private ControlPosition selectedPosition;
 
     private static Boolean editing;
 
     @PostConstruct
-    public void init()  {
+    public void init() throws FileNotFoundException {
 
         bar.setVisible(false);
 
+        loadListView();
+
+        mapView.addMapInializedListener(this);
+        backButton.setGraphic(new ImageView(
+                new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
+    }
+
+    public void loadListView() {
         try {
-            loadListView();
+            loadPositionListView();
+            filterData();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        mapView.addMapInializedListener(this);
     }
 
     public void closeMarkerBar(ActionEvent actionEvent) {
@@ -99,7 +117,7 @@ public class MarkerController extends BaseController implements MapComponentInit
 
     public void disableControl(ActionEvent actionEvent) {
         if (editing) {
-            nameField.setText(controlList.get(controlIndex).getPlaceName());
+            nameField.setText(selectedPosition.getPlaceName());
             nameField.setDisable(true);
             editButton.setText("Editar");
             disableButton.setText("Desactivar");
@@ -130,18 +148,11 @@ public class MarkerController extends BaseController implements MapComponentInit
                 "¿Estas seguro que deseas activar nuevamente este punto de control?");
     }
 
-    public void loadListView() throws IOException {
+    public void loadPositionListView() throws IOException {
 
         controlList = service.getAllControl();
 
         data = FXCollections.observableArrayList();
-
-        HBox hBoxBack = new HBox();
-        Label backButton = new Label();
-        backButton.setGraphic(new ImageView(new Image(
-                new FileInputStream("src/img/arrow_back_icon16.png"))));
-        hBoxBack.getChildren().add(backButton);
-        data.add(hBoxBack);
 
         for (ControlPosition control: controlList) {
 
@@ -165,7 +176,7 @@ public class MarkerController extends BaseController implements MapComponentInit
             labelsVBox.getChildren().addAll(nameLabel, activeLabel);
             labelsVBox.setPadding(new Insets(-1,3,-1,3));
             hBox.getChildren().addAll(imageHBox, labelsVBox);
-
+            hBox.setUserData(control);
             data.addAll(hBox);
 
             if (!control.getActive()) {
@@ -180,7 +191,7 @@ public class MarkerController extends BaseController implements MapComponentInit
                     if (event.getButton() == MouseButton.SECONDARY) {
                         closeMarkerBar(null);
                         popup.show(hBox, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT);
-                        controlIndex = controlList.indexOf(control);
+                        selectedPosition = control;
                     }
                 });
             }
@@ -196,23 +207,21 @@ public class MarkerController extends BaseController implements MapComponentInit
     @Override
     public void handle(MouseEvent event) {
 
-        if (event.getButton() == MouseButton.PRIMARY) {
+        if (event.getButton() == MouseButton.PRIMARY
+                && listView.getSelectionModel().getSelectedItem() != null) {
 
-            if (listView.getSelectionModel().getSelectedIndex() == 0) {
-                onBackController();
+            ControlPosition control = (ControlPosition)
+                    listView.getSelectionModel().getSelectedItem().getUserData();
+            if (control.getActive()) {
+                openMarkerBar(control);
+                LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
+                centerMap(latLong);
             } else {
-                ControlPosition control = controlList
-                        .get(listView.getSelectionModel().getSelectedIndex() - 1);
-                if (control.getActive()) {
-                    openMarkerBar(control);
-                    LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
-                    centerMap(latLong);
-                } else {
-                    closeMarkerBar(null);
-                    LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
-                    centerMap(latLong);
-                }
+                closeMarkerBar(null);
+                LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
+                centerMap(latLong);
             }
+
         } else {
             closeMarkerBar(null);
         }
@@ -230,7 +239,7 @@ public class MarkerController extends BaseController implements MapComponentInit
         editButton.setText("Editar");
         disableButton.setText("Desactivar");
         editing = false;
-        controlIndex = controlList.indexOf(control);
+        selectedPosition = control;
     }
 
     @Override
@@ -309,7 +318,7 @@ public class MarkerController extends BaseController implements MapComponentInit
     public void onDialogAccept(ActionEvent actionEvent) {
         super.onDialogAccept(actionEvent);
         ControlPosition control = service
-                .findCPById(controlList.get(controlIndex).getId());
+                .findCPById(selectedPosition.getId());
 
         switch (dialogType) {
             case Const.DIALOG_SAVE_EDIT:
@@ -326,12 +335,55 @@ public class MarkerController extends BaseController implements MapComponentInit
                 break;
         }
 
-        try {
-            loadListView();
-            addMarkers();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadListView();
+        addMarkers();
+    }
+
+    private void filterData() {
+        FilteredList<HBox> filteredData = new FilteredList<>(data, p -> true);
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(hBox -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                ControlPosition position = (ControlPosition) hBox.getUserData();
+                if (position == null)
+                    return false;
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = filterField.getText().toLowerCase();
+
+                if (position.getPlaceName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        SortedList<HBox> sortedData = new SortedList<>(filteredData);
+        listView.setItems(sortedData);
+        checkFilter(filteredData);
+    }
+
+    void checkFilter(FilteredList<HBox> filteredData) {
+        filteredData.setPredicate(hBox -> {
+            // If filter text is empty, display all persons.
+            if (filterField.getText() == null || filterField.getText().isEmpty()) {
+                return true;
+            }
+
+            ControlPosition position = (ControlPosition) hBox.getUserData();
+            if (position == null)
+                return false;
+            // Compare first name and last name of every person with filter text.
+            String lowerCaseFilter = filterField.getText().toLowerCase();
+
+            if (position.getPlaceName().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches first name.
+            }
+            return false; // Does not match.
+        });
     }
 
     public class InputController {

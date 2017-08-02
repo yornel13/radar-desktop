@@ -105,9 +105,9 @@ public class SyncController extends BaseController {
         Boolean successful;
         successful = service.saveImport(json);
         if (successful) {
-            // TODO, show dialog successful
+            showSnackBar("Informacion guardada en la base de datos con exito");
         } else {
-            // TODO, show dialog process error
+            showSnackBar("Error de guardado de informacion!");
         }
 
     }
@@ -148,9 +148,9 @@ public class SyncController extends BaseController {
         }
 
         if (successful) {
-            // TODO, show dialog successful
+            showSnackBar(Const.EXPORT_FILE_NAME+" creado con exito en la ruta: "+filePath);
         } else {
-            // TODO, show dialog process error
+            showSnackBar("error al intentar exporta la informacion!");
         }
 
     }
