@@ -356,7 +356,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501698866790</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Merge branches 'joshuan' and 'yornel' of https://github.com/yornel13/radar-desktop into joshuan&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/gui/controller/WorkmanController.java">
+      <created>1501698932539</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1501698932539</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
