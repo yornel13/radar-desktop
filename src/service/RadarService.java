@@ -16,6 +16,8 @@ public class RadarService {
     UserDAO userDao;
     WatchDAO watchDAO;
     PositionDAO posDAO;
+    RouteDAO routeDAO;
+    RoutePositionDAO rpDAO;
     Gson gson;
 
     private static RadarService ourInstance = new RadarService();
@@ -30,6 +32,8 @@ public class RadarService {
         userDao = new UserDAO();
         watchDAO = new WatchDAO();
         posDAO = new PositionDAO();
+        routeDAO = new RouteDAO();
+        rpDAO = new RoutePositionDAO();
         gson = new Gson();
     }
 
@@ -185,11 +189,11 @@ public class RadarService {
         doEdit();
         return isDeleted;
     }
+
     public void deleteAdmin(Admin admin) {
         adminDAO.delete(admin);
         doEdit();
     }
-
 
     public User findUserById(Long id) {
         User user = userDao.findById(id);
@@ -216,6 +220,42 @@ public class RadarService {
         return admin;
     }
 
+    public void saveRoute(Route route) {
+        routeDAO.save(route);
+    }
 
+    public List<Route> getAllRoute() {
+        List<Route> routes = routeDAO.findAll();
+        return routes;
+    }
+
+    public void deleteRoute(Route route) {
+        deleteAllRPByRouteId(route);
+        routeDAO.delete(route);
+        doEdit();
+    }
+
+    public Route findRouteById(Long id) {
+        Route route = routeDAO.findById(id);
+        return route;
+    }
+
+    public List<RoutePosition> findAllRPByRouteId(Route route) {
+        List<RoutePosition> routePositions = rpDAO.findAllByRouteId(route.getId());
+        return routePositions;
+    }
+
+
+
+    public void deleteAllRPByRouteId(Route route) {
+        for (RoutePosition routePosition: findAllRPByRouteId(route)) {
+            rpDAO.delete(routePosition);
+        }
+        doEdit();
+    }
+
+    public void saveRoutePosition(RoutePosition routePosition) {
+        rpDAO.save(routePosition);
+    }
 
 }

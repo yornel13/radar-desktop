@@ -72,5 +72,20 @@
     -fx-text-fill: #ff4081;
 }
 
+.jfx-tab-pane .headers-region {
+    -fx-background-color: white;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: white;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #FFC107;
+    -fx-stroke-width: 3pt;
+}
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #03A9F4;
+}
+
 
 
