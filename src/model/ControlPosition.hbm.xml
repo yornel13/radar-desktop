@@ -28,5 +28,17 @@
             </key>
             <one-to-many class="model.Position" />
         </set>
+        <set name="routePositions" inverse="true">
+            <key>
+                <column name="control_id" not-null="true" />
+            </key>
+            <one-to-many class="model.RoutePosition" />
+        </set>
+        <set name="routeMarkers" inverse="true">
+            <key>
+                <column name="control_id" not-null="true" />
+            </key>
+            <one-to-many class="model.RouteMarker" />
+        </set>
     </class>
 </hibernate-mapping>
