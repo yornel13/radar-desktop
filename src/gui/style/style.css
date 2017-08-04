@@ -62,6 +62,7 @@
     -fx-border-width: 0 4 4 4;
 }
 
+
 .jfx-snackbar-content {
     -fx-background-color: #323232;
 }
@@ -79,13 +80,15 @@
     -fx-background-color: white;
 }
 .jfx-tab-pane .tab-selected-line {
-    -fx-stroke: #FFC107;
+    -fx-stroke: #0288D1;
     -fx-stroke-width: 3pt;
 }
+
 .tab:selected .tab-label {
     -fx-alignment: CENTER;
     -fx-text-fill: #03A9F4;
 }
 
-
-
+/*.jfx-tab-pane .tab-header-area .jfx-rippler{
+    -jfx-rippler-fill :BLUE;
+}*/

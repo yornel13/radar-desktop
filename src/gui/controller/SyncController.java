@@ -35,6 +35,9 @@ public class SyncController extends BaseController {
     @FXML
     @ActionTrigger("control")
     private JFXButton optionControl;
+    @FXML
+    @ActionTrigger("assign")
+    private JFXButton optionAssign;
 
 
     @PostConstruct
