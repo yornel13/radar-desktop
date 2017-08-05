@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import model.Route;
 import model.RoutePosition;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
@@ -104,6 +105,17 @@ public class RoutePositionDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
+
+	public List<RoutePosition> findAllByRouteId(Long routeId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM route_position WHERE " +
+				"route_id = :route_id ORDER BY create_date DESC")
+				.addEntity(RoutePosition.class)
+				.setParameter("route_id", routeId);
+
+		Object result = query.list();
+		return (List<RoutePosition>) result;
+	}
+
 
 	public RoutePosition merge(RoutePosition detachedInstance) {
 		log.debug("merging RoutePosition instance");

@@ -84,8 +84,8 @@ public class BaseController {
     }
 
     protected void showSnackBar(String content) {
-        JFXSnackbar bar = new JFXSnackbar(root);
-        bar.enqueue(new JFXSnackbar.SnackbarEvent(content));
+        JFXSnackbar snackBar = new JFXSnackbar(root);
+        snackBar.enqueue(new JFXSnackbar.SnackbarEvent(content));
     }
 
 }
