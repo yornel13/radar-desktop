@@ -277,7 +277,6 @@ public class MarkerController extends BaseController implements MapComponentInit
                 hideFloatingButton();
             } else {
                 addLabel.setVisible(true);
-                editButton.setVisible(false);
                 openAddPane();
             }
         });
@@ -291,6 +290,7 @@ public class MarkerController extends BaseController implements MapComponentInit
             openFloatingButton();
             drawerFilterField.clear();
             filterDrawerData();
+            loadDrawerListView();
         }
     }
 
@@ -349,8 +349,6 @@ public class MarkerController extends BaseController implements MapComponentInit
             }
         }
         showSnackBar("Modificacion de ubicaciones de ruta completada");
-
-        loadDrawerListView();
     }
 
     public void openAddPane() {
@@ -524,7 +522,6 @@ public class MarkerController extends BaseController implements MapComponentInit
                 });
             }
         }
-
         markerListView.setItems(markerData);
         markerListView.setOnMouseClicked(this);
     }
@@ -633,7 +630,7 @@ public class MarkerController extends BaseController implements MapComponentInit
 
             cell.setOnMouseClicked(e -> {
                 if (cell.getItem() != null) {
-                    if (cell.getItem().isSelected()) {
+                    /*if (cell.getItem().isSelected()) {
                         cell.setStyle("-fx-background-color: white;");
                         cell.getGraphic().setStyle("-fx-text-fill: black");
                         cell.getItem().setSelected(false);
@@ -641,10 +638,10 @@ public class MarkerController extends BaseController implements MapComponentInit
                         cell.getGraphic().setStyle("-fx-text-fill: white");
                         cell.setStyle("-fx-background-color: #03A9F4;");
                         cell.getItem().setSelected(true);
-                    }
+                    }*/
+                    onClickMarker(controlData.indexOf(cell.getItem()));
                 }
             });
-
             return cell ;
         });
 
@@ -905,19 +902,55 @@ public class MarkerController extends BaseController implements MapComponentInit
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLong);
                 markerOptions.animation(Animation.DROP);
-                markerOptions.icon("red_marker_32.png");
+                if (controlPosition.isSelected())
+                    markerOptions.icon("blue_marker_32.png");
+                else
+                    markerOptions.icon("red_marker_32.png");
                 Marker marker = new Marker(markerOptions);
                 marker.setTitle(controlPosition.getPlaceName());
+                marker.getJSObject().setMember("marker", list.indexOf(controlPosition));
                 map.addMarker(marker);
                 markers.add(marker);
                 markersOptions.add(markerOptions);
 
                 map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
                     openMarkerBar(controlPosition);
+                    onClickMarker((int) marker.getJSObject().getMember("marker"));
+
                 });
             }
         }
         centerMap(list, null);
+    }
+
+    public void onClickMarker(Integer index) {
+
+        ControlPosition controlPosition = controlData.get(index);
+        controlPosition.setSelected(!controlPosition.isSelected());
+        LatLong latLong = new LatLong(controlPosition.getLatitude(),
+                controlPosition.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLong);
+        markerOptions.animation(Animation.DROP);
+        if (controlPosition.isSelected())
+            markerOptions.icon("blue_marker_32.png");
+        else
+            markerOptions.icon("red_marker_32.png");
+        Marker marker = new Marker(markerOptions);
+        marker.setTitle(controlPosition.getPlaceName());
+        marker.getJSObject().setMember("marker", index);
+        map.removeMarker(markers.get(index));
+        map.addMarker(marker);
+        markers.set(index, marker);
+        markersOptions.set(index, markerOptions);
+
+        map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+            openMarkerBar(controlPosition);
+            onClickMarker((int) marker.getJSObject().getMember("marker"));
+
+        });
+
+        controlListView.refresh();
     }
 
     private void centerMap(List<RoutePosition> routePositions) {

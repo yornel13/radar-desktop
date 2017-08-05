@@ -35,6 +35,7 @@ public class MainController extends BaseController {
         innerFlow.withGlobalLink("control", MarkerController.class);
         innerFlow.withGlobalLink("admin", AdminController.class);
         innerFlow.withGlobalLink("employee", UserController.class);
+        innerFlow.withGlobalLink("assign", AssignController.class);
         innerFlow.withGlobalBackAction("back");
 
         flowHandler = innerFlow.createHandler(context);
