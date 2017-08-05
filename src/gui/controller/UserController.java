@@ -13,8 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,8 +25,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import model.Group;
 import model.User;
 import org.joda.time.DateTime;
+import service.RadarService;
 import util.Const;
 import util.Password;
 import util.RadarFilters;
@@ -43,7 +44,7 @@ import static javafx.scene.paint.Color.valueOf;
 @ViewController("../view/user.fxml")
 public class UserController extends BaseController {
 
-    private List<User> users;
+
     @FXML
     private StackPane stackPane;
     @FXML
@@ -53,10 +54,9 @@ public class UserController extends BaseController {
     private JFXButton backButton;
     @FXML
     private JFXTextField filterField;
-    @FXML
-    private JFXListView<HBox> userListView;
 
-    private ObservableList<HBox> dataUser;
+
+
     @FXML
     private JFXButton newGroupBtn;
     @FXML
@@ -84,6 +84,21 @@ public class UserController extends BaseController {
     @FXML
     private JFXButton saveButton;
 
+    /*********Employee Tab Pane**********/
+    @FXML
+    private JFXTabPane tabPane;
+    private List<User> users;
+    private JFXListView<HBox> employeeListView;
+    private ObservableList<HBox> empData;
+
+    /*********Group Tab Pane**********/
+    private List<Group> groups;
+    private JFXListView<HBox> groupListView;
+    private ObservableList<HBox> groupData;
+
+
+
+
     private User selectUser;
 
     private boolean editingPassword = false;
@@ -92,12 +107,13 @@ public class UserController extends BaseController {
 
     @PostConstruct
     public void init() throws FileNotFoundException {
-
+        createTabPane();
         loadListView();
         loadSelectedUser();
         editUser();
         addUser();
-        createGroup();
+       // createGroup();
+
 
         passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
@@ -105,9 +121,10 @@ public class UserController extends BaseController {
     }
 
     public void loadListView() {
-        users = service.getAllUser();
+
         try {
             loadUserListView();
+            loadGroupListView();
             nonUserInfo();
             filterUser();
         } catch (IOException e) {
@@ -117,8 +134,9 @@ public class UserController extends BaseController {
     }
 
     public void loadUserListView() throws IOException {
+        users = service.getAllUser();
 
-        dataUser = FXCollections.observableArrayList();
+        empData = FXCollections.observableArrayList();
 
         for(User user: users) {
             HBox parentHBox = new HBox();
@@ -144,7 +162,7 @@ public class UserController extends BaseController {
             parentHBox.getChildren().addAll(imageHBox, nameDniVBox);
 
             parentHBox.setUserData(user);
-            dataUser.add(parentHBox);
+            empData.add(parentHBox);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/popup.fxml"));
             InputController inputController = new InputController(this);
@@ -165,10 +183,35 @@ public class UserController extends BaseController {
                 }
             });
         }
-        userListView.setItems(dataUser);
-        userListView.setExpanded(true);
-        userListView.setVerticalGap(2.0);
-        userListView.depthProperty().set(1);
+        employeeListView.setItems(empData);
+
+    }
+
+    void loadGroupListView() throws FileNotFoundException {
+        groups = service.getAllGroup();
+        groupData = FXCollections.observableArrayList();
+
+        for (Group group: groups) {
+
+            HBox parentHBox = new HBox();
+            HBox imageHBox = new HBox();
+            HBox groupNameHBox = new HBox();
+
+            ImageView iconGroup = new ImageView(new Image(new FileInputStream("src/img/group1_64.png")));
+            iconGroup.setFitHeight(55);
+            iconGroup.setFitWidth(55);
+            Label groupNameLabel = new Label("    "+group.getName());
+            groupNameLabel.setFont(new Font(null,16));
+
+            imageHBox.getChildren().add(iconGroup);
+            groupNameHBox.getChildren().add(groupNameLabel);
+            parentHBox.getChildren().addAll(imageHBox, groupNameHBox);
+            parentHBox.setUserData(group);
+            groupData.add(parentHBox);
+
+
+        }
+        groupListView.setItems(groupData);
 
     }
 
@@ -315,7 +358,7 @@ public class UserController extends BaseController {
         saveButton.setVisible(true);
         saveButton.setLayoutY(370);
         cancelGroupButton.setVisible(true);
-        userListView.setDisable(false);
+        employeeListView.setDisable(false);
 
     }
 
@@ -336,15 +379,15 @@ public class UserController extends BaseController {
     }
 
     private void loadSelectedUser() {
-        userListView.setOnMouseClicked(event -> {
+        employeeListView.setOnMouseClicked(event -> {
 
             if (event.getButton() == MouseButton.PRIMARY
-                    && userListView.getSelectionModel().getSelectedItem() != null) {
+                    && employeeListView.getSelectionModel().getSelectedItem() != null) {
                 editingPassword = false;
 
                 nonEditableUser();
 
-                User user = (User) userListView
+                User user = (User) employeeListView
                         .getSelectionModel().getSelectedItem().getUserData();
 
                 if (!user.getActive()) {
@@ -368,7 +411,29 @@ public class UserController extends BaseController {
         });
     }
 
-    private void setSelectedGroup() {
+    private void createTabPane() {
+        employeeListView = new JFXListView();
+        employeeListView.setExpanded(true);
+        employeeListView.setVerticalGap(2.0);
+        employeeListView.depthProperty().set(1);
+
+        Tab empTab = new Tab();
+        empTab.setText("Empleados");
+        empTab.setContent(employeeListView);
+        empTab.setUserData(0);
+
+
+        groupListView = new JFXListView<>();
+        groupListView.setExpanded(true);
+        groupListView.setVerticalGap(2.0);
+        groupListView.depthProperty().set(1);
+
+        Tab groupTab = new Tab();
+        groupTab.setText("Grupos");
+        groupTab.setContent(groupListView);
+        groupTab.setUserData(1);
+
+        tabPane.getTabs().addAll(empTab, groupTab);
 
 
     }
@@ -461,7 +526,7 @@ public class UserController extends BaseController {
         switch (dialogType) {
             case Const.DIALOG_SAVE_EDIT:
                 user = service.findUserById(((User)
-                        userListView.getSelectionModel().getSelectedItem().getUserData()).getId());
+                        employeeListView.getSelectionModel().getSelectedItem().getUserData()).getId());
                 user.setDni(dniField.getText());
                 user.setName(nameField.getText());
                 user.setLastname(lastNameField.getText());
@@ -523,7 +588,7 @@ public class UserController extends BaseController {
     }
 
     private void filterUser() {
-        FilteredList<HBox> filteredData = new FilteredList<>(dataUser, p -> true);
+        FilteredList<HBox> filteredData = new FilteredList<>(empData, p -> true);
         filterField.textProperty().addListener((observable, oldValue, newValue) -> {
             nonUserInfo();
             filteredData.setPredicate(hBox -> {
@@ -553,7 +618,7 @@ public class UserController extends BaseController {
         });
 
         SortedList<HBox> sortedData = new SortedList<>(filteredData);
-        userListView.setItems(sortedData);
+        employeeListView.setItems(sortedData);
         checkFilter(filteredData);
     }
 

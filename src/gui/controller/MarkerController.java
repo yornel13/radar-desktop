@@ -502,6 +502,7 @@ public class MarkerController extends BaseController implements MapComponentInit
             labelsVBox.getChildren().addAll(nameLabel, activeLabel);
             labelsVBox.setPadding(new Insets(-1,3,-1,3));
             hBox.getChildren().addAll(imageHBox, labelsVBox);
+
             hBox.setUserData(control);
             markerData.addAll(hBox);
 

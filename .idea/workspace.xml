@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/blue_marker_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/gui/controller/AssignController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/gui/view/assign.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/img/red_marker_32.png" afterPath="$PROJECT_DIR$/src/img/red_marker_32.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/MainController.java" afterPath="$PROJECT_DIR$/src/gui/controller/MainController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/group1_64.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/group2_64.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/group3_64.png" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/img/policeman_32.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dao/GroupDAO.java" afterPath="$PROJECT_DIR$/src/dao/GroupDAO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/MarkerController.java" afterPath="$PROJECT_DIR$/src/gui/controller/MarkerController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/SyncController.java" afterPath="$PROJECT_DIR$/src/gui/controller/SyncController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/style/style.css" afterPath="$PROJECT_DIR$/src/gui/style/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/sync.fxml" afterPath="$PROJECT_DIR$/src/gui/view/sync.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/UserController.java" afterPath="$PROJECT_DIR$/src/gui/controller/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/user.fxml" afterPath="$PROJECT_DIR$/src/gui/view/user.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/service/RadarService.java" afterPath="$PROJECT_DIR$/src/service/RadarService.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,12 +29,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3528">
-              <caret line="371" column="0" lean-forward="false" selection-start-line="371" selection-start-column="0" selection-end-line="371" selection-end-column="0" />
+            <state relative-caret-position="21">
+              <caret line="215" column="5" lean-forward="false" selection-start-line="215" selection-start-column="5" selection-end-line="215" selection-end-column="5" />
               <folding>
+                <element signature="method#loadGroupListView#0;class#UserController#0" expanded="false" />
                 <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
                 <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
                 <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
@@ -41,78 +43,6 @@
                 <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
                 <element signature="method#setFieldsGroup#0;class#UserController#0" expanded="false" />
                 <element signature="method#loadSelectedUser#0;class#UserController#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MarkerController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/gui/controller/MarkerController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="621" column="42" lean-forward="false" selection-start-line="621" selection-start-column="42" selection-end-line="621" selection-end-column="42" />
-              <folding>
-                <element signature="method#createTabPane#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#openedDrawer#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#loadDrawerListView#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#createDrawer#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#handle#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#onBackPress#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#mapInitialized#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#addMarkers#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#addMarkers#1;class#MarkerController#0" expanded="false" />
-                <element signature="method#addMarkers#2;class#MarkerController#0" expanded="false" />
-                <element signature="method#centerMap#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#centerMap#1;class#MarkerController#0" expanded="false" />
-                <element signature="method#centerMap#2;class#MarkerController#0" expanded="false" />
-                <element signature="method#centerMap#3;class#MarkerController#0" expanded="false" />
-                <element signature="method#centerMap#4;class#MarkerController#0" expanded="false" />
-                <element signature="method#centerMapEcuador#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#onDialogAccept#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#filterMarkerData#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#checkFilterMarker#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#filterRouteData#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#checkFilterRoute#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#filterDrawerData#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#checkFilterDrawer#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#filterControlData#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#checkFilterControl#0;class#MarkerController#0" expanded="false" />
-                <element signature="method#mapReady#0;class#MarkerController#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RadarService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2604">
-              <caret line="135" column="51" lean-forward="false" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ControlPositionDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dao/ControlPositionDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2457">
-              <caret line="130" column="33" lean-forward="false" selection-start-line="130" selection-start-column="33" selection-end-line="130" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ControlPosition.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/ControlPosition.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1785">
-              <caret line="118" column="19" lean-forward="false" selection-start-line="118" selection-start-column="19" selection-end-line="118" selection-end-column="19" />
-              <folding>
-                <element signature="e#2377#2378#0" expanded="true" />
-                <element signature="e#2399#2400#0" expanded="true" />
-                <element signature="e#2445#2446#0" expanded="true" />
-                <element signature="e#2476#2477#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -177,7 +107,6 @@
         <option value="$PROJECT_DIR$/src/model/Admin.java" />
         <option value="$PROJECT_DIR$/src/model/Admin.hbm.xml" />
         <option value="$PROJECT_DIR$/src/gui/view/admin.fxml" />
-        <option value="$PROJECT_DIR$/src/service/RadarService.java" />
         <option value="$PROJECT_DIR$/src/dao/AdminDAO.java" />
         <option value="$PROJECT_DIR$/src/gui/controller/AdminController.java" />
         <option value="$PROJECT_DIR$/src/model/RouteMarker.hbm.xml" />
@@ -185,7 +114,6 @@
         <option value="$PROJECT_DIR$/src/model/Group.hbm.xml" />
         <option value="$PROJECT_DIR$/src/model/Route.java" />
         <option value="$PROJECT_DIR$/src/dao/RouteDAO.java" />
-        <option value="$PROJECT_DIR$/src/dao/GroupDAO.java" />
         <option value="$PROJECT_DIR$/src/dao/RouteMarkerDAO.java" />
         <option value="$PROJECT_DIR$/src/dao/RoutePositionDAO.java" />
         <option value="$PROJECT_DIR$/src/hibernate.cfg.xml" />
@@ -198,6 +126,8 @@
         <option value="$PROJECT_DIR$/src/model/RoutePosition.hbm.xml" />
         <option value="$PROJECT_DIR$/src/gui/view/user.fxml" />
         <option value="$PROJECT_DIR$/src/gui/controller/MarkerController.java" />
+        <option value="$PROJECT_DIR$/src/dao/GroupDAO.java" />
+        <option value="$PROJECT_DIR$/src/service/RadarService.java" />
         <option value="$PROJECT_DIR$/src/gui/controller/UserController.java" />
       </list>
     </option>
@@ -238,7 +168,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -275,7 +206,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,6 +218,12 @@
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
@@ -318,7 +255,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -330,6 +266,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Joshuan\Documents\IntelliJProjects\radar-desktop\src\img" />
       <recent name="C:\Users\Joshuan\Documents\IntelliJProjects\radar-desktop\src\model" />
       <recent name="C:\Users\Joshuan\Documents\IntelliJProjects\radar-desktop\src\dao" />
       <recent name="C:\Users\Joshuan\Documents\IntelliJProjects\Radar\src\util" />
@@ -539,11 +476,19 @@
       <option name="project" value="LOCAL" />
       <updated>1501960384971</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Merge branches 'joshuan' and 'yornel' of https://github.com/yornel13/radar-desktop into joshuan&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
+      <created>1501960547406</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1501960547406</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32676518" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -557,7 +502,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840723" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22995462" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15960665" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -627,7 +572,8 @@
     <MESSAGE value="merge yornel" />
     <MESSAGE value="merge yornel y nuevas tablas" />
     <MESSAGE value="Merge branches 'joshuan' and 'yornel' of https://github.com/yornel13/radar-desktop into joshuan&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/gui/controller/WorkmanController.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branches 'joshuan' and 'yornel' of https://github.com/yornel13/radar-desktop into joshuan&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/gui/controller/WorkmanController.java" />
+    <MESSAGE value="Merge branches 'joshuan' and 'yornel' of https://github.com/yornel13/radar-desktop into joshuan&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branches 'joshuan' and 'yornel' of https://github.com/yornel13/radar-desktop into joshuan&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -636,60 +582,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/Prueba.java" />
-    <entry file="file://$PROJECT_DIR$/GMapsFX/src/main/java/com/lynden/gmapsfx/javascript/JavaFxWebEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/Pruebas.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/javafx-src.zip!/javafx/scene/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="700" column="18" lean-forward="false" selection-start-line="700" selection-start-column="18" selection-end-line="700" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/BaseHibernateDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/RadarFilters.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="8" column="41" lean-forward="false" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/view/admin.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-213">
-          <caret line="28" column="80" lean-forward="false" selection-start-line="28" selection-start-column="79" selection-end-line="28" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Admin.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="30" column="30" lean-forward="false" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1907">
-          <caret line="126" column="30" lean-forward="false" selection-start-line="126" selection-start-column="30" selection-end-line="126" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dao/AdminDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1128">
@@ -698,13 +590,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/view/workman.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="28" column="12" lean-forward="false" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/util/Const.java">
@@ -728,13 +620,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Group.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-44">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Route.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -746,13 +631,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="56" column="60" lean-forward="false" selection-start-line="56" selection-start-column="60" selection-end-line="56" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/GroupDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="67" column="61" lean-forward="false" selection-start-line="67" selection-start-column="61" selection-end-line="67" selection-end-column="61" />
         </state>
       </provider>
     </entry>
@@ -816,13 +694,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="542">
           <caret line="344" column="44" lean-forward="false" selection-start-line="344" selection-start-column="44" selection-end-line="344" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/BaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="27" column="20" lean-forward="false" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -896,26 +767,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/view/user.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="57" column="162" lean-forward="false" selection-start-line="57" selection-start-column="159" selection-end-line="57" selection-end-column="162" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/view/marker.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="17" column="31" lean-forward="false" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/controller/WorkmanController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-336">
@@ -955,12 +806,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
           <caret line="118" column="19" lean-forward="false" selection-start-line="118" selection-start-column="19" selection-end-line="118" selection-end-column="19" />
-          <folding>
-            <element signature="e#2377#2378#0" expanded="true" />
-            <element signature="e#2399#2400#0" expanded="true" />
-            <element signature="e#2445#2446#0" expanded="true" />
-            <element signature="e#2476#2477#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -972,14 +817,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2604">
-          <caret line="135" column="51" lean-forward="false" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/javafx-src.zip!/javafx/scene/control/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -987,28 +824,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/view/user.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3528">
-          <caret line="371" column="0" lean-forward="false" selection-start-line="371" selection-start-column="0" selection-end-line="371" selection-end-column="0" />
-          <folding>
-            <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
-            <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
-            <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#createUser#0;class#UserController#0" expanded="false" />
-            <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
-            <element signature="method#setFieldsGroup#0;class#UserController#0" expanded="false" />
-            <element signature="method#loadSelectedUser#0;class#UserController#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="203">
+          <caret line="20" column="36" lean-forward="false" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="36" />
+          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/view/marker.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-399">
+          <caret line="17" column="31" lean-forward="false" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/controller/MarkerController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="621" column="42" lean-forward="false" selection-start-line="621" selection-start-column="42" selection-end-line="621" selection-end-column="42" />
+        <state relative-caret-position="-1134">
+          <caret line="189" column="27" lean-forward="false" selection-start-line="189" selection-start-column="27" selection-end-line="189" selection-end-column="27" />
           <folding>
-            <element signature="method#createTabPane#0;class#MarkerController#0" expanded="false" />
             <element signature="method#openedDrawer#0;class#MarkerController#0" expanded="false" />
             <element signature="method#loadDrawerListView#0;class#MarkerController#0" expanded="false" />
             <element signature="method#createDrawer#0;class#MarkerController#0" expanded="false" />
@@ -1034,6 +876,104 @@
             <element signature="method#filterControlData#0;class#MarkerController#0" expanded="false" />
             <element signature="method#checkFilterControl#0;class#MarkerController#0" expanded="false" />
             <element signature="method#mapReady#0;class#MarkerController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="43" column="27" lean-forward="false" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/GroupDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="126" column="35" lean-forward="false" selection-start-line="126" selection-start-column="35" selection-end-line="126" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-669">
+          <caret line="151" column="33" lean-forward="true" selection-start-line="151" selection-start-column="32" selection-end-line="151" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="121" column="23" lean-forward="false" selection-start-line="121" selection-start-column="23" selection-end-line="121" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Group.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="759">
+          <caret line="64" column="18" lean-forward="false" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/user_64.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/save_button_16.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/route_marker_64.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/route_128.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/route_64.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/red_marker_128.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/placeholders_32.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/IBaseHibernateDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="215" column="5" lean-forward="false" selection-start-line="215" selection-start-column="5" selection-end-line="215" selection-end-column="5" />
+          <folding>
+            <element signature="method#loadGroupListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
+            <element signature="method#createUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
+            <element signature="method#setFieldsGroup#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadSelectedUser#0;class#UserController#0" expanded="false" />
           </folding>
         </state>
       </provider>
