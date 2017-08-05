@@ -4,6 +4,7 @@ package gui.controller;
 import com.jfoenix.controls.*;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.action.ActionTrigger;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -12,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import model.User;
 import org.joda.time.DateTime;
 import util.Const;
@@ -54,11 +58,17 @@ public class UserController extends BaseController {
 
     private ObservableList<HBox> dataUser;
     @FXML
+    private JFXButton newGroupBtn;
+    @FXML
+    private Label groupLabel;
+    @FXML
     private Label employeeLabel;
     @FXML
     private Label editLabel;
     @FXML
     private Label addLabel;
+    @FXML
+    private JFXTextField groupNameField;
     @FXML
     private JFXTextField dniField;
     @FXML
@@ -70,11 +80,15 @@ public class UserController extends BaseController {
     @FXML
     private JFXButton editButton;
     @FXML
+    private JFXButton cancelGroupButton;
+    @FXML
     private JFXButton saveButton;
 
     private User selectUser;
 
     private boolean editingPassword = false;
+
+
 
     @PostConstruct
     public void init() throws FileNotFoundException {
@@ -83,6 +97,7 @@ public class UserController extends BaseController {
         loadSelectedUser();
         editUser();
         addUser();
+        createGroup();
 
         passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
@@ -154,6 +169,7 @@ public class UserController extends BaseController {
         userListView.setExpanded(true);
         userListView.setVerticalGap(2.0);
         userListView.depthProperty().set(1);
+
     }
 
     void editableUser() {
@@ -180,6 +196,7 @@ public class UserController extends BaseController {
         employeeLabel.setVisible(true);
         editLabel.setVisible(false);
         addLabel.setVisible(false);
+        groupLabel.setVisible(false);
 
         dniField.setEditable(false);
         dniField.setDisable(true);
@@ -189,9 +206,41 @@ public class UserController extends BaseController {
         lastNameField.setDisable(true);
         passwordField.setEditable(false);
         passwordField.setDisable(true);
+        groupNameField.setVisible(false);
 
         editButton.setDisable(false);
         saveButton.setDisable(true);
+        cancelGroupButton.setVisible(false);
+    }
+
+    void initializeFields() {
+        employeeLabel.setVisible(true);
+        editLabel.setVisible(false);
+        addLabel.setVisible(false);
+        groupLabel.setVisible(false);
+
+        dniField.setVisible(true);
+        dniField.setEditable(false);
+        dniField.setDisable(true);
+        nameField.setVisible(true);
+        nameField.setEditable(false);
+        nameField.setDisable(true);
+        lastNameField.setVisible(true);
+        lastNameField.setEditable(false);
+        lastNameField.setDisable(true);
+        passwordField.setVisible(true);
+        passwordField.setEditable(false);
+        passwordField.setDisable(true);
+        groupNameField.setVisible(false);
+
+
+        editButton.setVisible(true);
+        editButton.setDisable(true);
+        saveButton.setVisible(true);
+        saveButton.setDisable(true);
+        saveButton.setLayoutY(430);
+        cancelGroupButton.setVisible(false);
+
     }
 
     void createUser() {
@@ -222,11 +271,13 @@ public class UserController extends BaseController {
         employeeLabel.setVisible(true);
         editLabel.setVisible(false);
         addLabel.setVisible(false);
+        groupLabel.setVisible(false);
 
         dniField.clear();
         nameField.clear();
         lastNameField.clear();
         passwordField.clear();
+        groupNameField.clear();
 
         dniField.setEditable(false);
         dniField.setDisable(true);
@@ -236,9 +287,52 @@ public class UserController extends BaseController {
         lastNameField.setDisable(true);
         passwordField.setEditable(false);
         passwordField.setDisable(true);
+        groupNameField.setVisible(false);
 
         editButton.setDisable(true);
         saveButton.setDisable(true);
+        cancelGroupButton.setVisible(false);
+    }
+
+    void setFieldsGroup(){
+        groupLabel.setVisible(true);
+        employeeLabel.setVisible(false);
+        editLabel.setVisible(false);
+        addLabel.setVisible(false);
+
+        dniField.clear();
+        nameField.clear();
+        lastNameField.clear();
+        passwordField.clear();
+
+        groupNameField.setVisible(true);
+        dniField.setVisible(false);
+        nameField.setVisible(false);
+        lastNameField.setVisible(false);
+        passwordField.setVisible(false);
+        editButton.setVisible(false);
+        saveButton.setDisable(false);
+        saveButton.setVisible(true);
+        saveButton.setLayoutY(370);
+        cancelGroupButton.setVisible(true);
+        userListView.setDisable(false);
+
+    }
+
+    void createGroup() {
+        newGroupBtn.setOnAction(event -> {
+            setFieldsGroup();
+
+            TranslateTransition downTransition = new TranslateTransition(Duration.millis(500), groupNameField);
+            downTransition.setFromY(0);
+            downTransition.setToY(120);
+            downTransition.play();
+        });
+        cancelGroupButton.setOnAction(event -> {
+            initializeFields();
+
+        });
+
     }
 
     private void loadSelectedUser() {
@@ -272,6 +366,11 @@ public class UserController extends BaseController {
                 });
             }
         });
+    }
+
+    private void setSelectedGroup() {
+
+
     }
 
     private void editUser() {
@@ -328,7 +427,7 @@ public class UserController extends BaseController {
             createUser();
             saveButton.setOnAction(event -> {
                 if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
-                        || passwordField.getText().isEmpty()){
+                                                   || passwordField.getText().isEmpty()){
 
                     dialogType = Const.DIALOG_NOTIFICATION;
                     showDialogNotification("Campo vacio",
