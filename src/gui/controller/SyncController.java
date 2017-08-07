@@ -53,6 +53,7 @@ public class SyncController extends BaseController {
             optionControl.setGraphic(new ImageView(new Image(new FileInputStream("src/img/pointer_32.png"))));
             optionAdmin.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_32.png"))));
             optionEmployee.setGraphic(new ImageView(new Image(new FileInputStream("src/img/employee_32.png"))));
+            optionAssign.setGraphic(new ImageView(new Image(new FileInputStream("src/img/assign_32.png"))));
 
             ImageView mapImage = new ImageView(new Image(new FileInputStream("src/img/map_icon_full.png")));
             mapImage.setFitHeight(62);
