@@ -61,7 +61,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     private List<User> users;
 
-    /*************WAHCTS****************/
+    /*************WATCHES****************/
     @FXML
     private JFXTextField watchFilterField;
     @FXML
