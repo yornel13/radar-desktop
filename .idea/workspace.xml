@@ -23,8 +23,8 @@
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="263" column="36" lean-forward="false" selection-start-line="263" selection-start-column="36" selection-end-line="263" selection-end-column="36" />
+            <state relative-caret-position="219">
+              <caret line="332" column="0" lean-forward="false" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
               <folding>
                 <element signature="method#init#0;class#UserController#0" expanded="false" />
                 <element signature="method#loadListView#0;class#UserController#0" expanded="false" />
@@ -506,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502130318399</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="creacion de grupos_2">
+      <created>1502130330842</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1502130330842</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -985,8 +992,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="263" column="36" lean-forward="false" selection-start-line="263" selection-start-column="36" selection-end-line="263" selection-end-column="36" />
+        <state relative-caret-position="219">
+          <caret line="332" column="0" lean-forward="false" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
           <folding>
             <element signature="method#init#0;class#UserController#0" expanded="false" />
             <element signature="method#loadListView#0;class#UserController#0" expanded="false" />
