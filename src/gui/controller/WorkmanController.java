@@ -192,7 +192,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             watchDrawer.setVisible(false);
             setUserFilterField();
         });
-        watchDrawer.setOnDrawerOpened(event -> {
+            watchDrawer.setOnDrawerOpened(event -> {
             setWatchFilterField();
         });
         ///////////////////////////////////////////////////////////////////////////

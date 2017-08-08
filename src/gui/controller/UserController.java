@@ -4,7 +4,6 @@ package gui.controller;
 import com.jfoenix.controls.*;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.action.ActionTrigger;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.Tab;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -25,7 +25,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 import model.Group;
 import model.User;
 import org.joda.time.DateTime;
@@ -37,6 +36,7 @@ import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.scene.paint.Color.valueOf;
@@ -45,6 +45,55 @@ import static javafx.scene.paint.Color.valueOf;
 public class UserController extends BaseController {
 
 
+    /*********Employee Tab Pane**********/
+    @FXML
+    private JFXTabPane tabPane;
+    private List<User> userList;
+    private JFXListView<HBox> employeeListView;
+    private ObservableList<HBox> empData;
+    private JFXButton floatingButton;
+    @FXML
+    private Label employeeLabel;
+    @FXML
+    private Label editLabel;
+    @FXML
+    private Label addLabel;
+    @FXML
+    private JFXTextField nameField;
+    @FXML
+    private JFXTextField dniField;
+    @FXML
+    private JFXTextField lastNameField;
+    @FXML
+    private JFXPasswordField passwordField;
+    @FXML
+    private JFXButton editButton;
+    @FXML
+    private JFXButton saveButton;
+    @FXML
+    private JFXButton cancelGroupButton;
+
+
+    /*********Group Tab Pane**********/
+    @FXML
+    private JFXListView<User> empGroupListView;
+    private ObservableList<User> empGroupData;
+    private List<User> empGroupList;
+
+    private JFXListView<HBox> groupListView;
+    private ObservableList<HBox> groupData;
+    private List<Group> groupList;
+
+    @FXML
+    private Label groupLabel;
+    @FXML
+    private Label createGroupLabel;
+    @FXML
+    private JFXTextField groupNameField;
+    private Group selectedGroup;
+
+
+    /**********OTHERS*********/
     @FXML
     private StackPane stackPane;
     @FXML
@@ -54,56 +103,7 @@ public class UserController extends BaseController {
     private JFXButton backButton;
     @FXML
     private JFXTextField filterField;
-
-
-
-    @FXML
-    private JFXButton newGroupBtn;
-    @FXML
-    private Label groupLabel;
-    @FXML
-    private Label createGroupLabel;
-    @FXML
-    private Label employeeLabel;
-    @FXML
-    private Label editLabel;
-    @FXML
-    private Label addLabel;
-    @FXML
-    private JFXTextField groupNameField;
-    @FXML
-    private JFXTextField dniField;
-    @FXML
-    private JFXTextField lastNameField;
-    @FXML
-    private JFXPasswordField passwordField;
-    @FXML
-    private JFXTextField nameField;
-    @FXML
-    private JFXButton editButton;
-    @FXML
-    private JFXButton cancelGroupButton;
-    @FXML
-    private JFXButton saveButton;
-
-    /*********Employee Tab Pane**********/
-    @FXML
-    private JFXTabPane tabPane;
-    private List<User> users;
-    private JFXListView<HBox> employeeListView;
-    private ObservableList<HBox> empData;
-    private JFXButton floatingButton;
-
-    /*********Group Tab Pane**********/
-    @FXML
-    private JFXListView<HBox> empGroupListView;
-    private List<Group> groups;
-    private JFXListView<HBox> groupListView;
-    private ObservableList<HBox> groupData;
-
-
     private User selectUser;
-
     private boolean editingPassword = false;
 
 
@@ -138,11 +138,11 @@ public class UserController extends BaseController {
     }
 
     private void loadUserListView() throws IOException {
-        users = service.getAllUser();
+        userList = service.getAllUser();
 
         empData = FXCollections.observableArrayList();
 
-        for(User user: users) {
+        for(User user: userList) {
             HBox parentHBox = new HBox();
             HBox imageHBox = new HBox();
             VBox nameDniVBox = new VBox();
@@ -169,7 +169,7 @@ public class UserController extends BaseController {
             empData.add(parentHBox);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/popup.fxml"));
-            InputController inputController = new InputController(this);
+            InputController inputController = new InputController(this, 1);
             loader.setController(inputController);
             JFXPopup popup = new JFXPopup(loader.load());
             inputController.setPopup(popup);
@@ -188,34 +188,6 @@ public class UserController extends BaseController {
             });
         }
         employeeListView.setItems(empData);
-
-    }
-
-    private void loadGroupListView() throws FileNotFoundException {
-        groups = service.getAllGroup();
-        groupData = FXCollections.observableArrayList();
-
-        for (Group group: groups) {
-
-            HBox parentHBox = new HBox();
-            HBox imageHBox = new HBox();
-            HBox groupNameHBox = new HBox();
-
-            ImageView iconGroup = new ImageView(new Image(new FileInputStream("src/img/group1_64.png")));
-            iconGroup.setFitHeight(55);
-            iconGroup.setFitWidth(55);
-            Label groupNameLabel = new Label("    "+group.getName());
-            groupNameLabel.setFont(new Font(null,16));
-
-            imageHBox.getChildren().add(iconGroup);
-            groupNameHBox.getChildren().add(groupNameLabel);
-            parentHBox.getChildren().addAll(imageHBox, groupNameHBox);
-            parentHBox.setUserData(group);
-            groupData.add(parentHBox);
-
-
-        }
-        groupListView.setItems(groupData);
 
     }
 
@@ -296,39 +268,40 @@ public class UserController extends BaseController {
 
     }
 
-    private void loadEmpGroupListView() throws FileNotFoundException {
-        users = service.getAllUser();
+    private HBox createParentBox(User user) {
+        HBox parentHBox = new HBox();
+        HBox imageHBox = new HBox();
+        VBox nameDniVBox = new VBox();
 
-        empData = FXCollections.observableArrayList();
-
-        for(User user: users) {
-            HBox parentHBox = new HBox();
-            HBox imageHBox = new HBox();
-            VBox nameDniVBox = new VBox();
-
-            ImageView iconUser = new ImageView(new Image(new FileInputStream("src/img/policeman_32.png")));
-            if (!user.getActive()) {
-                ColorAdjust desaturate = new ColorAdjust();
-                desaturate.setSaturation(-1);
-                iconUser.setEffect(desaturate);
-            }
-
-            Label fullNameUser = new Label("    "+user.getLastname()+"  "+user.getName());
-            Label dniUser = new Label("    "+user.getDni());
-            fullNameUser.setFont(new Font(null,16));
-            dniUser.setFont(new Font(null,14));
-            dniUser.setTextFill(valueOf("#aaaaaa"));
-            imageHBox.setPadding(new Insets(5));
-            imageHBox.getChildren().add(iconUser);
-            nameDniVBox.getChildren().add(fullNameUser);
-            nameDniVBox.getChildren().add(dniUser);
-            parentHBox.getChildren().addAll(imageHBox, nameDniVBox);
-
-            parentHBox.setUserData(user);
-            parentHBox.setPrefHeight(35);
-            empData.add(parentHBox);
+        ImageView iconUser = null;
+        try {
+            iconUser = new ImageView(new Image(new FileInputStream("src/img/policeman_32.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        empGroupListView.setItems(empData);
+        if (!user.getActive()) {
+            ColorAdjust desaturate = new ColorAdjust();
+            desaturate.setSaturation(-1);
+            iconUser.setEffect(desaturate);
+        }
+
+        Label fullNameUser = new Label("    "+user.getLastname()+"  "+user.getName());
+        Label dniUser = new Label("    "+user.getDni());
+        fullNameUser.setFont(new Font(null,16));
+        dniUser.setFont(new Font(null,14));
+        imageHBox.setPadding(new Insets(5));
+        imageHBox.getChildren().add(iconUser);
+        nameDniVBox.getChildren().add(fullNameUser);
+        nameDniVBox.getChildren().add(dniUser);
+        parentHBox.getChildren().addAll(imageHBox, nameDniVBox);
+
+        List<Label> arrayLabels = new ArrayList<>();
+        arrayLabels.add(fullNameUser);
+        arrayLabels.add(dniUser);
+        parentHBox.setUserData(arrayLabels);
+        parentHBox.setPrefHeight(35);
+
+        return parentHBox;
     }
 
     private void setAddUserFields() {
@@ -357,7 +330,7 @@ public class UserController extends BaseController {
     }
 
     private void addUser() {
-
+    if(employeeListView.isVisible()){
         floatingButton.setOnAction(eventAction -> {
             setAddUserFields();
             saveButton.setOnAction(event -> {
@@ -387,6 +360,8 @@ public class UserController extends BaseController {
                 }
             });
         });
+    }
+
     }
 
     private void editUser() {
@@ -445,7 +420,6 @@ public class UserController extends BaseController {
     }
 
     private void nonUserInfo() {
-
         employeeLabel.setVisible(true);
         editLabel.setVisible(false);
         addLabel.setVisible(false);
@@ -506,6 +480,108 @@ public class UserController extends BaseController {
         cancelGroupButton.setDisable(true);
         floatingButton.setStyle("-fx-background-color: #ffc107");
 
+        try {
+            loadEmpGroupListView();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void loadGroupListView() throws IOException {
+        groupList = service.getAllGroup();
+        groupData = FXCollections.observableArrayList();
+
+        for (Group group: groupList) {
+
+            HBox parentHBox = new HBox();
+            HBox imageHBox = new HBox();
+            HBox groupNameHBox = new HBox();
+
+            ImageView iconGroup = new ImageView(new Image(new FileInputStream("src/img/group1_64.png")));
+            iconGroup.setFitHeight(55);
+            iconGroup.setFitWidth(55);
+            Label groupNameLabel = new Label("    "+group.getName());
+            groupNameLabel.setFont(new Font(null,16));
+
+            imageHBox.getChildren().add(iconGroup);
+            groupNameHBox.getChildren().add(groupNameLabel);
+            parentHBox.getChildren().addAll(imageHBox, groupNameHBox);
+            parentHBox.setUserData(group);
+            groupData.add(parentHBox);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/popup.fxml"));
+            InputController inputController = new InputController(this,2);
+            loader.setController(inputController);
+            JFXPopup popup = new JFXPopup(loader.load());
+            inputController.setPopup(popup);
+            if (group.getActive()) {
+                inputController.setText("Borrar");
+            } else {
+                inputController.setText("Activar");
+            }
+
+            parentHBox.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    selectedGroup = group;
+                    popup.show(parentHBox, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT);
+                } else {
+                    groupNameField.setText(group.getName());
+                }
+            });
+
+        }
+        groupListView.setItems(groupData);
+
+    }
+
+    private void loadEmpGroupListView() throws FileNotFoundException {
+        empGroupList = service.getAllUser();
+
+        empGroupData = FXCollections.observableArrayList();
+
+        for(User user: empGroupList) {
+            user.setSelected(false);
+        }
+        empGroupData.addAll(empGroupList);
+        empGroupListView.setItems(empGroupData);
+
+        empGroupListView.setCellFactory(lv -> {
+            ListCell<User> cell = new ListCell<User>() {
+                @Override
+                protected void updateItem(User user, boolean empty) {
+                    super.updateItem(user, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setStyle(null);
+                    } else {
+                        HBox hBox = createParentBox(user);
+                        setGraphic(hBox);
+                        if (user.isSelected()) {
+                            setStyle("-fx-background-color: #03A9F4;");
+                            ((ArrayList<Label>) hBox.getUserData()).get(0).setStyle("-fx-text-fill: white");
+                            ((ArrayList<Label>) hBox.getUserData()).get(1).setStyle("-fx-text-fill: white");
+                        } else {
+                            setStyle("-fx-background-color: white;");
+                            ((ArrayList<Label>) hBox.getUserData()).get(0).setStyle("-fx-text-fill: black");
+                            ((ArrayList<Label>) hBox.getUserData()).get(1).setStyle("-fx-text-fill: #aaaaaa");
+
+                        }
+                    }
+                }
+            };
+
+            cell.setOnMouseClicked(e -> {
+                if (e.getButton() == MouseButton.PRIMARY
+                        && cell.getItem() != null) {
+                    cell.getItem().setSelected(!cell.getItem().isSelected());
+                    empGroupListView.refresh();
+                }
+            });
+
+            return cell ;
+        });
     }
 
     private void setCreateGroupFields(){
@@ -514,7 +590,6 @@ public class UserController extends BaseController {
         employeeLabel.setVisible(false);
         editLabel.setVisible(false);
         addLabel.setVisible(false);
-
 
         groupNameField.setDisable(false);
         dniField.setVisible(false);
@@ -537,9 +612,42 @@ public class UserController extends BaseController {
         floatingButton.setFocusTraversable(false);
     }
 
-    private void createGroup() {
+    private void saveGroup() {
+    if(empGroupListView.isVisible()) {
+        if(groupNameField.getText().isEmpty()) {
+            showDialog("Nombre de grupo vacio", "Debe asignar un nombre al grupo");
+        } else {
+            Group group = new Group();
+            group.setName(groupNameField.getText());
+            group.setCreateDate(new DateTime().getMillis());
+            group.setLastUpdate(new DateTime().getMillis());
+            group.setActive(true);
+            service.saveGroup(group);
+
+            for(User user : empGroupData) {
+                if(user.isSelected()){
+                    user.setGroup(group);
+                }
+            }
+            service.doEdit();
+            showSnackBar("Grupo creado con exito");
+            try {
+                loadGroupListView();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    }
+
+    private void createGroupActions() {
 
         floatingButton.setOnAction(event -> setCreateGroupFields());
+
+        saveButton.setOnMouseClicked(event -> saveGroup());
 
         cancelGroupButton.setOnAction(event -> setTabGroupFields());
     }
@@ -579,38 +687,41 @@ public class UserController extends BaseController {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                createGroup();
+                createGroupActions();
             }
        });
 
     }
 
     private void saveChanges(String dni, String name, String lastName) {
-        saveButton.setOnAction(event -> {
-            if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
-                                               || passwordField.getText().isEmpty()){
+        if(employeeListView.isVisible()){
+            saveButton.setOnAction(event -> {
+                if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
+                        || passwordField.getText().isEmpty()){
 
-                dialogType = Const.DIALOG_NOTIFICATION;
-                showDialogNotification("Campo vacio",
-                        "Debe llenar todos los campos para la modificacion del usuario");
-            } else if (editingPassword && passwordField.getText().length() < 4) {
-                dialogType = Const.DIALOG_NOTIFICATION;
-                showDialogNotification("Error de contraseña",
-                        "La contraseña debe tener al menos 4 caracteres");
-            } else if (dniField.getText().length() < 5) {
-                dialogType = Const.DIALOG_NOTIFICATION;
-                showDialogNotification("Error de dni",
-                        "La dni es muy corto");
-            } else if (!dniField.getText().equals(dni) && service.findUserByDni(dniField.getText()) != null) {
-                dialogType = Const.DIALOG_NOTIFICATION;
-                showDialogNotification("Error de dni",
-                        "El dni ya esta siendo usado para otro empleado");
-            } else {
-                dialogType = Const.DIALOG_SAVE_EDIT;
-                showDialog("¿Desea Guardar los cambios?",
-                        "¿Seguro que desea modificar el usuario: "+lastName+" "+name+"?");
-            }
-        });
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Campo vacio",
+                            "Debe llenar todos los campos para la modificacion del usuario");
+                } else if (editingPassword && passwordField.getText().length() < 4) {
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Error de contraseña",
+                            "La contraseña debe tener al menos 4 caracteres");
+                } else if (dniField.getText().length() < 5) {
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Error de dni",
+                            "La dni es muy corto");
+                } else if (!dniField.getText().equals(dni) && service.findUserByDni(dniField.getText()) != null) {
+                    dialogType = Const.DIALOG_NOTIFICATION;
+                    showDialogNotification("Error de dni",
+                            "El dni ya esta siendo usado para otro empleado");
+                } else {
+                    dialogType = Const.DIALOG_SAVE_EDIT;
+                    showDialog("¿Desea Guardar los cambios?",
+                            "¿Seguro que desea modificar el usuario: "+lastName+" "+name+"?");
+                }
+            });
+        }
+
     }
 
     public void deleteUser() {
@@ -625,6 +736,21 @@ public class UserController extends BaseController {
             showDialog("Confirmacion",
                     "¿Seguro que desea reactivar el empleado: "
                             + user.getLastname() + " " + user.getName() + "?");
+        }
+    }
+
+    public void deleteGroup() {
+        Group group = selectedGroup;
+        if(selectedGroup.getActive()) {
+            dialogType = Const.DIALOG_DELETE;
+            showDialog("Confirmacion",
+                    "¿Seguro que desea borrar este grupo: " +group.getName()+"? \n" +
+                            "Los empleados relacionado con este conjunto, quedaran disponibles " +
+                            "para ser asignado a otro grupo");
+        } else {
+            dialogType = Const.DIALOG_ENABLE;
+            showDialog("Confirmacion",
+                    "¿Seguro que desea reactivar el grupo: " +group.getName()+"?");
         }
     }
 
@@ -692,6 +818,7 @@ public class UserController extends BaseController {
     public void onDialogAccept(ActionEvent actionEvent) {
         super.onDialogAccept(actionEvent);
         User user;
+        Group group;
         switch (dialogType) {
             case Const.DIALOG_SAVE_EDIT:
                 user = service.findUserById(((User)
@@ -722,14 +849,34 @@ public class UserController extends BaseController {
                 showSnackBar("Empleado creado con exito");
                 break;
             case Const.DIALOG_DELETE:
-                user = service.findUserById(selectUser.getId());
-                if (service.deleteUser(user)) {
-                    showSnackBar("Empleado borrado con exito");
-                } else {
-                    showSnackBar("No se puede borrar porque " +
-                            "tiene registros, el empleado ha sido desactivado.");
+
+                if(employeeLabel.isVisible()){
+                    user = service.findUserById(selectUser.getId());
+                    if (service.deleteUser(user)) {
+                        showSnackBar("Empleado borrado con exito");
+                    } else {
+                        showSnackBar("No se puede borrar porque " +
+                                "tiene registros, el empleado ha sido desactivado.");
+                    }
+                    loadListView();
                 }
-                loadListView();
+
+                if(groupListView.isVisible()) {
+                    group = service.findGroupById(selectedGroup.getId());
+                    if(service.deleteGroup(group)) {
+                        showSnackBar("Grupo borrado con exito");
+                    } else {
+
+                    }
+                    setTabGroupFields();
+                    try {
+                        loadGroupListView();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
                 break;
             case Const.DIALOG_ENABLE:
                 user = service.findUserById(selectUser.getId());
@@ -740,7 +887,6 @@ public class UserController extends BaseController {
                 break;
         }
     }
-
 
     public class InputController {
 
@@ -754,20 +900,30 @@ public class UserController extends BaseController {
 
         private JFXPopup popup;
 
-        public InputController(UserController principal) {
+        private Integer popupType;
+
+        public InputController(UserController principal, Integer popupType) {
             this.principal = principal;
+            this.popupType = popupType;
         }
 
         @FXML
         private void submit() {
             popup.hide();
             if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 0) {
-                principal.deleteUser();
+                if(popupType == 1){
+                    principal.deleteUser();
+                } else if (popupType == 2) {
+                    principal.deleteGroup();
+
+                }
+
             }
         }
 
         public void setPopup(JFXPopup popup) {
             this.popup = popup;
+
         }
 
         public void setText(String content) {
