@@ -19,6 +19,9 @@ public class Route implements java.io.Serializable {
 	private Set groups = new HashSet(0);
 	private Set routePositions = new HashSet(0);
 
+	// Uso local
+	private boolean selected;
+
 	// Constructors
 
 	/** default constructor */
@@ -102,4 +105,11 @@ public class Route implements java.io.Serializable {
 		this.routePositions = routePositions;
 	}
 
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 }

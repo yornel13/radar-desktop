@@ -5,21 +5,76 @@
 <?import com.jfoenix.controls.JFXDialogLayout?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane fx:id="anchorPane" prefHeight="585.0" prefWidth="860.0">
        <children>
-         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="300.0" />
-          <JFXListView fx:id="userListView" layoutY="45.0" prefHeight="540.0" prefWidth="300.0" />
+         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: white;" />
+          <JFXListView fx:id="groupListView" layoutY="45.0" prefHeight="540.0" prefWidth="300.0" />
+         <JFXListView fx:id="userListView" layoutY="45.0" prefHeight="540.0" prefWidth="300.0" visible="false" />
           <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="220.0" promptText="Buscar" unFocusColor="#909090">
              <font>
                 <Font size="13.0" />
              </font>
           </JFXTextField>
+         <Pane layoutX="300.0" prefHeight="585.0" prefWidth="560.0">
+            <children>
+               <JFXButton fx:id="addButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="120.0" layoutY="279.0" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Agregar Ruta" textFill="WHITE" visible="false">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </JFXButton>
+               <Pane prefHeight="80.0" prefWidth="560.0" style="-fx-background-color: #03a9f4;">
+                  <children>
+                     <Label fx:id="groupLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="35.0" prefWidth="460.0" text="Seleccione un Grupo" textAlignment="CENTER" textFill="WHITE">
+                        <font>
+                           <Font size="25.0" />
+                        </font>
+                     </Label>
+                  </children>
+                  <effect>
+                     <DropShadow blurType="GAUSSIAN" color="#a3a2a2eb" height="62.41" offsetY="1.0" radius="15.1025" width="0.0" />
+                  </effect>
+               </Pane>
+            </children>
+         </Pane>
+         <Pane fx:id="selectRoutePane" layoutX="300.0" prefHeight="585.0" prefWidth="560.0" visible="false">
+            <children>
+               <JFXButton fx:id="cancelEditButton" buttonType="RAISED" layoutX="120.0" layoutY="493.0" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: red;" text="Cancelar" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </JFXButton>
+               <JFXListView fx:id="routeListView" layoutX="50.0" layoutY="160.0" prefHeight="310.0" prefWidth="460.0" />
+               <JFXTextField fx:id="filterRouteField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="169.0" layoutY="104.0" prefHeight="35.0" prefWidth="220.0" promptText="Buscar" unFocusColor="#909090">
+                  <font>
+                     <Font size="13.0" />
+                  </font>
+               </JFXTextField>
+            </children>
+         </Pane>
+         <Pane fx:id="showRoutePane" layoutX="300.0" prefHeight="585.0" prefWidth="560.0" visible="false">
+            <children>
+               <Label fx:id="routeLabel" alignment="CENTER" layoutX="50.0" layoutY="100.0" prefHeight="35.0" prefWidth="460.0" text="name" textAlignment="CENTER" textFill="#171717">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Label>
+               <JFXButton fx:id="editButton" buttonType="RAISED" layoutX="120.0" layoutY="493.0" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Cambiar Ruta" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </JFXButton>
+               <GoogleMapView fx:id="mapView" layoutX="50.0" layoutY="160.0" prefHeight="310.0" prefWidth="460.0" />
+            </children>
+         </Pane>
        </children>
     </AnchorPane>
     <JFXDialog fx:id="dialog">

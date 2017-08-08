@@ -120,6 +120,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
     @PostConstruct
     public void init() throws FileNotFoundException {
 
+        setTitle("Control de Guardias");
+
         mapView.addMapInializedListener(this);
 
         controlList = service.getAllControlActive();

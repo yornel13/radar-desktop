@@ -81,6 +81,8 @@ public class AdminController extends BaseController implements EventHandler<Mous
     @PostConstruct
     public void init() throws FileNotFoundException {
 
+        setTitle("Administradores");
+
         loadListView();
         loadSelectedAdmin();
         editAdmin();

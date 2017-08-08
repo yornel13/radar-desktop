@@ -110,6 +110,9 @@ public class UserController extends BaseController {
 
     @PostConstruct
     public void init() throws FileNotFoundException {
+
+        setTitle("Empleados");
+
         createTabPane();
         createFloatingButton();
         loadListView();

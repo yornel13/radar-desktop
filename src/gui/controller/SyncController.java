@@ -42,6 +42,9 @@ public class SyncController extends BaseController {
 
     @PostConstruct
     public void init() {
+
+        setTitle("Radar app");
+
         buttonImport.setOnMouseEntered(event ->  buttonImport.setStyle(" -fx-background-color: #d6d6d6"));
         buttonImport.setOnMouseExited( event ->  buttonImport.setStyle(" -fx-background-color: #ffc107"));
         buttonExport.setOnMouseEntered(event ->  buttonExport.setStyle(" -fx-background-color: #d6d6d6"));

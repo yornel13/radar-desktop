@@ -124,6 +124,11 @@ public class RadarService {
         return groups;
     }
 
+    public Group findGroupById(Long id) {
+        Group group = groupDAO.findById(id);
+        return group;
+    }
+
     public List<User> getAllUser() {
         List<User> users = userDao.findAllOrder();
         return users;
