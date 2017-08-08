@@ -4,6 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXSnackbar;
 import io.datafx.controller.flow.FlowException;
+import io.datafx.controller.flow.action.ActionMethod;
+import io.datafx.controller.flow.action.ActionTrigger;
+import io.datafx.controller.flow.container.ContainerAnimations;
 import io.datafx.controller.flow.context.ActionHandler;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.FlowActionHandler;
@@ -13,16 +16,31 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import service.RadarService;
+import util.ExtendedAnimatedFlowContainer;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class BaseController {
+
+    @ActionHandler
+    protected FlowActionHandler actionHandler;
+
+    @FXMLViewFlowContext
+    protected ViewFlowContext flowContext;
+
+    @FXML
+    @ActionTrigger("back")
+    private JFXButton backButton;
 
     @FXML
     protected StackPane root;
@@ -44,17 +62,16 @@ public class BaseController {
 
     protected int dialogType;
 
-    @ActionHandler
-    protected FlowActionHandler actionHandler;
-
-    @FXMLViewFlowContext
-    protected ViewFlowContext flowContext;
-
     protected RadarService service = RadarService.getInstance();
 
+    @ActionMethod("back")
     protected void onBackController() {
         try {
+            ExtendedAnimatedFlowContainer animations = (ExtendedAnimatedFlowContainer)
+                    flowContext.getRegisteredObject("AnimatedFlow");
+            animations.changeAnimation(ContainerAnimations.SWIPE_RIGHT);
             actionHandler.navigateBack();
+            animations.changeAnimation(ContainerAnimations.SWIPE_LEFT);
         } catch (VetoException e) {
             e.printStackTrace();
         } catch (FlowException e) {
@@ -128,6 +145,15 @@ public class BaseController {
                 }
             }, 500, 500
         );
+    }
+
+    protected void setBackButtonImage() {
+        try {
+            backButton.setGraphic(new ImageView(
+                    new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import io.datafx.controller.util.VetoException;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import util.ExtendedAnimatedFlowContainer;
 
 import javax.annotation.PostConstruct;
 
@@ -38,8 +39,9 @@ public class MainController extends BaseController {
         flowHandler = innerFlow.createHandler(flowContext);
         ContainerAnimations animations = ContainerAnimations.SWIPE_LEFT;
         Duration duration = Duration.millis(320);
-        AnimatedFlowContainer animation = new AnimatedFlowContainer(duration, animations);
+        ExtendedAnimatedFlowContainer animation = new ExtendedAnimatedFlowContainer(duration, animations);
         centerPane.getChildren().add(flowHandler.start(animation));
+        flowContext.register("AnimatedFlow", animation);
         flowContext.register("ContentFlow", innerFlow);
     }
 }

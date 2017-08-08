@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -42,11 +43,8 @@ import java.util.List;
 import static javafx.scene.paint.Color.valueOf;
 
 @ViewController("../view/assign.fxml")
-public class AssignController extends BaseController implements MapComponentInitializedListener, MapReadyListener, EventHandler<MouseEvent> {
-
-    @FXML
-    @ActionTrigger("back")
-    private JFXButton backButton;
+public class AssignController extends BaseController implements MapComponentInitializedListener,
+        MapReadyListener, EventHandler<MouseEvent> {
 
     @FXML
     private JFXButton addButton;
@@ -65,6 +63,9 @@ public class AssignController extends BaseController implements MapComponentInit
 
     @FXML
     private Pane selectRoutePane;
+
+    @FXML
+    private Pane barPane;
 
     @FXML
     private JFXTextField filterField;
@@ -124,14 +125,17 @@ public class AssignController extends BaseController implements MapComponentInit
     public void init() throws FileNotFoundException {
 
         setTitle("Asignar Rutas");
+        setBackButtonImage();
 
         loadListView();
-
-        backButton.setGraphic(new ImageView(new Image(new
-                FileInputStream("src/img/arrow_back_icon16.png"))));
-
         mapView.addMapInializedListener(this);
         mapView.addMapReadyListener(this);
+    }
+
+    @Override
+    protected void onBackController() {
+        barPane.setEffect(null);
+        super.onBackController();
     }
 
     public void loadListView() {

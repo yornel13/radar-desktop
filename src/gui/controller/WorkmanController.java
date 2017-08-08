@@ -48,9 +48,6 @@ import java.util.List;
 @ViewController(value = "../view/workman.fxml")
 public class WorkmanController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
 
-    @FXML
-    private JFXButton backButton;
-
     /*************USERS****************/
     @FXML
     private JFXTextField userFilterField;
@@ -121,6 +118,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
     public void init() throws FileNotFoundException {
 
         setTitle("Control de Guardias");
+        setBackButtonImage();
 
         mapView.addMapInializedListener(this);
 
@@ -141,8 +139,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
         }
         showWatchesDetail();
         showMarker();
-        backButton.setGraphic(new ImageView(
-                new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
     }
 
     public void loadListView() throws FileNotFoundException {
@@ -246,15 +242,15 @@ public class WorkmanController extends BaseController implements MapComponentIni
         }
     }
 
-    @FXML
-    public void onBackPress(ActionEvent actionEvent) {
+    @Override
+    protected void onBackController() {
         if (markerDrawer.isShown()) {
             markerDrawer.close();
             addMarkers();
         } else if (watchDrawer.isShown()) {
             watchDrawer.close();
         } else {
-            onBackController();
+            super.onBackController();
         }
     }
 

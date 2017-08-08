@@ -20,10 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.Group;
@@ -50,8 +47,7 @@ public class UserController extends BaseController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    @ActionTrigger("back")
-    private JFXButton backButton;
+    private Pane barPane;
     @FXML
     private JFXTextField filterField;
 
@@ -112,6 +108,7 @@ public class UserController extends BaseController {
     public void init() throws FileNotFoundException {
 
         setTitle("Empleados");
+        setBackButtonImage();
 
         createTabPane();
         createFloatingButton();
@@ -122,9 +119,12 @@ public class UserController extends BaseController {
 
         passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
-        backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
+    }
 
-
+    @Override
+    protected void onBackController() {
+        barPane.setEffect(null);
+        super.onBackController();
     }
 
     private void loadListView() {

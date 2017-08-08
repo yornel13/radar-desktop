@@ -17,7 +17,7 @@
 <StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane fx:id="anchorPane" prefHeight="585.0" prefWidth="860.0">
       <children>
-         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="300.0" />
+         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: white;" />
          <JFXListView fx:id="adminListView" layoutY="45.0" prefHeight="540.0" prefWidth="300.0" />
          <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="220.0" promptText="Buscar" unFocusColor="#909090">
             <font>
@@ -60,7 +60,7 @@
                      <Font size="14.0" />
                   </font>
                </JFXButton>
-               <Pane prefHeight="80.0" prefWidth="560.0" style="-fx-background-color: #03a9f4;">
+               <Pane fx:id="barPane" prefHeight="80.0" prefWidth="560.0" style="-fx-background-color: #03a9f4;">
                   <children>
                      <Label fx:id="adminLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefWidth="460.0" text="Administradores" textAlignment="CENTER" textFill="WHITE" visible="false">
                         <font>

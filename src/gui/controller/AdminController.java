@@ -21,6 +21,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -41,14 +42,14 @@ public class AdminController extends BaseController implements EventHandler<Mous
 
     @FXML
     private JFXListView<HBox> adminListView;
+
     private ObservableList<HBox> dataAdmin;
 
     private List<Admin> admins;
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    @ActionTrigger("back")
-    private JFXButton backButton;
+    private Pane barPane;
     @FXML
     private JFXTextField filterField;
     @FXML
@@ -76,12 +77,11 @@ public class AdminController extends BaseController implements EventHandler<Mous
 
     private boolean  editingPassword = false;
 
-
-
     @PostConstruct
-    public void init() throws FileNotFoundException {
+    public void init() {
 
         setTitle("Administradores");
+        setBackButtonImage();
 
         loadListView();
         loadSelectedAdmin();
@@ -90,8 +90,13 @@ public class AdminController extends BaseController implements EventHandler<Mous
 
         passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
-        backButton.setGraphic(new ImageView(new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
 
+    }
+
+    @Override
+    protected void onBackController() {
+        barPane.setEffect(null);
+        super.onBackController();
     }
 
     public void loadListView() {

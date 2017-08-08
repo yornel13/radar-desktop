@@ -56,9 +56,6 @@ public class MarkerController extends BaseController implements MapComponentInit
         EventHandler<MouseEvent>,MapReadyListener {
 
     @FXML
-    private JFXButton backButton;
-
-    @FXML
     private AnchorPane anchorPane;
 
     @FXML
@@ -170,6 +167,7 @@ public class MarkerController extends BaseController implements MapComponentInit
     public void init() throws FileNotFoundException {
 
         setTitle("Marcadores y Rutas");
+        setBackButtonImage();
 
         bar.setVisible(false);
 
@@ -181,8 +179,6 @@ public class MarkerController extends BaseController implements MapComponentInit
 
         mapView.addMapInializedListener(this);
         mapView.addMapReadyListener(this);
-        backButton.setGraphic(new ImageView(
-                new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
     }
 
     public void setDrawer() {
@@ -785,7 +781,20 @@ public class MarkerController extends BaseController implements MapComponentInit
         }
     }
 
-    @FXML
+    @Override
+    protected void onBackController() {
+        if (barEditRoute.isVisible()) {
+            closeEditRoute();
+        } else if (addPane.isVisible()) {
+            hideAddPane();
+        } else if (drawer.isShown()) {
+            closeOpenDrawer();
+        } else {
+            super.onBackController();
+        }
+    }
+
+    /*@FXML
     public void onBackPress(ActionEvent actionEvent) {
         if (barEditRoute.isVisible()) {
             closeEditRoute();
@@ -796,7 +805,7 @@ public class MarkerController extends BaseController implements MapComponentInit
         } else {
             onBackController();
         }
-    }
+    }*/
 
     @Override
     public void mapInitialized() {

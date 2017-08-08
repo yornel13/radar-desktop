@@ -24,14 +24,14 @@
                 <Font size="13.0" />
              </font>
           </JFXTextField>
-         <Pane layoutX="300.0" prefHeight="585.0" prefWidth="560.0">
+         <Pane fx:id="fullPane" layoutX="300.0" prefHeight="585.0" prefWidth="560.0">
             <children>
                <JFXButton fx:id="addButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="120.0" layoutY="279.0" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Agregar Ruta" textFill="WHITE" visible="false">
                   <font>
                      <Font size="14.0" />
                   </font>
                </JFXButton>
-               <Pane prefHeight="80.0" prefWidth="560.0" style="-fx-background-color: #03a9f4;">
+               <Pane fx:id="barPane" prefHeight="80.0" prefWidth="560.0" style="-fx-background-color: #03a9f4;">
                   <children>
                      <Label fx:id="groupLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="35.0" prefWidth="460.0" text="Seleccione un Grupo" textAlignment="CENTER" textFill="WHITE">
                         <font>
@@ -40,7 +40,7 @@
                      </Label>
                   </children>
                   <effect>
-                     <DropShadow blurType="GAUSSIAN" color="#a3a2a2eb" height="62.41" offsetY="1.0" radius="15.1025" width="0.0" />
+                     <DropShadow blurType="GAUSSIAN" color="#a3a2a2eb" height="31.205" offsetY="1.0" radius="7.30125" width="0.0" />
                   </effect>
                </Pane>
             </children>
