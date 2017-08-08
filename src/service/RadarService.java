@@ -14,6 +14,7 @@ public class RadarService {
     AdminDAO adminDAO;
     ControlPositionDAO cpDao;
     UserDAO userDao;
+    GroupDAO groupDAO;
     WatchDAO watchDAO;
     PositionDAO posDAO;
     RouteDAO routeDAO;
@@ -30,6 +31,7 @@ public class RadarService {
         adminDAO = new AdminDAO();
         cpDao = new ControlPositionDAO();
         userDao = new UserDAO();
+        groupDAO = new GroupDAO();
         watchDAO = new WatchDAO();
         posDAO = new PositionDAO();
         routeDAO = new RouteDAO();
@@ -115,6 +117,11 @@ public class RadarService {
             e.printStackTrace();
         }
         return jsonExport;
+    }
+
+    public List<Group> getAllGroup() {
+        List<Group> groups = groupDAO.findAll();
+        return groups;
     }
 
     public List<User> getAllUser() {

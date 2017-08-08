@@ -227,6 +227,7 @@ public class MarkerController extends BaseController implements MapComponentInit
         tabR.setUserData(0);
         tabPane.getTabs().add(tabR);
 
+
         markerListView = new JFXListView<>();
         markerListView.setPrefWidth(275);
         markerListView.setExpanded(true);
@@ -414,6 +415,7 @@ public class MarkerController extends BaseController implements MapComponentInit
             editButton.setText("Editar");
             disableButton.setText("Desactivar");
             editing = false;
+
         } else {
             showSnackBar(control.getPlaceName());
         }
@@ -500,6 +502,7 @@ public class MarkerController extends BaseController implements MapComponentInit
             labelsVBox.getChildren().addAll(nameLabel, activeLabel);
             labelsVBox.setPadding(new Insets(-1,3,-1,3));
             hBox.getChildren().addAll(imageHBox, labelsVBox);
+
             hBox.setUserData(control);
             markerData.addAll(hBox);
 
