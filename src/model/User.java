@@ -23,6 +23,9 @@ public class User implements java.io.Serializable {
 	private Set watchs = new HashSet(0);
 	private Set routeMarkers = new HashSet(0);
 
+	// Uso local
+	private boolean selected;
+
 	// Constructors
 
 	/** default constructor */
@@ -147,4 +150,11 @@ public class User implements java.io.Serializable {
 		this.routeMarkers = routeMarkers;
 	}
 
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 }

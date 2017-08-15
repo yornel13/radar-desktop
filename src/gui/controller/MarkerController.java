@@ -460,8 +460,6 @@ public class MarkerController extends BaseController implements MapComponentInit
                 "¿Estas seguro que deseas activar nuevamente este punto de control?");
     }
 
-
-
     private void deleteRoute() {
         dialogType = Const.DIALOG_DELETE;
         showDialog("Confirmacion",

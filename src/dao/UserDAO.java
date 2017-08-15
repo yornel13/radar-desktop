@@ -3,6 +3,8 @@ package dao;
 import java.util.List;
 import java.util.Set;
 
+import javafx.collections.ObservableList;
+import model.Group;
 import model.User;
 import model.Watch;
 import org.hibernate.LockOptions;
@@ -77,6 +79,18 @@ public class UserDAO extends BaseHibernateDAO {
 		Object result = query.uniqueResult();
 		return (User) result;
 	}
+
+	public List findUserByGroupId(Long id) {
+		Query query = getSession().createSQLQuery("SELECT * FROM user WHERE " +
+				"group_id = :group_id")
+				.addEntity(User.class)
+				.setParameter("group_id", id);
+
+		Object result = query.list();
+		return (List) result;
+	}
+
+
 
 	public List findByExample(User instance) {
 		log.debug("finding User instance by example");

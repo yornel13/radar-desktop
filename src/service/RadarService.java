@@ -124,11 +124,6 @@ public class RadarService {
         return groups;
     }
 
-    public Group findGroupById(Long id) {
-        Group group = groupDAO.findById(id);
-        return group;
-    }
-
     public List<User> getAllUser() {
         List<User> users = userDao.findAllOrder();
         return users;
@@ -202,6 +197,13 @@ public class RadarService {
         return isDeleted;
     }
 
+    public Boolean deleteGroup(Group group) {
+        groupDAO.delete(group);
+        doEdit();
+        return true;
+    }
+
+
     public void deleteAdmin(Admin admin) {
         adminDAO.delete(admin);
         doEdit();
@@ -212,8 +214,18 @@ public class RadarService {
         return user;
     }
 
+    public Group findGroupById(Long id) {
+        Group group = groupDAO.findById(id);
+        return group;
+    }
+
+
     public User findUserByDni(String dni) {
         User user = userDao.findByDni(dni);
+        return user;
+    }
+    public List findUserByGroupId(Long id) {
+        List user = userDao.findUserByGroupId(id);
         return user;
     }
 
@@ -230,6 +242,10 @@ public class RadarService {
     public Admin findAdminByUserName(String userName){
         Admin admin = adminDAO.findByUserName(userName);
         return admin;
+    }
+
+    public void saveGroup(Group group) {
+        groupDAO.save(group);
     }
 
     public void saveRoute(Route route) {

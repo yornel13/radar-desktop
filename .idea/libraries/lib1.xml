@@ -1,12 +1,12 @@
 <component name="libraryTable">
-  <library name="lib">
+  <library name="lib1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/gson-2.2.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/jfoenix.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/flow-8.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/core-8.0.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.42-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.2.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/joda-time-2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.42-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfoenix.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
