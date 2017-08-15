@@ -111,7 +111,7 @@
                      <Font size="14.0" />
                   </font>
                </JFXButton>
-               <JFXListView fx:id="empGroupListView" layoutX="19.0" layoutY="176.0" prefHeight="278.0" prefWidth="520.0" visible="false" />
+               <JFXListView fx:id="empGroupListView" layoutX="19.0" layoutY="176.0" prefHeight="290.0" prefWidth="520.0" visible="false" />
             </children>
          </Pane>
        </children>

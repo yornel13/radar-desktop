@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.*;
 import model.*;
-import org.hibernate.exception.ConstraintViolationException;
 import util.HibernateSessionFactory;
 
 import java.util.List;
@@ -221,8 +220,13 @@ public class RadarService {
         return group;
     }
 
+
     public User findUserByDni(String dni) {
         User user = userDao.findByDni(dni);
+        return user;
+    }
+    public List findUserByGroupId(Long id) {
+        List user = userDao.findUserByGroupId(id);
         return user;
     }
 
