@@ -41,8 +41,8 @@
                      <HBox fx:id="headHBox" alignment="BOTTOM_LEFT" cache="true" prefHeight="60.0" prefWidth="275.0" style="-fx-background-color: white;" />
                      <Pane prefHeight="450.0" prefWidth="275.0">
                         <children>
-                           <JFXListView fx:id="controlListView" prefHeight="447.0" prefWidth="276.0" visible="false" />
-                           <JFXListView fx:id="drawerListView" focusTraversable="false" prefHeight="447.0" prefWidth="276.0" />
+                           <JFXListView fx:id="controlListView" maxHeight="424.0" prefHeight="447.0" prefWidth="276.0" visible="false" />
+                           <JFXListView fx:id="drawerListView" focusTraversable="false" maxHeight="424.0" prefHeight="447.0" prefWidth="276.0" />
                         </children>
                      </Pane>
                   </children>

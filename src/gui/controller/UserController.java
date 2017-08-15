@@ -47,6 +47,7 @@ import static javafx.scene.paint.Color.valueOf;
 public class UserController extends BaseController {
 
     /*********Employee Tab Pane**********/
+    @FXML
     private JFXTabPane tabPane;
     @FXML
     private Pane barPane;

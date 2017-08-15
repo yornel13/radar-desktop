@@ -640,7 +640,6 @@ public class MarkerController extends BaseController implements MapComponentInit
             });
             return cell ;
         });
-
         controlListView.setVisible(true);
         drawerListView.setVisible(false);
         showSnackBar("Marcar/desmarcar las ubicaciones para agregar/quitar de la ruta");
