@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.*;
 import model.*;
+import org.hibernate.exception.ConstraintViolationException;
 import util.HibernateSessionFactory;
 
 import java.util.List;
@@ -122,8 +123,6 @@ public class RadarService {
         List<Group> groups = groupDAO.findAll();
         return groups;
     }
-
-
 
     public List<User> getAllUser() {
         List<User> users = userDao.findAllOrder();
@@ -286,6 +285,5 @@ public class RadarService {
     public void saveRoutePosition(RoutePosition routePosition) {
         rpDAO.save(routePosition);
     }
-
 
 }
