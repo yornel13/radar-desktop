@@ -13,9 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Tab;
 import javafx.scene.effect.ColorAdjust;
@@ -26,7 +24,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 import model.Group;
 import model.User;
 import org.joda.time.DateTime;
@@ -164,6 +161,7 @@ public class UserController extends BaseController {
                 desaturate.setSaturation(-1);
                 iconUser.setEffect(desaturate);
             }
+
             iconUser.setFitHeight(55);
             iconUser.setFitWidth(55);
             Label fullNameUser = new Label("    "+user.getLastname()+"  "+user.getName());
@@ -636,7 +634,6 @@ public class UserController extends BaseController {
             groupHBox.getChildren().addAll(iconGroup, groupLabel);
         }
 
-
         fullNameUser.setFont(new Font(null,16));
         dniUser.setFont(new Font(null,14));
         dniUser.setTextFill(valueOf("#aaaaaa"));
@@ -764,7 +761,7 @@ public class UserController extends BaseController {
                 setTabGroupFields();
                 createGroupActions();
             }
-       });
+        });
 
     }
 
