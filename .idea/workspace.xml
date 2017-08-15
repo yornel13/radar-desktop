@@ -2,26 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/assign_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/radar_splash.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/AppDecorator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/ExtendedAnimatedFlowContainer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/AdminController.java" afterPath="$PROJECT_DIR$/src/gui/controller/AdminController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/AssignController.java" afterPath="$PROJECT_DIR$/src/gui/controller/AssignController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/BaseController.java" afterPath="$PROJECT_DIR$/src/gui/controller/BaseController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/MainController.java" afterPath="$PROJECT_DIR$/src/gui/controller/MainController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/MarkerController.java" afterPath="$PROJECT_DIR$/src/gui/controller/MarkerController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/StartApp.java" afterPath="$PROJECT_DIR$/src/gui/controller/StartApp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/SyncController.java" afterPath="$PROJECT_DIR$/src/gui/controller/SyncController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/UserController.java" afterPath="$PROJECT_DIR$/src/gui/controller/UserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/WorkmanController.java" afterPath="$PROJECT_DIR$/src/gui/controller/WorkmanController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/admin.fxml" afterPath="$PROJECT_DIR$/src/gui/view/admin.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/assign.fxml" afterPath="$PROJECT_DIR$/src/gui/view/assign.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/marker.fxml" afterPath="$PROJECT_DIR$/src/gui/view/marker.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/user.fxml" afterPath="$PROJECT_DIR$/src/gui/view/user.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/workman.fxml" afterPath="$PROJECT_DIR$/src/gui/view/workman.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Route.java" afterPath="$PROJECT_DIR$/src/model/Route.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/service/RadarService.java" afterPath="$PROJECT_DIR$/src/service/RadarService.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/GMapsFX/target/" />
@@ -37,8 +19,8 @@
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="46" column="9" lean-forward="false" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
+            <state relative-caret-position="-520">
+              <caret line="628" column="0" lean-forward="false" selection-start-line="628" selection-start-column="0" selection-end-line="628" selection-end-column="0" />
               <folding>
                 <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
                 <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
@@ -57,36 +39,6 @@
                 <element signature="method#onDialogAccept#0;class#UserController#0" expanded="false" />
                 <element signature="class#InputController#0;class#UserController#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GMapsFX/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/style/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RadarService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3700">
-              <caret line="200" column="19" lean-forward="false" selection-start-line="200" selection-start-column="19" selection-end-line="200" selection-end-column="19" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -232,9 +184,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -401,20 +353,25 @@
       <option name="project" value="LOCAL" />
       <updated>1502765552080</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="last_change_user">
+      <created>1502769133637</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1502769133637</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -425,6 +382,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -438,7 +396,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="user change" />
     <MESSAGE value="group changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="group changes" />
+    <MESSAGE value="last_change_user" />
+    <option name="LAST_COMMIT_MESSAGE" value="last_change_user" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -447,11 +406,35 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
+            <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
+            <element signature="method#addUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#editUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
+            <element signature="method#setCreateGroupFields#0;class#UserController#0" expanded="false" />
+            <element signature="method#saveGroup#0;class#UserController#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#UserController#0" expanded="false" />
+            <element signature="method#deleteUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
+            <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
+            <element signature="method#onDialogAccept#0;class#UserController#0" expanded="false" />
+            <element signature="class#InputController#0;class#UserController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/style/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="4" column="34" lean-forward="true" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -484,7 +467,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3700">
           <caret line="200" column="19" lean-forward="false" selection-start-line="200" selection-start-column="19" selection-end-line="200" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -517,7 +499,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4540">
           <caret line="227" column="37" lean-forward="false" selection-start-line="227" selection-start-column="37" selection-end-line="227" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -590,7 +571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-120">
           <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -598,7 +578,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="8" column="36" lean-forward="false" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -641,19 +620,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/view/user.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="113" column="98" lean-forward="false" selection-start-line="113" selection-start-column="98" selection-end-line="113" selection-end-column="98" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Group.java">
@@ -683,7 +661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3700">
           <caret line="200" column="19" lean-forward="false" selection-start-line="200" selection-start-column="19" selection-end-line="200" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -691,7 +668,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -705,8 +681,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="46" column="9" lean-forward="false" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
+        <state relative-caret-position="-520">
+          <caret line="628" column="0" lean-forward="false" selection-start-line="628" selection-start-column="0" selection-end-line="628" selection-end-column="0" />
           <folding>
             <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
             <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
