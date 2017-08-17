@@ -7,9 +7,12 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.*;
 import model.*;
 import org.hibernate.exception.ConstraintViolationException;
+import org.joda.time.DateTime;
 import util.HibernateProxyTypeAdapter;
 import util.HibernateSessionFactory;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RadarService {
@@ -114,6 +117,7 @@ public class RadarService {
             for (User user: users) {
                 user.setWatchs(null);
                 user.setRouteMarkers(null);
+                user.setCompany(null);
             }
             List<ControlPosition> controlPositions = cpDao.findAll();
             for (ControlPosition control: controlPositions) {
@@ -159,8 +163,18 @@ public class RadarService {
         return users;
     }
 
+    public List<User> getAllUserByCompany(Company company) {
+        List<User> users = userDao.findAllOrderByCompanyId(company.getId());
+        return users;
+    }
+
     public List<User> getAllUserActive() {
         List<User> users = userDao.findAllActive();
+        return users;
+    }
+
+    public List<User> getAllUserByCompanyActive(Company company) {
+        List<User> users = userDao.findAllByCompanyIdActive(company.getId());
         return users;
     }
 
@@ -171,6 +185,11 @@ public class RadarService {
 
     public List<Company> getAllCompanies() {
         List<Company> companies = companyDAO.findAll();
+        return companies;
+    }
+
+    public List<Company> getAllCompaniesActive() {
+        List<Company> companies = companyDAO.findAllActive();
         return companies;
     }
 
@@ -213,6 +232,24 @@ public class RadarService {
     public List<Position> findAllPositionsByControl(ControlPosition control) {
         List<Position> positions = posDAO.findAllByControlId(control.getId());
         return positions;
+    }
+
+    public List<Position> findAllPositionsByControl(ControlPosition control, Date dateFrom, Date dateTo) {
+        List<Position> positions = posDAO.findAllByControlIdBetween(control.getId(), dateFrom.getTime(),
+                new DateTime(dateTo.getTime()).plusDays(1).getMillis());
+        return positions;
+    }
+
+    public List<Position> findAllPositionsByControlAndCompany(ControlPosition control, Company company, Date dateFrom, Date dateTo) {
+        List<Position> positions = posDAO.findAllByControlIdBetween(control.getId(), dateFrom.getTime(),
+                new DateTime(dateTo.getTime()).plusDays(1).getMillis());
+        List<Position> positionsFilter = new ArrayList<>();
+        for (Position position: positions) {
+            if (position.getWatch().getUser().getCompany().getId().equals(company.getId())) {
+                positionsFilter.add(position);
+            }
+        }
+        return positionsFilter;
     }
 
     public void saveUser(User user) {
@@ -271,13 +308,24 @@ public class RadarService {
         User user = userDao.findByDni(dni);
         return user;
     }
-    public List findUserByGroupId(Long id) {
+
+    public List<User> findUserByGroupId(Long id) {
         List user = userDao.findUserByGroupId(id);
         return user;
     }
 
-    public List findAllOrderByGroup() {
+    public List<User> findUsersByGroupIdAndCompany(Long id, Company company) {
+        List user = userDao.findUserByCompanyIdByGroupId(id, company.getId());
+        return user;
+    }
+
+    public List<User> findAllOrderByGroup() {
         List user = userDao.findAllOrderByGroup();
+        return user;
+    }
+
+    public List<User> findAllOrderByGroup(Company company) {
+        List user = userDao.findAllOrderByCompanyId(company.getId());
         return user;
     }
 

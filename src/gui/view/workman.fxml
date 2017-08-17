@@ -31,8 +31,7 @@
                <Font size="13.0" />
             </font>
          </JFXTextField>
-         <JFXListView fx:id="userListView" layoutX="-2.0" layoutY="45.0" prefHeight="510.0" prefWidth="275.0" />
-         <JFXButton fx:id="buttonChangeListView" buttonType="RAISED" layoutY="555.0" onAction="#changeListView" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #03a9f4;" text="Ver por ubicaciones" textFill="WHITE" />
+         <JFXListView fx:id="userListView" layoutX="-2.0" layoutY="45.0" prefHeight="540.0" prefWidth="275.0" />
          <GoogleMapView fx:id="mapView" layoutX="273.0" prefHeight="585.0" prefWidth="585.0" />
          <JFXDrawer fx:id="watchDrawer" defaultDrawerSize="300.0" layoutX="-3.0" layoutY="45.0" prefHeight="540.0" prefWidth="275.0" visible="false">
             <children>

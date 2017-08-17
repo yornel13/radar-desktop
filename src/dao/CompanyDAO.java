@@ -137,6 +137,14 @@ public class CompanyDAO extends BaseHibernateDAO {
 		return (List<Company>) result;
 	}
 
+	public List<Company> findAllActive() {
+		Query query = getSession()
+				.createSQLQuery("SELECT * FROM company where active = true")
+				.addEntity(Company.class);
+		Object result = query.list();
+		return (List<Company>) result;
+	}
+
 	public Company merge(Company detachedInstance) {
 		log.debug("merging Company instance");
 		try {

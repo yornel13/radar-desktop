@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -45,8 +46,6 @@ import java.util.List;
 public class ControlController  extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
 
     /*************USERS****************/
-    @FXML
-    private JFXTextField userFilterField;
     @FXML
     private JFXListView<HBox> userListView;
 
@@ -131,14 +130,19 @@ public class ControlController  extends BaseController implements MapComponentIn
 
     public boolean isMapReady = false;
 
-    public boolean isDateReady = true;
+    private boolean isDateReady = false;
+    private Date from;
+    private Date to;
 
+    public void updateMap(ActionEvent event) {
+        mapView.addMapInializedListener(this);
+    }
 
     @PostConstruct
     public void init() throws FileNotFoundException {
 
-        setTitle("Control de Guardias - Por ubicacion");
-        setBackButtonImage();
+        setTitleToCompany("Control de Guardias (Por ubicacion)");
+        setBackButtonImageBlack();
 
         mapView.addMapInializedListener(this);
 
@@ -173,8 +177,8 @@ public class ControlController  extends BaseController implements MapComponentIn
             if (event.getButton() == MouseButton.PRIMARY) {
                 isDateReady = false;
                 try {
-                    Date from = Date.valueOf(fromPicker.getValue());
-                    Date to = Date.valueOf(toPicker.getValue());
+                    from = Date.valueOf(fromPicker.getValue());
+                    to = Date.valueOf(toPicker.getValue());
                     if (to.before(from)) {
                         showDialogNotification("Error", "Rango de fechas incorrecto");
                         return;
@@ -241,46 +245,22 @@ public class ControlController  extends BaseController implements MapComponentIn
         watchDrawer.setVisible(false);
         watchDrawer.setOnDrawerClosed(event  ->  {
             watchDrawer.setVisible(false);
-            setUserFilterField();
+            setMarkerFilterField();
         });
         watchDrawer.setOnDrawerOpened(event -> {
             setWatchFilterField();
         });
-        ///////////////////////////////////////////////////////////////////////////
-        markerHeadHBox.setStyle("-fx-background-color: #ffffff");
-        markerHeadHBox.setPrefWidth(275);
-        markerHeadHBox.setPadding(new Insets(6));
-
-        markerDrawer.setSidePane(markerDrawerBox);
-        markerDrawer.setVisible(false);
-        markerDrawer.setOnDrawerClosed(event  ->  {
-            markerDrawer.setVisible(false);
-            setWatchFilterField();
-        });
-        markerDrawer.setOnDrawerOpened(event -> {
-            setMarkerFilterField();
-        });
     }
 
-    public void setUserFilterField() {
-        userFilterField.setVisible(true);
-        watchFilterField.setVisible(false);
-        markerFilterField.setVisible(false);
-
-        watchFilterField.clear();
-        markerFilterField.clear();
-    }
 
     public void setWatchFilterField() {
-        userFilterField.setVisible(false);
         watchFilterField.setVisible(true);
         markerFilterField.setVisible(false);
 
-        markerFilterField.clear();
+        watchFilterField.clear();
     }
 
     public void setMarkerFilterField() {
-        userFilterField.setVisible(false);
         watchFilterField.setVisible(false);
         markerFilterField.setVisible(true);
     }
@@ -291,26 +271,21 @@ public class ControlController  extends BaseController implements MapComponentIn
         if (event.getButton() == MouseButton.PRIMARY
                 && controlListView.getSelectionModel()
                 .getSelectedItem().getUserData() != null) {
-            openedWatchDrawer();
+            if (isDateReady)
+                openedWatchDrawer();
+            else
+                showSnackBar("Seleccione el rango de fechas primero y presione buscar");
         }
     }
 
     @Override
     protected void onBackController() {
-        if (markerDrawer.isShown()) {
-            markerDrawer.close();
-            addMarkers();
-        } else if (watchDrawer.isShown()) {
+        if (watchDrawer.isShown()) {
             watchDrawer.close();
             addMarkers();
         } else {
-            super.onBackToMain();
+            super.onBackToSync();
         }
-    }
-
-    @FXML
-    public void changeListView(ActionEvent event) throws VetoException, FlowException {
-        actionHandler.handle("workman");
     }
 
     public void createWatchDrawer() {
@@ -343,7 +318,7 @@ public class ControlController  extends BaseController implements MapComponentIn
         watchDrawer.setVisible(true);
 
         ControlPosition control = (ControlPosition) controlListView.getSelectionModel().getSelectedItem().getUserData();
-        centerMap(new LatLong(control.getLatitude(), control.getLongitude()));
+        addMarker(control);
 
         if(drawerWatchFirstShow)
             createWatchDrawer();
@@ -353,7 +328,13 @@ public class ControlController  extends BaseController implements MapComponentIn
 
         watchData = FXCollections.observableArrayList();
 
-        positionsUser = service.findAllPositionsByControl(control);
+        if (isDateReady && fromPicker.getValue() != null && toPicker.getValue() != null)
+            positionsUser = service.findAllPositionsByControlAndCompany(control, getCompany(), from, to);
+        else {
+            watchDrawer.close();
+            showSnackBar("Seleccionar el rango de preciosa y presione buscar.");
+            return;
+        }
 
         for (Position position: positionsUser) {
 
@@ -366,16 +347,21 @@ public class ControlController  extends BaseController implements MapComponentIn
                     .getFechaConMesYHora(position.getTime()));
             timeLabel.setFont( new Font(null, 12));
             timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
+            Label watchLabel  = new Label("   Guardia Nro: "+position.getWatch().getId());
+            watchLabel.setFont( new Font(null, 10));
+            watchLabel.setTextFill(Color.valueOf("#4B919F"));
+            watchLabel.setAlignment(Pos.TOP_RIGHT);
+            watchLabel.setPrefWidth(200);
             ImageView iconImage = null;
             try {
                 iconImage = new ImageView(
                         new Image(new FileInputStream("src/img/icon_multiple_marker_64.png")));
-                iconImage.setFitHeight(30);
-                iconImage.setFitWidth(30);
+                iconImage.setFitHeight(45);
+                iconImage.setFitWidth(45);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            labelsVBox.getChildren().addAll(nameLabel, timeLabel);
+            labelsVBox.getChildren().addAll(nameLabel, timeLabel, watchLabel);
             hBox.getChildren().addAll(iconImage, labelsVBox);
 
             hBox.setUserData(position);
@@ -388,7 +374,7 @@ public class ControlController  extends BaseController implements MapComponentIn
         watchListView.setVerticalGap(2.0);
         watchListView.depthProperty().set(1);
 
-        //filterWatch();*/
+        filterWatch();
     }
 
     private void showWatchesDetail() {
@@ -400,62 +386,11 @@ public class ControlController  extends BaseController implements MapComponentIn
                     showSnackBar("Espere que se cargue el mapa");
                     return;
                 }
-                openedMarkersDrawer();
+                //openedMarkersDrawer();
+                addFlag((Position) watchListView.getSelectionModel()
+                        .getSelectedItem().getUserData());
             }
         });
-    }
-
-    public void openedMarkersDrawer() {
-
-        markerDrawer.open();
-        markerDrawer.setVisible(true);
-
-        Watch watch = (Watch) watchListView.getSelectionModel()
-                .getSelectedItem().getUserData();
-
-        if(drawerMarkerFirstShow)
-            createMarkerDrawer();
-
-        markerTimeLabel.setText("   "+RadarDate
-                .getFechaConMes(new DateTime(watch.getStartTime())));
-
-        markerData = FXCollections.observableArrayList();
-
-        positionWatch = service.findAllPositionsByWatch(watch);
-
-        for (Position position: positionWatch) {
-
-            HBox hBox = new HBox();
-            VBox labelsVBox = new VBox();
-            Label placeLabel = new Label("   "+position.getControlPosition().getPlaceName());
-            placeLabel.setFont(new Font(null, 14));
-            Label timeLabel  = new Label("   "+RadarDate
-                    .getHora(position.getTime()));
-            timeLabel.setFont( new Font(null, 12));
-            timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
-            ImageView iconImage = null;
-            try {
-                iconImage = new ImageView(
-                        new Image(new FileInputStream("src/img/marker_in_map_64.png")));
-                iconImage.setFitHeight(40);
-                iconImage.setFitWidth(40);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            labelsVBox.getChildren().addAll(placeLabel, timeLabel);
-            hBox.getChildren().addAll(iconImage, labelsVBox);
-
-            hBox.setUserData(position);
-            markerData.add(hBox);
-        }
-        addMarkersRoute();
-
-        markerListView.setItems(markerData);
-        markerListView.setExpanded(true);
-        markerListView.setVerticalGap(2.0);
-        markerListView.depthProperty().set(1);
-
-        filterMarker();
     }
 
     private void showMarker() {
@@ -503,6 +438,34 @@ public class ControlController  extends BaseController implements MapComponentIn
 
     }
 
+    public void addFlag(Position position) {
+
+        markers = new ArrayList<>();
+        markersOptions = new ArrayList<>();
+
+        LatLong latLong = new LatLong(position.getLatitude(), position.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLong);
+        markerOptions.animation(Animation.DROP);
+        markerOptions.icon("flag_blue_32.png");
+        Marker marker = new Marker(markerOptions);
+        marker.setTitle(position.getControlPosition().getPlaceName());
+        map.addMarker(marker);
+        markers.add(marker);
+        markersOptions.add(markerOptions);
+
+        map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+            showSnackBar(position.getWatch().getUser().getLastname()
+                    +" "+position.getWatch().getUser().getName()+"\n"+RadarDate
+                    .getFechaConMesYHora(position.getTime()));
+            System.out.println("You clicked the line at LatLong: lat: " +
+                    position.getLatitude() + " lng: " + position.getLongitude());
+        });
+
+
+        //centerMap(new LatLong(position.getLatitude(), position.getLongitude()));
+    }
+
     public void addMarkers() {
 
         map.clearMarkers();
@@ -532,35 +495,35 @@ public class ControlController  extends BaseController implements MapComponentIn
         centerMap();
     }
 
+    public void addMarker(ControlPosition control) {
+
+        map.clearMarkers();
+
+        markers = new ArrayList<>();
+        markersOptions = new ArrayList<>();
+
+        LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLong);
+        markerOptions.animation(Animation.DROP);
+        markerOptions.icon("red_marker_32.png");
+        Marker marker = new Marker(markerOptions);
+        marker.setTitle(control.getPlaceName());
+        map.addMarker(marker);
+        markers.add(marker);
+        markersOptions.add(markerOptions);
+
+        map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+            showSnackBar(control.getPlaceName());
+            System.out.println("You clicked the line at LatLong: lat: " +
+                    control.getLatitude() + " lng: " + control.getLongitude());
+        });
+
+        centerMap(new LatLong(control.getLatitude(), control.getLongitude()));
+    }
+
     public void addMarkersRoute() {
         for (Position position: positionWatch) {
-
-            /*ControlPosition control = null;
-            for (ControlPosition controlPosition: controlList) {
-                if (position.getControlPosition().getId().equals(controlPosition.getId())) {
-                    control = controlPosition;
-                }
-            }
-
-            if (control != null) {
-                map.removeMarker(markers.get(controlList.indexOf(control)));
-                LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLong);
-                markerOptions.animation(Animation.DROP);
-                markerOptions.icon("flag_blue_32.png");
-                Marker marker = new Marker(markerOptions);
-                marker.setTitle(control.getPlaceName());
-                map.addMarker(marker);
-                ControlPosition finalControl = control;
-                map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
-                    showSnackBar(finalControl.getPlaceName());
-                    System.out.println("You clicked the line at LatLong: lat: " +
-                            finalControl.getLatitude() + " lng: " + finalControl.getLongitude());
-                });
-            } else {
-                System.err.println("The control position didn't has match");
-            }*/
 
             LatLong latLong = new LatLong(position.getLatitude(), position.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
@@ -606,65 +569,6 @@ public class ControlController  extends BaseController implements MapComponentIn
         map.fitBounds(latLongBounds);
     }
 
-    private void filterUser() {
-        FilteredList<HBox> filteredData = new FilteredList<>(userData, p -> true);
-        userFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(hBox -> {
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                User user = (User) hBox.getUserData();
-                if (user == null)
-                    return false;
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = userFilterField.getText().toLowerCase();
-
-                String fullName = user.getLastname()+" "+user.getName();
-                if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                }
-                return false; // Does not match.
-            });
-        });
-
-        SortedList<HBox> sortedData = new SortedList<>(filteredData);
-        userListView.setItems(sortedData);
-        checkUserFilter(filteredData);
-    }
-
-    void checkUserFilter(FilteredList<HBox> filteredData) {
-        filteredData.setPredicate(hBox -> {
-            // If filter text is empty, display all persons.
-            if (userFilterField.getText() == null || userFilterField.getText().isEmpty()) {
-                return true;
-            }
-
-            User user = (User) hBox.getUserData();
-            // Compare first name and last name of every person with filter text.
-            String lowerCaseFilter = userFilterField.getText().toLowerCase();
-
-            String fullName = user.getLastname()+" "+user.getName();
-            if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
-                return true; // Filter matches first name.
-            } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
-                return true; // Filter matches last name.
-            } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
-                return true; // Filter matches last name.
-            } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
-                return true; // Filter matches last name.
-            }
-            return false; // Does not match.
-        });
-    }
-
     private void filterWatch() {
         FilteredList<HBox> filteredData = new FilteredList<>(watchData, p -> true);
         watchFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -674,15 +578,19 @@ public class ControlController  extends BaseController implements MapComponentIn
                     return true;
                 }
 
-                Watch watch = (Watch) hBox.getUserData();
-                if (watch == null)
+                Position position = (Position) hBox.getUserData();
+                if (position == null)
                     return false;
                 // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = watchFilterField.getText().toLowerCase();
 
                 String timeString = RadarDate
-                        .getFechaConMes(new DateTime(watch.getStartTime()));
+                        .getFechaConMes(new DateTime(position.getTime()));
+                String fullName = position.getWatch().getUser().getLastname()
+                        +" "+position.getWatch().getUser().getName();
                 if (timeString.toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches first name.
                 }
                 return false; // Does not match.
@@ -701,15 +609,19 @@ public class ControlController  extends BaseController implements MapComponentIn
                 return true;
             }
 
-            Watch watch = (Watch) hBox.getUserData();
-            if (watch == null)
+            Position position = (Position) hBox.getUserData();
+            if (position == null)
                 return false;
             // Compare first name and last name of every person with filter text.
             String lowerCaseFilter = watchFilterField.getText().toLowerCase();
 
             String timeString = RadarDate
-                    .getFechaConMes(new DateTime(watch.getStartTime()));
+                    .getFechaConMes(new DateTime(position.getTime()));
+            String fullName = position.getWatch().getUser().getLastname()
+                    +" "+position.getWatch().getUser().getName();
             if (timeString.toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches first name.
+            } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
                 return true; // Filter matches first name.
             }
             return false; // Does not match.

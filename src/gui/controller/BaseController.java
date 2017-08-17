@@ -22,6 +22,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import model.Company;
 import service.RadarService;
 import util.ExtendedAnimatedFlowContainer;
 
@@ -64,6 +65,13 @@ public class BaseController {
 
     protected RadarService service = RadarService.getInstance();
 
+    protected Company company;
+
+    public Company getCompany() {
+        company = (Company) flowContext.getRegisteredObject("company");
+        return company;
+    }
+
     @ActionMethod("back")
     protected void onBackController() {
         try {
@@ -79,12 +87,26 @@ public class BaseController {
         }
     }
 
-    protected void onBackToMain() {
+    protected void onBackToSync() {
         try {
             ExtendedAnimatedFlowContainer animations = (ExtendedAnimatedFlowContainer)
                     flowContext.getRegisteredObject("AnimatedFlow");
             animations.changeAnimation(ContainerAnimations.SWIPE_RIGHT);
             actionHandler.handle("sync");
+            animations.changeAnimation(ContainerAnimations.SWIPE_LEFT);
+        } catch (VetoException e) {
+            e.printStackTrace();
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void onBackToStart() {
+        try {
+            ExtendedAnimatedFlowContainer animations = (ExtendedAnimatedFlowContainer)
+                    flowContext.getRegisteredObject("AnimatedFlow");
+            animations.changeAnimation(ContainerAnimations.SWIPE_RIGHT);
+            actionHandler.handle("start");
             animations.changeAnimation(ContainerAnimations.SWIPE_LEFT);
         } catch (VetoException e) {
             e.printStackTrace();
@@ -161,10 +183,37 @@ public class BaseController {
         );
     }
 
-    protected void setBackButtonImage() {
+    protected void setTitleToCompany(String title) {
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            Stage stage = (Stage) flowContext.getRegisteredObject("Stage");
+                            if (title == null || title.isEmpty())
+                                stage.setTitle(getCompany().getName());
+                            else
+                            stage.setTitle(getCompany().getName()+" - "+title);
+                        });
+                    }
+                }, 500, 500
+        );
+    }
+
+    protected void setBackButtonImageBlack() {
         try {
             backButton.setGraphic(new ImageView(
                     new Image(new FileInputStream("src/img/arrow_back_icon16.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void setBackButtonImageWhite() {
+        try {
+            backButton.setGraphic(new ImageView(
+                    new Image(new FileInputStream("src/img/back_white_16.png"))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

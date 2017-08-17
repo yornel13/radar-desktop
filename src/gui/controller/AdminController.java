@@ -3,7 +3,6 @@ package gui.controller;
 
 import com.jfoenix.controls.*;
 import io.datafx.controller.ViewController;
-import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -33,7 +32,6 @@ import util.RadarFilters;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class AdminController extends BaseController implements EventHandler<Mous
     public void init() {
 
         setTitle("Administradores");
-        setBackButtonImage();
+        setBackButtonImageBlack();
 
         loadListView();
         loadSelectedAdmin();

@@ -24,11 +24,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.Admin;
 import model.Company;
-import org.joda.time.DateTime;
 import util.Const;
-import util.Password;
 import util.RadarFilters;
 
 import javax.annotation.PostConstruct;
@@ -80,7 +77,7 @@ public class CompanyController extends BaseController implements EventHandler<Mo
     public void init() {
 
         setTitle("Empresas");
-        setBackButtonImage();
+        setBackButtonImageBlack();
 
         loadListView();
         loadSelectedCompany();

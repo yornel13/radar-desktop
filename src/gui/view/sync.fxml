@@ -5,39 +5,33 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
       <children>
          <Pane prefHeight="585.0" prefWidth="860.0" style="-fx-background-color: #03a9f4;">
             <children>
-               <JFXButton fx:id="buttonImport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="160.0" layoutY="210.0" onAction="#importFile" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #ffc107;" text="Importar" textFill="WHITE">
+               <JFXButton fx:id="buttonMap2" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" focusTraversable="false" layoutX="500.0" layoutY="200.0" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #ffc107;" text="Por Ubicaciones" textAlignment="CENTER" textFill="WHITE">
                   <font>
-                     <Font size="15.0" />
-                  </font>
-                  <styleClass>
-                     <String fx:value="circle_button" />
-                     <String fx:value="buttonHoverMenu" />
-                  </styleClass></JFXButton>
-               <JFXButton fx:id="buttonMap" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" focusTraversable="false" layoutX="360.0" layoutY="200.0" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #ffc107;" text="Control" textAlignment="CENTER" textFill="WHITE">
-                  <font>
-                     <Font size="15.0" />
+                     <Font size="12.0" />
                   </font>
                   <styleClass>
                      <String fx:value="circle_button_center" />
                      <String fx:value="buttonHoverMenu" />
-                  </styleClass></JFXButton>
-               <JFXButton fx:id="buttonExport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="580.0" layoutY="210.0" onAction="#exportFile" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #ffc107;" text="Exportar" textFill="WHITE">
+                  </styleClass>
+               </JFXButton>
+               <JFXButton fx:id="buttonMap1" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" focusTraversable="false" layoutX="250.0" layoutY="200.0" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #ffc107;" text="Por Empleados" textAlignment="CENTER" textFill="WHITE">
                   <font>
-                     <Font size="15.0" />
+                     <Font size="12.0" />
                   </font>
                   <styleClass>
-                     <String fx:value="circle_button" />
+                     <String fx:value="circle_button_center" />
                      <String fx:value="buttonHoverMenu" />
-                  </styleClass></JFXButton>
-               <JFXButton fx:id="optionAdmin" focusTraversable="false" layoutX="20.0" layoutY="14.0" text="Administradores" textFill="WHITE">
+                  </styleClass>
+               </JFXButton>
+               <JFXButton fx:id="optionEmployee" focusTraversable="false" layoutX="80.0" layoutY="14.0" text="Empleados" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -45,31 +39,7 @@
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </JFXButton>
-               <JFXButton fx:id="optionEnterprise" focusTraversable="false" layoutX="200.0" layoutY="14.0" text="Empresas" textFill="WHITE">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </JFXButton>
-               <JFXButton fx:id="optionEmployee" focusTraversable="false" layoutX="350.0" layoutY="14.0" text="Empleados" textFill="WHITE">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </JFXButton>
-               <JFXButton fx:id="optionControl" focusTraversable="false" layoutX="500.0" layoutY="14.0" text="Marcadores" textFill="WHITE">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </JFXButton>
-               <JFXButton fx:id="optionAssign" focusTraversable="false" layoutX="640.0" layoutY="14.0" text="Asignar" textFill="WHITE">
+               <JFXButton fx:id="optionAssign" focusTraversable="false" layoutX="220.0" layoutY="14.0" text="Asignar" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -79,6 +49,7 @@
                </JFXButton>
             </children>
          </Pane>
+         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" focusTraversable="false" prefHeight="45.0" prefWidth="45.0" />
       </children>
    </AnchorPane>
 </StackPane>

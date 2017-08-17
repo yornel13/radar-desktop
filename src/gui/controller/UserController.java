@@ -9,12 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Tab;
@@ -121,8 +119,8 @@ public class UserController extends BaseController {
     @PostConstruct
     public void init() throws FileNotFoundException {
 
-        setTitle("Empleados");
-        setBackButtonImage();
+        setTitleToCompany("Empleados");
+        setBackButtonImageBlack();
 
         createTabPane();
         createFloatingButton();
@@ -155,7 +153,8 @@ public class UserController extends BaseController {
     }
 
     private void loadUserListView() throws IOException {
-        userList = service.getAllUser();
+
+        userList = service.getAllUserByCompany(getCompany());
 
         empData = FXCollections.observableArrayList();
 
@@ -374,10 +373,8 @@ public class UserController extends BaseController {
         } else if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 1) {
             if (createGroupLabel.isVisible()) {
                 saveGroup();
-                setTabGroupFields();
             } else if (editGroupLabel.isVisible()) {
                 saveEditedGroup(selectedGroup);
-                groupListViewClick(clickPrimaryMouseButton());
             }
         }
     }
@@ -592,14 +589,20 @@ public class UserController extends BaseController {
 
     public void groupListViewClick(MouseEvent event) {
 
-        if (event.getButton() == MouseButton.PRIMARY
-                && groupListView.getSelectionModel().getSelectedItem() != null) {
+        if (groupListView.getSelectionModel().getSelectedItem() != null) {
 
-            selectedGroup = (Group) groupListView
-                    .getSelectionModel().getSelectedItem().getUserData();
+            groupListViewClick(event, (Group) groupListView
+                    .getSelectionModel().getSelectedItem().getUserData());
+        }
+    }
+
+    public void groupListViewClick(MouseEvent event, Group group) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+
+            selectedGroup = group;
 
             groupNameField.setText(selectedGroup.getName());
-            userList = service.findUserByGroupId(selectedGroup.getId());
+            userList = service.findUsersByGroupIdAndCompany(selectedGroup.getId(), getCompany());
 
             ImageView editIcon = null;
             try {
@@ -647,7 +650,7 @@ public class UserController extends BaseController {
     private void loadAllEmpGroupListView(Group group) {
 
         editGroup.setVisible(false);
-        empGroupList = service.findAllOrderByGroup();
+        empGroupList = service.findAllOrderByGroup(getCompany());
 
         empGroupData = FXCollections.observableArrayList();
 
@@ -807,6 +810,7 @@ public class UserController extends BaseController {
             service.doEdit();
             showSnackBar("Grupo creado con exito");
             loadGroupListView();
+            setTabGroupFields();
         }
     }
 
@@ -838,22 +842,29 @@ public class UserController extends BaseController {
     }
 
     public void saveEditedGroup(Group group) {
-        group.setName(groupNameField.getText());
-        group.setLastUpdate(new DateTime().getMillis());
-        group.setActive(true);
+        if(groupNameField.getText().isEmpty()) {
+            showDialog("Nombre de grupo vacio",
+                    "Debe asignar un nombre al grupo");
+        } else {
+            group.setName(groupNameField.getText());
+            group.setLastUpdate(new DateTime().getMillis());
+            group.setActive(true);
 
-        for(User user : empGroupData) {
-            if(user.isSelected()) {
-                user.setGroup(group);
-            } else {
-                if (user.getGroup() != null
-                        && user.getGroup().getId().equals(group.getId())) {
-                    user.setGroup(null);
+            for (User user : empGroupData) {
+                if (user.isSelected()) {
+                    user.setGroup(group);
+                } else {
+                    if (user.getGroup() != null
+                            && user.getGroup().getId().equals(group.getId())) {
+                        user.setGroup(null);
+                    }
                 }
             }
+            service.doEdit();
+            showSnackBar("Grupo editado con exito");
+            loadGroupListView();
+            groupListViewClick(clickPrimaryMouseButton(), group);
         }
-        service.doEdit();
-        showSnackBar("Grupo editado con exito");
     }
 
     private void createTabPane() {
@@ -930,8 +941,8 @@ public class UserController extends BaseController {
             dialogType = Const.DIALOG_DELETE;
             showDialog("Confirmacion",
                     "¿Seguro que desea borrar este grupo: " +group.getName()+"? \n" +
-                            "Los empleados relacionado con este conjunto, quedaran disponibles " +
-                            "para ser asignado a otro grupo");
+                            "Todos Los empleados relacionados con este grupo, incluyendo los de otras empresas,\nquedaran sin grupo y disponibles " +
+                            "para ser asignados a otro grupo.");
         } else {
             dialogType = Const.DIALOG_ENABLE;
             showDialog("Confirmacion",
@@ -1077,6 +1088,7 @@ public class UserController extends BaseController {
                 user.setCreateDate(new DateTime().getMillis());
                 user.setLastUpdate(new DateTime().getMillis());
                 user.setActive(true);
+                user.setCompany(service.findCompanyById(getCompany().getId()));
                 service.saveUser(user);
                 loadListView();
                 showSnackBar("Empleado creado con exito");
@@ -1098,7 +1110,8 @@ public class UserController extends BaseController {
                     group = service.findGroupById(selectedGroup.getId());
                     userList = service.findUserByGroupId(selectedGroup.getId());
 
-                    for (User userGroupId : userList) userGroupId.setGroup(null);
+                    for (User userGroupId : userList)
+                        userGroupId.setGroup(null);
                     service.doEdit();
 
                     if(service.deleteGroup(group)) {

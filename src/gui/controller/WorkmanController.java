@@ -20,7 +20,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -122,14 +121,14 @@ public class WorkmanController extends BaseController implements MapComponentIni
     @PostConstruct
     public void init() throws FileNotFoundException {
 
-        setTitle("Control de Guardias - Por empleado");
-        setBackButtonImage();
+        setTitleToCompany("Control de Guardias (Por empleado)");
+        setBackButtonImageBlack();
 
         mapView.addMapInializedListener(this);
 
         controlList = service.getAllControlActive();
 
-        users = service.getAllUserActive();
+        users = service.getAllUserByCompanyActive(getCompany());
 
         if(users == null) {
             System.err.println("No users");
@@ -255,13 +254,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
         } else if (watchDrawer.isShown()) {
             watchDrawer.close();
         } else {
-            super.onBackToMain();
+            super.onBackToSync();
         }
-    }
-
-    @FXML
-    public void changeListView(ActionEvent event) throws VetoException, FlowException {
-        actionHandler.handle("control");
     }
 
     public void createWatchDrawer() {
@@ -409,8 +403,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
                     .getSelectedItem().getUserData() != null) {
                 Position position = (Position)
                         markerListView.getSelectionModel().getSelectedItem().getUserData();
-                LatLong latLong = new LatLong(position.getControlPosition().getLatitude(),
-                        position.getControlPosition().getLongitude());
+                LatLong latLong = new LatLong(position.getLatitude(),
+                        position.getLongitude());
                 centerMap(latLong);
             }
         });

@@ -9,7 +9,6 @@ import com.lynden.gmapsfx.MapReadyListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import io.datafx.controller.ViewController;
-import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -19,7 +18,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -125,7 +123,7 @@ public class AssignController extends BaseController implements MapComponentInit
     public void init() throws FileNotFoundException {
 
         setTitle("Asignar Rutas");
-        setBackButtonImage();
+        setBackButtonImageBlack();
 
         loadListView();
         mapView.addMapInializedListener(this);

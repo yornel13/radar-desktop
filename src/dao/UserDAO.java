@@ -167,6 +167,24 @@ public class UserDAO extends BaseHibernateDAO {
 		return (List<User>) result;
 	}
 
+	public List<User> findAllOrderByCompanyId(Long companyId) {
+		Query query = getSession().
+				createSQLQuery("SELECT * FROM user WHERE company_id = :company_id ORDER BY active DESC")
+				.addEntity(User.class)
+				.setParameter("company_id", companyId);
+		Object result = query.list();
+		return (List<User>) result;
+	}
+
+	public List<User> findAllByCompanyIdActive(Long companyId) {
+		Query query = getSession().
+				createSQLQuery("SELECT * FROM user WHERE company_id = :company_id AND active = true")
+				.addEntity(User.class)
+				.setParameter("company_id", companyId);
+		Object result = query.list();
+		return (List<User>) result;
+	}
+
 	public List findAllOrderByGroup() {
 		Query query = getSession().createSQLQuery("SELECT * FROM user ORDER BY group_id ")
 				.addEntity(User.class);
@@ -174,9 +192,23 @@ public class UserDAO extends BaseHibernateDAO {
 		return (List) result;
 	}
 
+	public List findAllByCompanyIdOrderByGroup(Long companyId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM user WHERE company_id = :company_id ORDER BY group_id")
+				.addEntity(User.class)
+				.setParameter("company_id", companyId);
+		Object result = query.list();
+		return (List) result;
+	}
 
-
-
+	public List findUserByCompanyIdByGroupId(Long id, Long companyId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM user WHERE " +
+				"group_id = :group_id and company_id = :company_id")
+				.addEntity(User.class)
+				.setParameter("group_id", id)
+				.setParameter("company_id", companyId);
+		Object result = query.list();
+		return (List) result;
+	}
 
 	public List<User> findAllActive() {
 		Query query = getSession().

@@ -7,6 +7,7 @@ import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.action.ActionMethod;
 import io.datafx.controller.flow.container.AnimatedFlowContainer;
 import io.datafx.controller.flow.container.ContainerAnimations;
+import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import io.datafx.controller.util.VetoException;
 import javafx.fxml.FXML;
@@ -18,7 +19,10 @@ import javax.annotation.PostConstruct;
 
 
 @ViewController("../view/main.fxml")
-public class MainController extends BaseController {
+public class MainController {
+
+    @FXMLViewFlowContext
+    protected ViewFlowContext flowContext;
 
     @FXML
     private StackPane centerPane;
@@ -28,7 +32,8 @@ public class MainController extends BaseController {
     @PostConstruct
     public void init() throws FlowException {
 
-        Flow innerFlow = new Flow(SyncController.class);
+        Flow innerFlow = new Flow(StartController.class);
+        innerFlow.withGlobalLink("start", StartController.class);
         innerFlow.withGlobalLink("sync", SyncController.class);
         innerFlow.withGlobalLink("workman", WorkmanController.class);
         innerFlow.withGlobalLink("control", ControlController.class);

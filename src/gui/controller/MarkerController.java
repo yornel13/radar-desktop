@@ -7,8 +7,6 @@ import com.lynden.gmapsfx.MapReadyListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import io.datafx.controller.ViewController;
-import io.datafx.controller.flow.Flow;
-import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
@@ -35,7 +33,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ControlPosition;
 import model.Route;
@@ -167,7 +164,7 @@ public class MarkerController extends BaseController implements MapComponentInit
     public void init() throws FileNotFoundException {
 
         setTitle("Marcadores y Rutas");
-        setBackButtonImage();
+        setBackButtonImageBlack();
 
         bar.setVisible(false);
 
