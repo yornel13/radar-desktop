@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Tab;
@@ -21,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -90,6 +92,10 @@ public class UserController extends BaseController {
     @FXML
     private Label createGroupLabel;
     @FXML
+    private Label editGroupLabel;
+    @FXML
+    private JFXButton editGroup;
+    @FXML
     private JFXTextField groupNameField;
     private Group selectedGroup;
 
@@ -121,6 +127,7 @@ public class UserController extends BaseController {
         loadSelectedUser();
         editUser();
         addUser();
+     //   editGroup();
 
         passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
@@ -136,7 +143,6 @@ public class UserController extends BaseController {
 
         try {
             loadUserListView();
-            loadGroupListView();
             nonUserInfo();
             filterUser();
         } catch (IOException e) {
@@ -215,7 +221,6 @@ public class UserController extends BaseController {
             if (event.getButton() == MouseButton.PRIMARY
                                   && employeeListView.getSelectionModel().getSelectedItem() != null) {
                 editingPassword = false;
-
                 nonEditableUser();
 
                 User user = (User) employeeListView
@@ -230,7 +235,7 @@ public class UserController extends BaseController {
                 nameField.setText(user.getName());
                 lastNameField.setText(user.getLastname());
                 passwordField.setText(user.getPassword());
-                saveChanges(user.getDni(), user.getName(), user.getLastname());
+                saveEditedUser(user.getDni(), user.getName(), user.getLastname());
 
                 passwordField.setOnMousePressed(event1 -> {
                     if (!editingPassword) {
@@ -246,9 +251,11 @@ public class UserController extends BaseController {
         employeeLabel.setVisible(true);
         createGroupLabel.setVisible(false);
         editLabel.setVisible(false);
+        editGroupLabel.setVisible(false);
         addLabel.setVisible(false);
         groupLabel.setVisible(false);
 
+        editGroup.setVisible(false);
         dniField.setVisible(true);
         dniField.setEditable(false);
         dniField.setDisable(true);
@@ -264,7 +271,6 @@ public class UserController extends BaseController {
         empGroupListView.setVisible(false);
         groupNameField.setVisible(false);
 
-
         editButton.setVisible(true);
         editButton.setDisable(true);
         saveButton.setVisible(true);
@@ -274,7 +280,6 @@ public class UserController extends BaseController {
         saveButton.setPrefWidth(320);
         cancelGroupButton.setVisible(false);
         floatingButton.setStyle("-fx-background-color: #ffc107");
-
     }
 
     private void setAddUserFields() {
@@ -303,15 +308,16 @@ public class UserController extends BaseController {
     }
 
     private void addUser() {
-    if(employeeListView.isVisible()){
+
         floatingButton.setOnAction(eventAction -> {
             setAddUserFields();
             saveButton.setOnAction(event -> {
                 if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
-                        || passwordField.getText().isEmpty()){
+                        || passwordField.getText().isEmpty()
+                        || dniField.getText().isEmpty()) {
 
                     dialogType = Const.DIALOG_NOTIFICATION;
-                    showDialogNotification("Campo vacio",
+                    showDialogNotification("Campo vacio!",
                             "Debe llenar todos los campos para crear un empleado");
                 } else if (passwordField.getText().length() < 4) {
                     dialogType = Const.DIALOG_NOTIFICATION;
@@ -329,26 +335,20 @@ public class UserController extends BaseController {
                     dialogType = Const.DIALOG_SAVE;
                     showDialog("Confirmacion",
                             "¿Seguro que desea crear el empleado: "
-                                    +lastNameField.getText()+" "+nameField.getText()+"?");
+                                    + lastNameField.getText() + " " + nameField.getText() + "?");
                 }
             });
-        });
-    }
+       });
+
 
     }
 
     private void editUser() {
-        editButton.setOnAction(event -> {
-
-            if((nameField.getText().isEmpty() && lastNameField.getText().isEmpty())
-                    && passwordField.getText().isEmpty()) {
-                dialogType = Const.DIALOG_NOTIFICATION;
-                showDialogNotification("Debe seleccionar un usuario!",
-                        "Seleccione un usuario de la lista para modificar");
-            } else {
+        if(employeeListView.isVisible()) {
+            editButton.setOnAction(event -> {
                 editableUser();
-            }
-        });
+            });
+        }
     }
 
     private void editableUser() {
@@ -419,11 +419,19 @@ public class UserController extends BaseController {
         cancelGroupButton.setVisible(false);
     }
 
+    private void editGroup() {
+        editGroup.setOnMouseClicked(event -> {
+            setEditGroupFields();
+            loadAllEmpGroupListView();
+        });
+    }
+
     private void setTabGroupFields() {
         groupLabel.setVisible(true);
         createGroupLabel.setVisible(false);
         employeeLabel.setVisible(false);
         editLabel.setVisible(false);
+        editGroupLabel.setVisible(false);
         addLabel.setVisible(false);
 
         dniField.clear();
@@ -435,23 +443,29 @@ public class UserController extends BaseController {
         groupNameField.setVisible(true);
         groupNameField.setDisable(true);
         dniField.setVisible(false);
+        dniField.setDisable(true);
         nameField.setVisible(false);
+        nameField.setDisable(true);
         lastNameField.setVisible(false);
+        lastNameField.setDisable(true);
         passwordField.setVisible(false);
+        passwordField.setDisable(true);
         empGroupListView.setVisible(true);
         empGroupListView.getItems().clear();
 
         editButton.setVisible(false);
+
         saveButton.setVisible(true);
         saveButton.setDisable(true);
         saveButton.setLayoutY(490);
         saveButton.setLayoutX(40);
         saveButton.setPrefWidth(220);
         cancelGroupButton.setVisible(true);
+        cancelGroupButton.setDisable(true);
         cancelGroupButton.setLayoutY(490);
         cancelGroupButton.setLayoutX(300);
         cancelGroupButton.setPrefWidth(220);
-        cancelGroupButton.setDisable(true);
+
         floatingButton.setStyle("-fx-background-color: #ffc107");
     }
 
@@ -502,20 +516,34 @@ public class UserController extends BaseController {
         floatingButton.setStyle("-fx-background-color: #ffc107");
 
         groupListView.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY
-                    && groupListView.getSelectionModel().getSelectedItem() != null) {
-
-                selectedGroup = (Group) groupListView
-                        .getSelectionModel().getSelectedItem().getUserData();
-
-                groupNameField.setText(selectedGroup.getName());
-                userList = service.findUserByGroupId(selectedGroup.getId());
-                setTabGroupFields();
-                loadEmpGroupListView();
-            }
-
+            groupListViewClick(event);
         });
+    }
 
+    public void groupListViewClick(MouseEvent event) {
+        System.out.println("call click");
+        if (event.getButton() == MouseButton.PRIMARY
+                && groupListView.getSelectionModel().getSelectedItem() != null) {
+
+            System.out.println("call click enter");
+            selectedGroup = (Group) groupListView
+                    .getSelectionModel().getSelectedItem().getUserData();
+
+            groupNameField.setText(selectedGroup.getName());
+            userList = service.findUserByGroupId(selectedGroup.getId());
+            System.out.println(userList.size());
+            ImageView editIcon = null;
+            try {
+                editIcon = new ImageView(new Image(new FileInputStream("src/img/bluePencil_16.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            editGroup.setVisible(true);
+            editGroup.setGraphic(editIcon);
+
+            setTabGroupFields();
+            loadEmpGroupListView();
+        }
     }
 
     private void loadEmpGroupListView() {
@@ -538,9 +566,7 @@ public class UserController extends BaseController {
                     if (empty) {
                         setGraphic(null);
                     } else {
-
-
-                        HBox hBox = createParentBox(user, selectedGroup);
+                        HBox hBox = createParentBox(user);
                         setGraphic(hBox);
                     }
                 }
@@ -550,15 +576,18 @@ public class UserController extends BaseController {
     }
 
     private void loadAllEmpGroupListView() {
-
-        empGroupList = service.getAllUser();
+        editGroup.setVisible(false);
+        empGroupList = service.findAllOrderByGroup();
 
         empGroupData = FXCollections.observableArrayList();
 
         for(User user: empGroupList) {
             user.setSelected(false);
+            if (user.getGroup() != null
+                    && user.getGroup().getId().equals(selectedGroup.getId())) {
+                user.setSelected(true);
+            }
         }
-
 
         empGroupData.addAll(empGroupList);
         empGroupListView.setItems(empGroupData);
@@ -571,12 +600,11 @@ public class UserController extends BaseController {
                     if (empty) {
                         setGraphic(null);
                         setStyle(null);
+
                     } else {
-
-                        Group group = user.getGroup();
-
-                        HBox hBox = createParentBox(user, group);
+                        HBox hBox = createParentBox(user);
                         setGraphic(hBox);
+
                         if (user.isSelected()) {
                             setStyle("-fx-background-color: #03A9F4;");
                             ((ArrayList<Label>) hBox.getUserData()).get(0).setStyle("-fx-text-fill: white");
@@ -585,7 +613,6 @@ public class UserController extends BaseController {
                             setStyle("-fx-background-color: white;");
                             ((ArrayList<Label>) hBox.getUserData()).get(0).setStyle("-fx-text-fill: black");
                             ((ArrayList<Label>) hBox.getUserData()).get(1).setStyle("-fx-text-fill: #aaaaaa");
-
                         }
                     }
                 }
@@ -603,12 +630,11 @@ public class UserController extends BaseController {
         });
     }
 
-    private HBox createParentBox(User user, Group group) {
+    private HBox createParentBox(User user) {
         HBox parentHBox = new HBox();
         HBox imageHBox = new HBox();
         VBox nameDniVBox = new VBox();
         HBox groupHBox = new HBox();
-
 
         ImageView iconUser = null;
         ImageView iconGroup = null;
@@ -618,6 +644,7 @@ public class UserController extends BaseController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         if (!user.getActive()) {
             ColorAdjust desaturate = new ColorAdjust();
             desaturate.setSaturation(-1);
@@ -628,10 +655,19 @@ public class UserController extends BaseController {
         Label dniUser = new Label("    "+user.getDni());
 
         if(user.getGroup() != null) {
-            Label groupLabel = new Label("   "+group.getName());
+            Label groupLabel = new Label("   "+user.getGroup().getName());
             groupLabel.setTextFill(Color.web("black"));
             groupHBox.setAlignment(Pos.CENTER);
-            groupHBox.getChildren().addAll(iconGroup, groupLabel);
+
+            if(editGroupLabel.isVisible()) {
+                try {
+                    groupHBox.getChildren().addAll(iconGroup, groupLabel);
+
+                } catch (NullPointerException e ){
+                }
+            }else {
+                    groupHBox.getChildren().addAll( iconGroup, groupLabel);
+            }
         }
 
         fullNameUser.setFont(new Font(null,16));
@@ -654,6 +690,31 @@ public class UserController extends BaseController {
         return parentHBox;
     }
 
+    private void setEditGroupFields() {
+        editGroupLabel.setVisible(true);
+        employeeLabel.setVisible(false);
+        editLabel.setVisible(false);
+        addLabel.setVisible(false);
+        createGroupLabel.setVisible(false);
+        groupLabel.setVisible(false);
+
+        groupNameField.setDisable(false);
+        groupNameField.setEditable(true);
+        dniField.setVisible(false);
+        dniField.setDisable(true);
+        nameField.setVisible(false);
+        nameField.setDisable(true);
+        lastNameField.setVisible(false);
+        lastNameField.setDisable(true);
+        passwordField.setVisible(false);
+        passwordField.setDisable(true);
+
+        editButton.setVisible(false);
+        saveButton.setVisible(true);
+        saveButton.setDisable(false);
+        cancelGroupButton.setDisable(false);
+    }
+
     private void setCreateGroupFields() {
         createGroupLabel.setVisible(true);
         groupLabel.setVisible(false);
@@ -661,13 +722,18 @@ public class UserController extends BaseController {
         editLabel.setVisible(false);
         addLabel.setVisible(false);
 
+        editGroup.setVisible(false);
         groupNameField.clear();
         groupNameField.setDisable(false);
         groupNameField.setEditable(true);
         dniField.setVisible(false);
+        dniField.setDisable(true);
         nameField.setVisible(false);
+        nameField.setDisable(true);
         lastNameField.setVisible(false);
+        lastNameField.setDisable(true);
         passwordField.setVisible(false);
+        passwordField.setDisable(true);
         empGroupListView.setDisable(false);
 
         editButton.setVisible(false);
@@ -686,7 +752,6 @@ public class UserController extends BaseController {
     }
 
     private void saveGroup() {
-    if(empGroupListView.isVisible()) {
         if(groupNameField.getText().isEmpty()) {
             showDialog("Nombre de grupo vacio",
                     "Debe asignar un nombre al grupo");
@@ -715,18 +780,38 @@ public class UserController extends BaseController {
         }
     }
 
+    public void saveEditedGroup(Group group) {
+        group.setName(groupNameField.getText());
+        group.setLastUpdate(new DateTime().getMillis());
+        group.setActive(true);
+
+        for(User user : empGroupData) {
+            if(user.isSelected()) {
+                user.setGroup(group);
+            } else {
+                if (user.getGroup() != null
+                        && user.getGroup().getId().equals(group.getId())) {
+                    user.setGroup(null);
+                }
+            }
+        }
+        service.doEdit();
+        showSnackBar("Grupo editado con exito");
     }
 
-    private void createGroupActions() {
 
-        floatingButton.setOnAction(event -> {
-            loadAllEmpGroupListView();
-            setCreateGroupFields();
-        });
-
-        saveButton.setOnMouseClicked(event -> saveGroup());
-
-        cancelGroupButton.setOnAction(event -> setTabGroupFields());
+    private void groupActions() {
+        if(empGroupListView.isVisible()) {
+            saveButton.setOnMouseClicked(event -> {
+                if (createGroupLabel.isVisible()) {
+                    saveGroup();
+                } else if (editGroupLabel.isVisible()) {
+                    saveEditedGroup(selectedGroup);
+                    groupListViewClick(clickPrimaryMouseButton());
+                }
+            });
+            cancelGroupButton.setOnAction(event -> setTabGroupFields());
+        }
     }
 
     private void createTabPane() {
@@ -759,41 +844,52 @@ public class UserController extends BaseController {
                 addUser();
             } else {
                 setTabGroupFields();
-                createGroupActions();
+                try {
+                    loadGroupListView();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                groupActions();
+                editGroup();
+
+                floatingButton.setOnAction(event -> {
+                    setCreateGroupFields();
+                    loadAllEmpGroupListView();
+                });
             }
         });
 
     }
 
-    private void saveChanges(String dni, String name, String lastName) {
-        if(employeeListView.isVisible()){
-            saveButton.setOnAction(event -> {
-                if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
-                        || passwordField.getText().isEmpty()){
+    private void saveEditedUser(String dni, String name, String lastName) {
+        if(employeeListView.isVisible()) {
+                saveButton.setOnAction(event -> {
+                    if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
+                                                       || dniField.getText().isEmpty()
+                                                       || passwordField.getText().isEmpty()) {
 
-                    dialogType = Const.DIALOG_NOTIFICATION;
-                    showDialogNotification("Campo vacio",
-                            "Debe llenar todos los campos para la modificacion del usuario");
-                } else if (editingPassword && passwordField.getText().length() < 4) {
-                    dialogType = Const.DIALOG_NOTIFICATION;
-                    showDialogNotification("Error de contraseña",
-                            "La contraseña debe tener al menos 4 caracteres");
-                } else if (dniField.getText().length() < 5) {
-                    dialogType = Const.DIALOG_NOTIFICATION;
-                    showDialogNotification("Error de dni",
-                            "La dni es muy corto");
-                } else if (!dniField.getText().equals(dni) && service.findUserByDni(dniField.getText()) != null) {
-                    dialogType = Const.DIALOG_NOTIFICATION;
-                    showDialogNotification("Error de dni",
-                            "El dni ya esta siendo usado para otro empleado");
-                } else {
-                    dialogType = Const.DIALOG_SAVE_EDIT;
-                    showDialog("¿Desea Guardar los cambios?",
-                            "¿Seguro que desea modificar el usuario: "+lastName+" "+name+"?");
-                }
-            });
+                        dialogType = Const.DIALOG_NOTIFICATION;
+                        showDialogNotification("Campo vacio!",
+                                "Debe llenar todos los campos para la modificacion del usuario");
+                    } else if (editingPassword && passwordField.getText().length() < 4) {
+                        dialogType = Const.DIALOG_NOTIFICATION;
+                        showDialogNotification("Error de contraseña",
+                                "La contraseña debe tener al menos 4 caracteres");
+                    } else if (dniField.getText().length() < 5) {
+                        dialogType = Const.DIALOG_NOTIFICATION;
+                        showDialogNotification("Error de dni",
+                                "La dni es muy corto");
+                    } else if (!dniField.getText().equals(dni) && service.findUserByDni(dniField.getText()) != null) {
+                        dialogType = Const.DIALOG_NOTIFICATION;
+                        showDialogNotification("Error de dni",
+                                "El dni ya esta siendo usado para otro empleado");
+                    } else {
+                        dialogType = Const.DIALOG_SAVE_EDIT;
+                        showDialog("¿Desea Guardar los cambios?",
+                                "¿Seguro que desea modificar el usuario: " + lastName + " " + name + "?");
+                    }
+                });
         }
-
     }
 
     public void deleteUser() {
@@ -935,11 +1031,15 @@ public class UserController extends BaseController {
 
                 if(groupLabel.isVisible()) {
                     group = service.findGroupById(selectedGroup.getId());
+                    userList = service.findUserByGroupId(selectedGroup.getId());
+
+                    for (User userGroupId : userList) userGroupId.setGroup(null);
+                    service.doEdit();
+
                     if(service.deleteGroup(group)) {
                         showSnackBar("Grupo borrado con exito");
-                    } else {
-
                     }
+
                     setTabGroupFields();
                     try {
                         loadGroupListView();

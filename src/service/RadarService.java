@@ -204,6 +204,7 @@ public class RadarService {
     }
 
 
+
     public void deleteAdmin(Admin admin) {
         adminDAO.delete(admin);
         doEdit();
@@ -226,6 +227,11 @@ public class RadarService {
     }
     public List findUserByGroupId(Long id) {
         List user = userDao.findUserByGroupId(id);
+        return user;
+    }
+
+    public List findAllOrderByGroup() {
+        List user = userDao.findAllOrderByGroup();
         return user;
     }
 

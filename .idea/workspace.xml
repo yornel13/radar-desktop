@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="">
+    <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="last_change_user">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/blackPencil_16.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/blackPencil_24.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/bluePencil_16.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/delete1_16.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/delete2_16.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/remove_16.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dao/UserDAO.java" afterPath="$PROJECT_DIR$/src/dao/UserDAO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/controller/UserController.java" afterPath="$PROJECT_DIR$/src/gui/controller/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/user.fxml" afterPath="$PROJECT_DIR$/src/gui/view/user.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/service/RadarService.java" afterPath="$PROJECT_DIR$/src/service/RadarService.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/GMapsFX/target/" />
@@ -19,24 +28,20 @@
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-520">
-              <caret line="628" column="0" lean-forward="false" selection-start-line="628" selection-start-column="0" selection-end-line="628" selection-end-column="0" />
+            <state relative-caret-position="186">
+              <caret line="865" column="38" lean-forward="false" selection-start-line="865" selection-start-column="27" selection-end-line="865" selection-end-column="38" />
               <folding>
-                <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
-                <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
-                <element signature="method#addUser#0;class#UserController#0" expanded="false" />
-                <element signature="method#editUser#0;class#UserController#0" expanded="false" />
+                <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+                <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+                <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
                 <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
                 <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
                 <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
-                <element signature="method#setCreateGroupFields#0;class#UserController#0" expanded="false" />
-                <element signature="method#saveGroup#0;class#UserController#0" expanded="false" />
-                <element signature="method#saveChanges#0;class#UserController#0" expanded="false" />
-                <element signature="method#deleteUser#0;class#UserController#0" expanded="false" />
+                <element signature="e#19716#20874#0" expanded="true" />
+                <element signature="e#20873#20874#0" expanded="true" />
                 <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
                 <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
                 <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
-                <element signature="method#onDialogAccept#0;class#UserController#0" expanded="false" />
                 <element signature="class#InputController#0;class#UserController#0" expanded="false" />
               </folding>
             </state>
@@ -48,6 +53,15 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>floatingButton</find>
+      <find>editB</find>
+      <find>editGr</find>
+      <find>save</find>
+      <find>debe lle</find>
+      <find>click</find>
+      <find>cancel</find>
+      <find>addLis</find>
+      <find>addLi</find>
+      <find>debe llena</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -61,11 +75,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/gui/view/user.fxml" />
-        <option value="$PROJECT_DIR$/src/dao/UserDAO.java" />
-        <option value="$PROJECT_DIR$/src/service/RadarService.java" />
         <option value="$PROJECT_DIR$/src/dao/GroupDAO.java" />
         <option value="$PROJECT_DIR$/GMapsFX/pom.xml" />
+        <option value="$PROJECT_DIR$/src/service/RadarService.java" />
+        <option value="$PROJECT_DIR$/src/dao/UserDAO.java" />
+        <option value="$PROJECT_DIR$/src/gui/view/user.fxml" />
         <option value="$PROJECT_DIR$/src/gui/controller/UserController.java" />
       </list>
     </option>
@@ -98,47 +112,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="GMapsFX" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="GMapsFX" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="GMapsFX" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="GMapsFX" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="GMapsFX" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="gmapsfx" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
@@ -154,12 +134,6 @@
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="gui" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -167,7 +141,7 @@
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="gui" type="462c0819:PsiDirectoryNode" />
-              <item name="style" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
@@ -176,17 +150,12 @@
               <item name="gui" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -195,7 +164,7 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Gluon/SceneBuilder.lnk" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -338,6 +307,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="" />
@@ -360,34 +332,51 @@
       <option name="project" value="LOCAL" />
       <updated>1502769133637</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="last_change_user">
+      <created>1502807231043</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1502807231043</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34210527" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19106881" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18381241" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967105" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -401,7 +390,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -411,21 +400,153 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#addUser#0;class#UserController#0" expanded="false" />
-            <element signature="method#editUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
             <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
-            <element signature="method#setCreateGroupFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveGroup#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveChanges#0;class#UserController#0" expanded="false" />
-            <element signature="method#deleteUser#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
             <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
             <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
             <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
-            <element signature="method#onDialogAccept#0;class#UserController#0" expanded="false" />
+            <element signature="class#InputController#0;class#UserController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
+            <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
+            <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
+            <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
+            <element signature="class#InputController#0;class#UserController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3400">
+          <caret line="170" column="89" lean-forward="false" selection-start-line="170" selection-start-column="89" selection-end-line="170" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4340">
+          <caret line="232" column="28" lean-forward="false" selection-start-line="232" selection-start-column="28" selection-end-line="232" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
+            <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
+            <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
+            <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
+            <element signature="class#InputController#0;class#UserController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3300">
+          <caret line="165" column="0" lean-forward="false" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2540">
+          <caret line="127" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3640">
+          <caret line="220" column="42" lean-forward="false" selection-start-line="220" selection-start-column="42" selection-end-line="220" selection-end-column="42" />
+          <folding>
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
+            <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
+            <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
+            <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
+            <element signature="class#InputController#0;class#UserController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4240">
+          <caret line="227" column="15" lean-forward="true" selection-start-line="227" selection-start-column="15" selection-end-line="227" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1380">
+          <caret line="82" column="15" lean-forward="true" selection-start-line="82" selection-start-column="15" selection-end-line="82" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1980">
+          <caret line="138" column="5" lean-forward="true" selection-start-line="138" selection-start-column="5" selection-end-line="138" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
+            <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
+            <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
+            <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
             <element signature="class#InputController#0;class#UserController#0" expanded="false" />
           </folding>
         </state>
@@ -443,21 +564,17 @@
         <state relative-caret-position="9000">
           <caret line="653" column="37" lean-forward="true" selection-start-line="653" selection-start-column="37" selection-end-line="653" selection-end-column="37" />
           <folding>
-            <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#addUser#0;class#UserController#0" expanded="false" />
-            <element signature="method#editUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
             <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
-            <element signature="method#setCreateGroupFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveGroup#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveChanges#0;class#UserController#0" expanded="false" />
-            <element signature="method#deleteUser#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
             <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
             <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
             <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
-            <element signature="method#onDialogAccept#0;class#UserController#0" expanded="false" />
             <element signature="class#InputController#0;class#UserController#0" expanded="false" />
           </folding>
         </state>
@@ -467,6 +584,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3700">
           <caret line="200" column="19" lean-forward="false" selection-start-line="200" selection-start-column="19" selection-end-line="200" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -475,21 +593,17 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#addUser#0;class#UserController#0" expanded="false" />
-            <element signature="method#editUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
             <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
-            <element signature="method#setCreateGroupFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveGroup#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveChanges#0;class#UserController#0" expanded="false" />
-            <element signature="method#deleteUser#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
             <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
             <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
             <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
-            <element signature="method#onDialogAccept#0;class#UserController#0" expanded="false" />
             <element signature="class#InputController#0;class#UserController#0" expanded="false" />
           </folding>
         </state>
@@ -499,6 +613,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4540">
           <caret line="227" column="37" lean-forward="false" selection-start-line="227" selection-start-column="37" selection-end-line="227" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -506,7 +621,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1640">
           <caret line="82" column="59" lean-forward="true" selection-start-line="82" selection-start-column="59" selection-end-line="82" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -559,18 +673,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/BaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/controller/MarkerController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-120">
           <caret line="3" column="25" lean-forward="false" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -578,6 +685,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="8" column="36" lean-forward="false" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -609,28 +717,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="72" column="0" lean-forward="false" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/jfoenix.jar!/com/jfoenix/controls/JFXListView.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/view/user.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="113" column="98" lean-forward="false" selection-start-line="113" selection-start-column="98" selection-end-line="113" selection-end-column="98" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -641,26 +731,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="92" column="0" lean-forward="false" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dao/GroupDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
           <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3700">
-          <caret line="200" column="19" lean-forward="false" selection-start-line="200" selection-start-column="19" selection-end-line="200" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -675,30 +749,106 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="138" column="5" lean-forward="false" selection-start-line="138" selection-start-column="5" selection-end-line="138" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4340">
+          <caret line="232" column="28" lean-forward="false" selection-start-line="232" selection-start-column="28" selection-end-line="232" selection-end-column="28" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2860">
+          <caret line="170" column="89" lean-forward="false" selection-start-line="170" selection-start-column="89" selection-end-line="170" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/delete1_16.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/img/delete2_16.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/view/user.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="127" column="48" lean-forward="true" selection-start-line="127" selection-start-column="48" selection-end-line="127" selection-end-column="48" />
+          <folding>
+            <marker date="1502933973834" expanded="true" signature="7495:7574" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="7599:7667" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="7935:8073" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="7977:8045" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="7844:8416" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="7870:8399" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="7892:7961" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="7980:8048" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="8070:8372" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="8173:8209" ph="..." />
+            <marker date="1502933973834" expanded="true" signature="8312:8349" ph="..." />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/com/sun/javafx/event/CompositeEventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/ListCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="329" column="0" lean-forward="false" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/controller/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="118" column="38" lean-forward="false" selection-start-line="118" selection-start-column="38" selection-end-line="118" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-520">
-          <caret line="628" column="0" lean-forward="false" selection-start-line="628" selection-start-column="0" selection-end-line="628" selection-end-column="0" />
+        <state relative-caret-position="186">
+          <caret line="865" column="38" lean-forward="false" selection-start-line="865" selection-start-column="27" selection-end-line="865" selection-end-column="38" />
           <folding>
-            <element signature="method#initializeFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#setAddUserFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#addUser#0;class#UserController#0" expanded="false" />
-            <element signature="method#editUser#0;class#UserController#0" expanded="false" />
+            <element signature="method#onBackController#0;class#UserController#0" expanded="false" />
+            <element signature="method#loadUserListView#0;class#UserController#0" expanded="false" />
+            <element signature="method#createFloatingButton#0;class#UserController#0" expanded="false" />
             <element signature="method#editableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonEditableUser#0;class#UserController#0" expanded="false" />
             <element signature="method#nonUserInfo#0;class#UserController#0" expanded="false" />
-            <element signature="method#setCreateGroupFields#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveGroup#0;class#UserController#0" expanded="false" />
-            <element signature="method#saveChanges#0;class#UserController#0" expanded="false" />
-            <element signature="method#deleteUser#0;class#UserController#0" expanded="false" />
+            <element signature="e#19716#20874#0" expanded="true" />
+            <element signature="e#20873#20874#0" expanded="true" />
             <element signature="method#deleteGroup#0;class#UserController#0" expanded="false" />
             <element signature="method#filterUser#0;class#UserController#0" expanded="false" />
             <element signature="method#checkFilter#0;class#UserController#0" expanded="false" />
-            <element signature="method#onDialogAccept#0;class#UserController#0" expanded="false" />
             <element signature="class#InputController#0;class#UserController#0" expanded="false" />
           </folding>
         </state>
@@ -756,7 +906,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>radar-desktop</last-edited>
+          <last-edited>GMapsFX</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
