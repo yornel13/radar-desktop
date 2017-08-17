@@ -30,7 +30,7 @@ public class SyncController extends BaseController {
     @ActionTrigger("admin")
     private JFXButton optionAdmin;
     @FXML
-    @ActionTrigger("enterprise")
+    @ActionTrigger("company")
     private JFXButton optionEnterprise;
     @FXML
     @ActionTrigger("employee")

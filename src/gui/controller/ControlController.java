@@ -131,6 +131,8 @@ public class ControlController  extends BaseController implements MapComponentIn
 
     public boolean isMapReady = false;
 
+    public boolean isDateReady = true;
+
 
     @PostConstruct
     public void init() throws FileNotFoundException {
@@ -169,6 +171,7 @@ public class ControlController  extends BaseController implements MapComponentIn
         }
         searchButton.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
+                isDateReady = false;
                 try {
                     Date from = Date.valueOf(fromPicker.getValue());
                     Date to = Date.valueOf(toPicker.getValue());
@@ -178,6 +181,7 @@ public class ControlController  extends BaseController implements MapComponentIn
                     }
                     if (isMapReady)
                         addMarkers();
+                    isDateReady = true;
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                     showDialogNotification("Error", "Rango de fechas incorrecto");

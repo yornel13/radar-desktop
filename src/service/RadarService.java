@@ -23,6 +23,7 @@ public class RadarService {
     RouteDAO routeDAO;
     RoutePositionDAO rpDAO;
     RouteMarkerDAO rmDAO;
+    CompanyDAO companyDAO;
     Gson gson;
 
     private static RadarService ourInstance = new RadarService();
@@ -41,6 +42,7 @@ public class RadarService {
         routeDAO = new RouteDAO();
         rpDAO = new RoutePositionDAO();
         rmDAO = new RouteMarkerDAO();
+        companyDAO = new CompanyDAO();
         gson = new Gson();
     }
 
@@ -167,6 +169,11 @@ public class RadarService {
         return admins;
     }
 
+    public List<Company> getAllCompanies() {
+        List<Company> companies = companyDAO.findAll();
+        return companies;
+    }
+
     public List<ControlPosition> getAllControlActive() {
         List<ControlPosition> control = cpDao.findAllActive();
         return control;
@@ -216,6 +223,10 @@ public class RadarService {
         adminDAO.save(admin);
     }
 
+    public void saveCompany(Company company) {
+        companyDAO.save(company);
+    }
+
     public Boolean deleteUser(User user) {
         Boolean isDeleted = true;
         if (getAllUserWatches(user.getId()).isEmpty()) {
@@ -235,10 +246,13 @@ public class RadarService {
         return true;
     }
 
-
-
     public void deleteAdmin(Admin admin) {
         adminDAO.delete(admin);
+        doEdit();
+    }
+
+    public void deleteCompany(Company company) {
+        companyDAO.delete(company);
         doEdit();
     }
 
@@ -272,6 +286,11 @@ public class RadarService {
         return admin;
     }
 
+    public Company findCompanyById(Long id) {
+        Company company = companyDAO.findById(id);
+        return company;
+    }
+
     public Admin findAdminByDni(String dni) {
         Admin admin = adminDAO.findByDni(dni);
         return  admin;
@@ -280,6 +299,16 @@ public class RadarService {
     public Admin findAdminByUserName(String userName){
         Admin admin = adminDAO.findByUserName(userName);
         return admin;
+    }
+
+    public Company findCompanyByAcronym(String acronym){
+        Company company = companyDAO.findByAcronym(acronym);
+        return company;
+    }
+
+    public Company findCompanyByNumeration(String numeration){
+        Company company = companyDAO.findByNumeration(numeration);
+        return company;
     }
 
     public void saveGroup(Group group) {
