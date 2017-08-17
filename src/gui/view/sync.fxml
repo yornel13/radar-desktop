@@ -45,7 +45,7 @@
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </JFXButton>
-               <JFXButton fx:id="optionEmployee" focusTraversable="false" layoutX="207.0" layoutY="12.0" prefHeight="30.0" prefWidth="139.0" text="Empleados" textFill="WHITE">
+               <JFXButton fx:id="optionEnterprise" focusTraversable="false" layoutX="200.0" layoutY="14.0" text="Empresas" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -53,7 +53,7 @@
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </JFXButton>
-               <JFXButton fx:id="optionControl" focusTraversable="false" layoutX="380.0" layoutY="14.0" text="Marcadores" textFill="WHITE">
+               <JFXButton fx:id="optionEmployee" focusTraversable="false" layoutX="350.0" layoutY="14.0" text="Empleados" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -61,7 +61,15 @@
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </JFXButton>
-               <JFXButton fx:id="optionAssign" focusTraversable="false" layoutX="540.0" layoutY="14.0" text="Asignar" textFill="WHITE">
+               <JFXButton fx:id="optionControl" focusTraversable="false" layoutX="500.0" layoutY="14.0" text="Marcadores" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </JFXButton>
+               <JFXButton fx:id="optionAssign" focusTraversable="false" layoutX="640.0" layoutY="14.0" text="Asignar" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>

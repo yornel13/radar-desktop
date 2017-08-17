@@ -30,6 +30,9 @@ public class SyncController extends BaseController {
     @ActionTrigger("admin")
     private JFXButton optionAdmin;
     @FXML
+    @ActionTrigger("enterprise")
+    private JFXButton optionEnterprise;
+    @FXML
     @ActionTrigger("employee")
     private JFXButton optionEmployee;
     @FXML
@@ -56,6 +59,7 @@ public class SyncController extends BaseController {
             optionControl.setGraphic(new ImageView(new Image(new FileInputStream("src/img/pointer_32.png"))));
             optionAdmin.setGraphic(new ImageView(new Image(new FileInputStream("src/img/admin_32.png"))));
             optionEmployee.setGraphic(new ImageView(new Image(new FileInputStream("src/img/employee_32.png"))));
+            optionEnterprise.setGraphic(new ImageView(new Image(new FileInputStream("src/img/enterprise_32.png"))));
             optionAssign.setGraphic(new ImageView(new Image(new FileInputStream("src/img/assign_32.png"))));
 
             ImageView mapImage = new ImageView(new Image(new FileInputStream("src/img/map_icon_full.png")));
