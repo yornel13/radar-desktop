@@ -23,7 +23,7 @@ public class SyncController extends BaseController {
     @FXML
     private JFXButton buttonExport;
     @FXML
-    @ActionTrigger("map")
+    @ActionTrigger("workman")
     private JFXButton buttonMap;
 
     @FXML
@@ -33,7 +33,7 @@ public class SyncController extends BaseController {
     @ActionTrigger("employee")
     private JFXButton optionEmployee;
     @FXML
-    @ActionTrigger("control")
+    @ActionTrigger("marker")
     private JFXButton optionControl;
     @FXML
     @ActionTrigger("assign")

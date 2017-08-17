@@ -98,6 +98,15 @@ public class RadarDate {
                 + dateTime.toString("HH:mm:ss");
         return fecha;
     }
+
+    public static String getFechaConMesYHora(Long longDate) {
+        DateTime dateTime = new DateTime(longDate);
+        String fecha = dateTime.getDayOfMonth() + " de "
+                + getMonthName(dateTime.getMonthOfYear())
+                + " " + dateTime.getYear() + " a las "
+                + dateTime.toString("HH:mm:ss");
+        return fecha;
+    }
     
     public static String getHora(Time time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mma");
@@ -110,7 +119,7 @@ public class RadarDate {
 
     public static String getHora(Long longDate) {
         DateTime dateTime = new DateTime(longDate);
-        String date = "a las "+dateTime.toString("HH:mm");
+        String date = "a las "+dateTime.toString("HH:mm:ss");
         return date;
     }
     

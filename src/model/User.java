@@ -157,4 +157,5 @@ public class User implements java.io.Serializable {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
+
 }

@@ -79,6 +79,20 @@ public class BaseController {
         }
     }
 
+    protected void onBackToMain() {
+        try {
+            ExtendedAnimatedFlowContainer animations = (ExtendedAnimatedFlowContainer)
+                    flowContext.getRegisteredObject("AnimatedFlow");
+            animations.changeAnimation(ContainerAnimations.SWIPE_RIGHT);
+            actionHandler.handle("sync");
+            animations.changeAnimation(ContainerAnimations.SWIPE_LEFT);
+        } catch (VetoException e) {
+            e.printStackTrace();
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void showDialog(String title, String content) {
         dialogTitle.setText(title);
         dialogContent.setText(content);

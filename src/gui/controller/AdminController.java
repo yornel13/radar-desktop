@@ -325,14 +325,15 @@ public class AdminController extends BaseController implements EventHandler<Mous
 
     private void saveChanges(String userName, String dni, String name, String lastName) {
         saveButton.setOnAction(event -> {
-            if ((nameField.getText().isEmpty() || lastNameField.getText().isEmpty())
+            if ((nameField.getText().isEmpty()
+                    || lastNameField.getText().isEmpty())
                     || passwordField.getText().isEmpty()
                     || userNameField.getText().isEmpty()) {
 
                 dialogType = Const.DIALOG_NOTIFICATION;
                 showDialogNotification("Campo vacio",
                         "Debe llenar todos los campos para la modificacion del administrador");
-            } else if (userNameField.getText().equals(userName) && service.findAdminByUserName(userNameField.getText()) != null){
+            } else if (!userNameField.getText().equals(userName) && service.findAdminByUserName(userNameField.getText()) != null){
                 dialogType = Const.DIALOG_NOTIFICATION;
                 showDialogNotification("Error en nombre de usuario",
                         "Este nombre de usuario esta siendo usado por otro administrador");

@@ -124,7 +124,7 @@ public class GroupDAO extends BaseHibernateDAO {
 
 	public List<Group> findAllOrder() {
 		Query query = getSession()
-				.createSQLQuery("SELECT * FROM group BY active DESC")
+				.createSQLQuery("SELECT * FROM group ORDER BY active DESC")
 				.addEntity(Group.class);
 		Object result = query.list();
 		return (List<Group>) result;

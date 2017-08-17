@@ -1,9 +1,6 @@
 package gui.controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
@@ -40,11 +37,12 @@ import util.RadarDate;
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@ViewController(value = "../view/workman.fxml")
-public class WorkmanController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
+@ViewController(value = "../view/control.fxml")
+public class ControlController  extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
 
     /*************USERS****************/
     @FXML
@@ -70,7 +68,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     private ObservableList<HBox> watchData;
 
-    private List<Watch> watchesUser;
+    private List<Position> positionsUser;
 
     private Label watchNameLabel;
 
@@ -99,6 +97,12 @@ public class WorkmanController extends BaseController implements MapComponentIni
     private Label markerTimeLabel;
 
     /*************CONTROL MARKERS****************/
+    @FXML
+    private JFXListView<Label> controlListView;
+
+    private ObservableList<Label> controlPositionsData;
+
+    private List<ControlPosition> controlPositions;
 
     @FXML
     private JFXButton buttonChangeListView;
@@ -113,6 +117,15 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     /*************OTHERS****************/
 
+    @FXML
+    private JFXButton searchButton;
+
+    @FXML
+    private JFXDatePicker fromPicker;
+
+    @FXML
+    private JFXDatePicker toPicker;
+
     private boolean drawerWatchFirstShow = true;
     private boolean drawerMarkerFirstShow = true;
 
@@ -122,7 +135,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
     @PostConstruct
     public void init() throws FileNotFoundException {
 
-        setTitle("Control de Guardias - Por empleado");
+        setTitle("Control de Guardias - Por ubicacion");
         setBackButtonImage();
 
         mapView.addMapInializedListener(this);
@@ -144,42 +157,73 @@ public class WorkmanController extends BaseController implements MapComponentIni
         }
         showWatchesDetail();
         showMarker();
+        createDateFilter();
+    }
+
+    private void createDateFilter() {
+        try {
+            searchButton.setGraphic(new ImageView(
+                    new Image(new FileInputStream("src/img/search_green_16.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        searchButton.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                try {
+                    Date from = Date.valueOf(fromPicker.getValue());
+                    Date to = Date.valueOf(toPicker.getValue());
+                    if (to.before(from)) {
+                        showDialogNotification("Error", "Rango de fechas incorrecto");
+                        return;
+                    }
+                    if (isMapReady)
+                        addMarkers();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    showDialogNotification("Error", "Rango de fechas incorrecto");
+                }
+            }
+        });
     }
 
     public void loadListView() throws FileNotFoundException {
 
-        userData = FXCollections.observableArrayList();
+        controlPositions = service.getAllControlActive();
 
-        for (User user: users) {
+        controlPositionsData = FXCollections.observableArrayList();
 
-            HBox hBox = new HBox();
-            HBox imageHBox = new HBox();
-            VBox labelsVBox = new VBox();
+        for (ControlPosition control : controlPositions) {
 
-            Label nameLabel = new Label("   "+user.getLastname()+" "+user.getName());
-            nameLabel.setFont(new Font(null, 16));
-            Label dniLabel  = new Label("   "+user.getDni());
-            dniLabel.setFont( new Font(null, 14));
-            dniLabel.setTextFill(Color.valueOf("#aaaaaa"));
-            ImageView guardImg = new ImageView(new Image(new FileInputStream("src/img/policeman64.png")));
-            guardImg.setFitHeight(50);
-            guardImg.setFitWidth(50);
+            // ListCells
+            Label nameLabel = new Label("   " + control.getPlaceName());
+            nameLabel.setFont(new Font(null, 15));
+            ImageView guardImg = null;
+            try {
+                guardImg = new ImageView(new Image(
+                        new FileInputStream("src/img/point_marker_64.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (!control.getActive()) {
+                ColorAdjust desaturate = new ColorAdjust();
+                desaturate.setSaturation(-1);
+                guardImg.setEffect(desaturate);
+            }
+            guardImg.setFitHeight(40);
+            guardImg.setFitWidth(40);
 
-            imageHBox.getChildren().addAll(guardImg, nameLabel);
-            imageHBox.setPrefHeight(4);
-            labelsVBox.getChildren().addAll(nameLabel, dniLabel);
-            labelsVBox.setPadding(new Insets(-1,3,-1,3));
-            hBox.getChildren().addAll(imageHBox, labelsVBox);
-            hBox.setUserData(user);
-            userData.addAll(hBox);
-       }
-        userListView.setItems(userData);
-        userListView.setExpanded(true);
-        userListView.setVerticalGap(2.0);
-        userListView.depthProperty().set(1);
-        userListView.setOnMouseClicked(this);
+            nameLabel.setGraphic(guardImg);
 
-        filterUser();
+            nameLabel.setUserData(control);
+            controlPositionsData.addAll(nameLabel);
+        }
+        controlListView.setItems(controlPositionsData);
+        controlListView.setExpanded(true);
+        controlListView.setVerticalGap(2.0);
+        controlListView.depthProperty().set(1);
+        controlListView.setOnMouseClicked(this);
+
+        filterMarker();
     }
 
     public void setDrawer() {
@@ -195,7 +239,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             watchDrawer.setVisible(false);
             setUserFilterField();
         });
-            watchDrawer.setOnDrawerOpened(event -> {
+        watchDrawer.setOnDrawerOpened(event -> {
             setWatchFilterField();
         });
         ///////////////////////////////////////////////////////////////////////////
@@ -241,7 +285,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
     public void handle(MouseEvent event) {
 
         if (event.getButton() == MouseButton.PRIMARY
-                && userListView.getSelectionModel()
+                && controlListView.getSelectionModel()
                 .getSelectedItem().getUserData() != null) {
             openedWatchDrawer();
         }
@@ -254,6 +298,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             addMarkers();
         } else if (watchDrawer.isShown()) {
             watchDrawer.close();
+            addMarkers();
         } else {
             super.onBackToMain();
         }
@@ -261,7 +306,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     @FXML
     public void changeListView(ActionEvent event) throws VetoException, FlowException {
-        actionHandler.handle("control");
+        actionHandler.handle("workman");
     }
 
     public void createWatchDrawer() {
@@ -270,7 +315,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         ImageView iconImage;
         try {
             iconImage = new ImageView(
-                    new Image(new FileInputStream("src/img/policeman_64.png")));
+                    new Image(new FileInputStream("src/img/point_marker_64.png")));
             iconImage.setFitHeight(40);
             iconImage.setFitWidth(40);
             iconHeader.setGraphic(iconImage);
@@ -293,38 +338,45 @@ public class WorkmanController extends BaseController implements MapComponentIni
         watchDrawer.open();
         watchDrawer.setVisible(true);
 
-        User user = (User) userListView.getSelectionModel().getSelectedItem().getUserData();
+        ControlPosition control = (ControlPosition) controlListView.getSelectionModel().getSelectedItem().getUserData();
+        centerMap(new LatLong(control.getLatitude(), control.getLongitude()));
 
         if(drawerWatchFirstShow)
             createWatchDrawer();
 
-        watchNameLabel.setText("   "+user.getLastname()+" "+user.getName());
-        watchDniLabel.setText("     "+user.getDni());
+        watchNameLabel.setText("   "+control.getPlaceName());
+        watchDniLabel.setText("     "+(control.getActive()?"Activo":"Desactivo"));
 
         watchData = FXCollections.observableArrayList();
 
-        watchesUser = service.getAllUserWatches(user.getId());
+        positionsUser = service.findAllPositionsByControl(control);
 
-        for (Watch watch: watchesUser) {
+        for (Position position: positionsUser) {
 
-            HBox wDetail = new HBox();
-            Label watchLabel = new Label();
-            ImageView iconImage;
+            HBox hBox = new HBox();
+            VBox labelsVBox = new VBox();
+            Label nameLabel = new Label("   "+position.getWatch().getUser().getLastname()
+                    +" "+position.getWatch().getUser().getName());
+            nameLabel.setFont(new Font(null, 14));
+            Label timeLabel  = new Label("   "+RadarDate
+                    .getFechaConMesYHora(position.getTime()));
+            timeLabel.setFont( new Font(null, 12));
+            timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
+            ImageView iconImage = null;
             try {
                 iconImage = new ImageView(
                         new Image(new FileInputStream("src/img/icon_multiple_marker_64.png")));
                 iconImage.setFitHeight(30);
                 iconImage.setFitWidth(30);
-                watchLabel.setGraphic(iconImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            watchLabel.setText("   "+RadarDate
-                    .getFechaConMes(new DateTime(watch.getStartTime())));
-            wDetail.getChildren().add(watchLabel);
-            wDetail.setUserData(watch);
-            watchData.add(wDetail);
-            
+            labelsVBox.getChildren().addAll(nameLabel, timeLabel);
+            hBox.getChildren().addAll(iconImage, labelsVBox);
+
+            hBox.setUserData(position);
+            watchData.add(hBox);
+
         }
 
         watchListView.setItems(watchData);
@@ -332,7 +384,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         watchListView.setVerticalGap(2.0);
         watchListView.depthProperty().set(1);
 
-        filterWatch();
+        //filterWatch();*/
     }
 
     private void showWatchesDetail() {
@@ -661,46 +713,46 @@ public class WorkmanController extends BaseController implements MapComponentIni
     }
 
     private void filterMarker() {
-        FilteredList<HBox> filteredData = new FilteredList<>(markerData, p -> true);
+        FilteredList<Label> filteredData = new FilteredList<>(controlPositionsData, p -> true);
         markerFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(hBox -> {
+            filteredData.setPredicate(label -> {
                 // If filter text is empty, display all persons.
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
-                Position position = (Position) hBox.getUserData();
+                ControlPosition position = (ControlPosition) label.getUserData();
                 if (position == null)
                     return false;
                 // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = markerFilterField.getText().toLowerCase();
 
-                if (position.getControlPosition().getPlaceName().toLowerCase().contains(lowerCaseFilter)) {
+                if (position.getPlaceName().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches first name.
                 }
                 return false; // Does not match.
             });
         });
 
-        SortedList<HBox> sortedData = new SortedList<>(filteredData);
-        markerListView.setItems(sortedData);
+        SortedList<Label> sortedData = new SortedList<>(filteredData);
+        controlListView.setItems(sortedData);
         checkMarkerFilter(filteredData);
     }
 
-    void checkMarkerFilter(FilteredList<HBox> filteredData) {
-        filteredData.setPredicate(hBox -> {
+    void checkMarkerFilter(FilteredList<Label> filteredData) {
+        filteredData.setPredicate(label -> {
             // If filter text is empty, display all persons.
             if (markerFilterField.getText() == null || markerFilterField.getText().isEmpty()) {
                 return true;
             }
 
-            Position position = (Position) hBox.getUserData();
+            ControlPosition position = (ControlPosition) label.getUserData();
             if (position == null)
                 return false;
             // Compare first name and last name of every person with filter text.
             String lowerCaseFilter = markerFilterField.getText().toLowerCase();
 
-            if (position.getControlPosition().getPlaceName()
+            if (position.getPlaceName()
                     .toLowerCase().contains(lowerCaseFilter)) {
                 return true; // Filter matches first name.
             }
@@ -708,3 +760,4 @@ public class WorkmanController extends BaseController implements MapComponentIni
         });
     }
 }
+
