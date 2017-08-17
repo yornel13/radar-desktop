@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.Gson;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -101,5 +103,4 @@ public class Group implements java.io.Serializable {
 	public void setUsers(Set users) {
 		this.users = users;
 	}
-
 }

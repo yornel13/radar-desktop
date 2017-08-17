@@ -73,6 +73,16 @@ public class PositionDAO extends BaseHibernateDAO {
 		return (List<Position>) result;
 	}
 
+	public List<Position> findAllByControlId(Long controlId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM position WHERE " +
+				"control_id = :control_id ORDER BY time DESC")
+				.addEntity(Position.class)
+				.setParameter("control_id", controlId);
+
+		Object result = query.list();
+		return (List<Position>) result;
+	}
+
 	public List findByExample(Position instance) {
 		log.debug("finding Position instance by example");
 		try {

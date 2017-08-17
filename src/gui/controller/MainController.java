@@ -29,8 +29,10 @@ public class MainController extends BaseController {
     public void init() throws FlowException {
 
         Flow innerFlow = new Flow(SyncController.class);
-        innerFlow.withGlobalLink("map", WorkmanController.class);
-        innerFlow.withGlobalLink("control", MarkerController.class);
+        innerFlow.withGlobalLink("sync", SyncController.class);
+        innerFlow.withGlobalLink("workman", WorkmanController.class);
+        innerFlow.withGlobalLink("control", ControlController.class);
+        innerFlow.withGlobalLink("marker", MarkerController.class);
         innerFlow.withGlobalLink("admin", AdminController.class);
         innerFlow.withGlobalLink("employee", UserController.class);
         innerFlow.withGlobalLink("assign", AssignController.class);

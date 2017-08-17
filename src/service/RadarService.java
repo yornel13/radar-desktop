@@ -1,10 +1,13 @@
 package service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.*;
 import model.*;
 import org.hibernate.exception.ConstraintViolationException;
+import util.HibernateProxyTypeAdapter;
 import util.HibernateSessionFactory;
 
 import java.util.List;
@@ -19,6 +22,7 @@ public class RadarService {
     PositionDAO posDAO;
     RouteDAO routeDAO;
     RoutePositionDAO rpDAO;
+    RouteMarkerDAO rmDAO;
     Gson gson;
 
     private static RadarService ourInstance = new RadarService();
@@ -36,6 +40,7 @@ public class RadarService {
         posDAO = new PositionDAO();
         routeDAO = new RouteDAO();
         rpDAO = new RoutePositionDAO();
+        rmDAO = new RouteMarkerDAO();
         gson = new Gson();
     }
 
@@ -96,27 +101,50 @@ public class RadarService {
 
     public String getExportJson() {
 
-        String jsonExport = null;
+        JsonObject jsonExport = new JsonObject();
+
+        GsonBuilder b = new GsonBuilder();
+        b.registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY);
+        Gson gson = b.create();
+
         try {
-            Export export = new Export();
-            export.setAdmins(adminDAO.findAllActive());
-            export.setUsers(userDao.findAllActive());
-            for (User user: export.getUsers()) {
-                // Watch(set) give stack over flow error, so this should be null
+            List<User> users = userDao.findAll();
+            for (User user: users) {
                 user.setWatchs(null);
+                user.setRouteMarkers(null);
             }
-            export.setControlPositions(cpDao.findAllActive());
-            for (ControlPosition control: export.getControlPositions()) {
-                // Positions(set) give stack over flow error, so this should be null
+            List<ControlPosition> controlPositions = cpDao.findAll();
+            for (ControlPosition control: controlPositions) {
                 control.setPositions(null);
+                control.setRouteMarkers(null);
+                control.setRoutePositions(null);
             }
-            jsonExport = gson.toJson(export);
+            List<RouteMarker> routeMarkers = rmDAO.findAll();
+            List<Group> groups = (List<Group>) groupDAO.findAll();
+            for (Group group: groups) {
+                group.setUsers(null);
+            }
+            List<Route> routes = (List<Route>) routeDAO.findAll();
+            for (Route route: routes) {
+                route.setGroups(null);
+                route.setRoutePositions(null);
+            }
+            List<RoutePosition> routePositions = rpDAO.findAll();
+            List<Admin> admins = adminDAO.findAll();
+
+            jsonExport.add("admins", gson.toJsonTree(admins));
+            jsonExport.add("users", gson.toJsonTree(users));
+            jsonExport.add("controlPositions", gson.toJsonTree(controlPositions));
+            jsonExport.add("groups", gson.toJsonTree(groups));
+            jsonExport.add("routes", gson.toJsonTree(routes));
+            jsonExport.add("routeMarkers", gson.toJsonTree(routeMarkers));
+            jsonExport.add("routePositions", gson.toJsonTree(routePositions));
 
         } catch (Exception e) {
-            System.err.println("json creation failed");
             e.printStackTrace();
+            System.err.println("json creation failed");
         }
-        return jsonExport;
+        return jsonExport.toString();
     }
 
     public List<Group> getAllGroup() {
@@ -152,7 +180,6 @@ public class RadarService {
     public List<Watch> getAllUserWatches(Long id) {
         List<Watch> watches = watchDAO.findAllByUserId(id);
         return watches;
-
     }
 
     public ControlPosition findCPByLatLong(Double latitude, Double longitude) {
@@ -173,6 +200,11 @@ public class RadarService {
 
     public List<Position> findAllPositionsByWatch(Watch watch) {
         List<Position> positions = posDAO.findAllByWatchId(watch.getId());
+        return positions;
+    }
+
+    public List<Position> findAllPositionsByControl(ControlPosition control) {
+        List<Position> positions = posDAO.findAllByControlId(control.getId());
         return positions;
     }
 
@@ -272,8 +304,6 @@ public class RadarService {
         List<RoutePosition> routePositions = rpDAO.findAllByRouteId(route.getId());
         return routePositions;
     }
-
-
 
     public void deleteAllRPByRouteId(Route route) {
         for (RoutePosition routePosition: findAllRPByRouteId(route)) {

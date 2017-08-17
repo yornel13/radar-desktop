@@ -190,16 +190,27 @@ public class AssignController extends BaseController implements MapComponentInit
 
             HBox parentHBox = new HBox();
             HBox imageHBox = new HBox();
-            HBox groupNameHBox = new HBox();
+            VBox groupNameHBox = new VBox();
 
             ImageView iconGroup = new ImageView(new Image(new FileInputStream("src/img/group1_64.png")));
             iconGroup.setFitHeight(55);
             iconGroup.setFitWidth(55);
             Label groupNameLabel = new Label("    "+group.getName());
             groupNameLabel.setFont(new Font(null,16));
+            Label usersLabel = new Label();
+            Integer number = service.findUserByGroupId(group.getId()).size();
+            if (number == 0) {
+                usersLabel.setText("     Sin empleados");
+            } else if (number == 1) {
+                usersLabel.setText("     1 empleado");
+            } else {
+                usersLabel.setText("     "+number+" empleados");
+            }
+            usersLabel.setFont(new Font(null,12));
+            usersLabel.setTextFill(valueOf("#aaaaaa"));
 
             imageHBox.getChildren().add(iconGroup);
-            groupNameHBox.getChildren().add(groupNameLabel);
+            groupNameHBox.getChildren().addAll(groupNameLabel, usersLabel);
             parentHBox.getChildren().addAll(imageHBox, groupNameHBox);
             parentHBox.setUserData(group);
             groupData.add(parentHBox);
