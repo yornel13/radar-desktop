@@ -90,8 +90,6 @@ public class UserDAO extends BaseHibernateDAO {
 		return (List) result;
 	}
 
-
-
 	public List findByExample(User instance) {
 		log.debug("finding User instance by example");
 		try {
@@ -163,11 +161,22 @@ public class UserDAO extends BaseHibernateDAO {
 
 	public List<User> findAllOrder() {
 		Query query = getSession().
-				createSQLQuery("SELECT * FROM user ORDER BY active DESC")
+				createSQLQuery("SELECT * FROM user ORDER BY active DESC ")
 				.addEntity(User.class);
 		Object result = query.list();
 		return (List<User>) result;
 	}
+
+	public List findAllOrderByGroup() {
+		Query query = getSession().createSQLQuery("SELECT * FROM user ORDER BY group_id ")
+				.addEntity(User.class);
+		Object result = query.list();
+		return (List) result;
+	}
+
+
+
+
 
 	public List<User> findAllActive() {
 		Query query = getSession().

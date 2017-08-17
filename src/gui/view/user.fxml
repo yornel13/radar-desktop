@@ -25,7 +25,7 @@
                 <Font size="14.0" />
              </font>
           </JFXTextField>
-         <Pane layoutX="300.0" prefHeight="585.0" prefWidth="560.0">
+         <Pane layoutX="300.0" layoutY="-1.0" prefHeight="585.0" prefWidth="560.0">
             <children>
                 <JFXTextField fx:id="nameField" alignment="TOP_LEFT" disable="true" editable="false" focusColor="#0288d1" labelFloat="true" layoutX="120.0" layoutY="180.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre">
                   <cursor>
@@ -88,6 +88,11 @@
                            <Font size="25.0" />
                         </font>
                      </Label>
+                     <Label fx:id="editGroupLabel" layoutX="210.0" layoutY="25.0" text="Editar Grupo" textFill="WHITE" visible="false">
+                        <font>
+                           <Font size="25.0" />
+                        </font>
+                     </Label>
                   </children>
                   <effect>
                      <DropShadow blurType="GAUSSIAN" color="#a3a2a2eb" height="62.41" offsetY="1.0" radius="15.1025" width="0.0" />
@@ -111,7 +116,15 @@
                      <Font size="14.0" />
                   </font>
                </JFXButton>
-               <JFXListView fx:id="empGroupListView" layoutX="19.0" layoutY="176.0" prefHeight="290.0" prefWidth="520.0" visible="false" />
+               <JFXListView fx:id="empGroupListView" cacheShape="false" layoutX="19.0" layoutY="176.0" prefHeight="290.0" prefWidth="520.0" visible="false" />
+               <JFXButton fx:id="editGroup" focusTraversable="false" layoutX="452.0" layoutY="125.0" prefHeight="25.0" prefWidth="52.0" textFill="#03a9f4">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <font>
+                     <Font size="13.0" />
+                  </font>
+               </JFXButton>
             </children>
          </Pane>
        </children>
