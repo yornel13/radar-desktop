@@ -174,10 +174,6 @@ public class UserDAO extends BaseHibernateDAO {
 		return (List) result;
 	}
 
-
-
-
-
 	public List<User> findAllActive() {
 		Query query = getSession().
 				createSQLQuery("SELECT * FROM user where active = true")
