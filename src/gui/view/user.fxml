@@ -20,11 +20,16 @@
        <children>
          <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" focusTraversable="false" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: white;" />
           <JFXTabPane fx:id="tabPane" layoutY="46.0" prefHeight="539.0" prefWidth="300.0" />
-          <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" focusColor="#0287cf" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="220.0" promptText="Buscar" style="-fx-prompt-text-fill: #e1e1e1; -fx-text-fill: white;" unFocusColor="#e1e1e1">
-             <font>
-                <Font size="14.0" />
-             </font>
-          </JFXTextField>
+         <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
+         <JFXTextField fx:id="filterFieldGroup" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
          <Pane layoutX="300.0" layoutY="-1.0" prefHeight="585.0" prefWidth="560.0">
             <children>
                 <JFXTextField fx:id="nameField" alignment="TOP_LEFT" disable="true" editable="false" focusColor="#0288d1" labelFloat="true" layoutX="120.0" layoutY="180.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre">
@@ -56,7 +61,7 @@
                       <Font size="14.0" />
                    </font>
                </JFXButton>
-                <JFXButton fx:id="saveButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="120.0" layoutY="430.0" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Guardar" textFill="WHITE">
+                <JFXButton fx:id="saveButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="120.0" layoutY="430.0" onAction="#saveAction" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Guardar" textFill="WHITE">
                    <font>
                       <Font size="14.0" />
                    </font>
@@ -116,7 +121,7 @@
                      <Font size="14.0" />
                   </font>
                </JFXButton>
-               <JFXListView fx:id="empGroupListView" cacheShape="false" layoutX="19.0" layoutY="176.0" prefHeight="290.0" prefWidth="520.0" visible="false" />
+               <JFXListView fx:id="empGroupListView" cacheShape="false" layoutX="19.0" layoutY="176.0" prefHeight="300.0" prefWidth="520.0" visible="false" />
                <JFXButton fx:id="editGroup" focusTraversable="false" layoutX="452.0" layoutY="125.0" prefHeight="25.0" prefWidth="52.0" textFill="#03a9f4">
                   <cursor>
                      <Cursor fx:constant="HAND" />

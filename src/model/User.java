@@ -12,13 +12,14 @@ public class User implements java.io.Serializable {
 	// Fields
 
 	private Long id;
-	private Group group;
 	private String dni;
 	private String name;
 	private String lastname;
 	private String password;
 	private Long createDate;
 	private Long lastUpdate;
+	private Group group;
+	private Company company;
 	private Boolean active;
 	private Set watchs = new HashSet(0);
 	private Set routeMarkers = new HashSet(0);
@@ -136,6 +137,14 @@ public class User implements java.io.Serializable {
 
 	public Set getWatchs() {
 		return this.watchs;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public void setWatchs(Set watchs) {

@@ -13,6 +13,9 @@
         <many-to-one name="group" class="model.Group" fetch="select">
             <column name="group_id" />
         </many-to-one>
+        <many-to-one name="company" class="model.Company" fetch="select">
+            <column name="company_id" />
+        </many-to-one>
         <property name="dni" type="java.lang.String">
             <column name="dni" length="20" not-null="true" />
         </property>

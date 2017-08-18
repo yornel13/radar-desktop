@@ -7,9 +7,12 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.*;
 import model.*;
 import org.hibernate.exception.ConstraintViolationException;
+import org.joda.time.DateTime;
 import util.HibernateProxyTypeAdapter;
 import util.HibernateSessionFactory;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RadarService {
@@ -23,6 +26,7 @@ public class RadarService {
     RouteDAO routeDAO;
     RoutePositionDAO rpDAO;
     RouteMarkerDAO rmDAO;
+    CompanyDAO companyDAO;
     Gson gson;
 
     private static RadarService ourInstance = new RadarService();
@@ -41,6 +45,7 @@ public class RadarService {
         routeDAO = new RouteDAO();
         rpDAO = new RoutePositionDAO();
         rmDAO = new RouteMarkerDAO();
+        companyDAO = new CompanyDAO();
         gson = new Gson();
     }
 
@@ -59,36 +64,32 @@ public class RadarService {
                             control.getLatitude(), control.getLongitude());
                     if (controlDB == null) {
                         cpDao.save(control);
-                    }else{
+                    } else{
                         controlDB.setActive(control.getActive());
                         controlDB.setPlaceName(control.getPlaceName());
                         doEdit();
                     }
                 }
 
-            if (imp.getWatches() != null)
-                for (Watch watch: imp.getWatches()) {
-                    User user = userDao.findByDni(watch.getUser().getDni());
-                    if (user == null){
-                        user = watch.getUser();
-                        userDao.save(user);
-                    }
+            if (imp.getWatches() != null) {
+
+                for (Watch watch : imp.getWatches()) {
+                    User user = userDao.findById(watch.getUser().getId());
                     watch.setUser(user);
                 }
 
-            for (Watch watch: imp.getWatches()) {
+                for (Watch watch : imp.getWatches()) {
 
-                Watch watchDB = watchDAO.findByTime(watch.getStartTime(), watch.getEndTime());
+                    Watch watchDB = watchDAO.findByTime(watch.getStartTime(), watch.getEndTime());
 
-                if (watchDB == null){
-                    watchDAO.save(watch);
-                    for(Position position: watch.getPositionsList()) {
-                        ControlPosition controlDB = cpDao.findByLatitudeLongitude(
-                                position.getControlPosition().getLatitude(),
-                                position.getControlPosition().getLongitude());
-                        position.setWatch(watch);
-                        position.setControlPosition(controlDB);
-                        posDAO.save(position);
+                    if (watchDB == null) {
+                        watchDAO.save(watch);
+                        for (Position position : watch.getPositionsList()) {
+                            ControlPosition controlDB = cpDao.findById(position.getControlPosition().getId());
+                            position.setWatch(watch);
+                            position.setControlPosition(controlDB);
+                            posDAO.save(position);
+                        }
                     }
                 }
             }
@@ -112,6 +113,7 @@ public class RadarService {
             for (User user: users) {
                 user.setWatchs(null);
                 user.setRouteMarkers(null);
+                user.setCompany(null);
             }
             List<ControlPosition> controlPositions = cpDao.findAll();
             for (ControlPosition control: controlPositions) {
@@ -157,14 +159,34 @@ public class RadarService {
         return users;
     }
 
+    public List<User> getAllUserByCompany(Company company) {
+        List<User> users = userDao.findAllOrderByCompanyId(company.getId());
+        return users;
+    }
+
     public List<User> getAllUserActive() {
         List<User> users = userDao.findAllActive();
+        return users;
+    }
+
+    public List<User> getAllUserByCompanyActive(Company company) {
+        List<User> users = userDao.findAllByCompanyIdActive(company.getId());
         return users;
     }
 
     public List<Admin> getAllAdmin() {
         List<Admin> admins = adminDAO.findAll();
         return admins;
+    }
+
+    public List<Company> getAllCompanies() {
+        List<Company> companies = companyDAO.findAll();
+        return companies;
+    }
+
+    public List<Company> getAllCompaniesActive() {
+        List<Company> companies = companyDAO.findAllActive();
+        return companies;
     }
 
     public List<ControlPosition> getAllControlActive() {
@@ -208,12 +230,34 @@ public class RadarService {
         return positions;
     }
 
+    public List<Position> findAllPositionsByControl(ControlPosition control, Date dateFrom, Date dateTo) {
+        List<Position> positions = posDAO.findAllByControlIdBetween(control.getId(), dateFrom.getTime(),
+                new DateTime(dateTo.getTime()).plusDays(1).getMillis());
+        return positions;
+    }
+
+    public List<Position> findAllPositionsByControlAndCompany(ControlPosition control, Company company, Date dateFrom, Date dateTo) {
+        List<Position> positions = posDAO.findAllByControlIdBetween(control.getId(), dateFrom.getTime(),
+                new DateTime(dateTo.getTime()).plusDays(1).getMillis());
+        List<Position> positionsFilter = new ArrayList<>();
+        for (Position position: positions) {
+            if (position.getWatch().getUser().getCompany().getId().equals(company.getId())) {
+                positionsFilter.add(position);
+            }
+        }
+        return positionsFilter;
+    }
+
     public void saveUser(User user) {
         userDao.save(user);
     }
 
     public void saveAdmin(Admin admin) {
         adminDAO.save(admin);
+    }
+
+    public void saveCompany(Company company) {
+        companyDAO.save(company);
     }
 
     public Boolean deleteUser(User user) {
@@ -235,10 +279,13 @@ public class RadarService {
         return true;
     }
 
-
-
     public void deleteAdmin(Admin admin) {
         adminDAO.delete(admin);
+        doEdit();
+    }
+
+    public void deleteCompany(Company company) {
+        companyDAO.delete(company);
         doEdit();
     }
 
@@ -257,19 +304,35 @@ public class RadarService {
         User user = userDao.findByDni(dni);
         return user;
     }
-    public List findUserByGroupId(Long id) {
+
+    public List<User> findUserByGroupId(Long id) {
         List user = userDao.findUserByGroupId(id);
         return user;
     }
 
-    public List findAllOrderByGroup() {
+    public List<User> findUsersByGroupIdAndCompany(Long id, Company company) {
+        List user = userDao.findUserByCompanyIdByGroupId(id, company.getId());
+        return user;
+    }
+
+    public List<User> findAllOrderByGroup() {
         List user = userDao.findAllOrderByGroup();
+        return user;
+    }
+
+    public List<User> findAllOrderByGroup(Company company) {
+        List user = userDao.findAllOrderByCompanyId(company.getId());
         return user;
     }
 
     public Admin findAdminById(Long id) {
         Admin admin = adminDAO.findById(id);
         return admin;
+    }
+
+    public Company findCompanyById(Long id) {
+        Company company = companyDAO.findById(id);
+        return company;
     }
 
     public Admin findAdminByDni(String dni) {
@@ -280,6 +343,16 @@ public class RadarService {
     public Admin findAdminByUserName(String userName){
         Admin admin = adminDAO.findByUserName(userName);
         return admin;
+    }
+
+    public Company findCompanyByAcronym(String acronym){
+        Company company = companyDAO.findByAcronym(acronym);
+        return company;
+    }
+
+    public Company findCompanyByNumeration(String numeration){
+        Company company = companyDAO.findByNumeration(numeration);
+        return company;
     }
 
     public void saveGroup(Group group) {

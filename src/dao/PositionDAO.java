@@ -83,6 +83,17 @@ public class PositionDAO extends BaseHibernateDAO {
 		return (List<Position>) result;
 	}
 
+	public List<Position> findAllByControlIdBetween(Long controlId, Long from, Long to) {
+		Query query = getSession().createSQLQuery("SELECT * FROM position WHERE " +
+				"control_id = :control_id AND time >= :from AND time <= :to ORDER BY time DESC")
+				.addEntity(Position.class)
+				.setParameter("control_id", controlId)
+				.setParameter("to", to)
+				.setParameter("from", from);
+		Object result = query.list();
+		return (List<Position>) result;
+	}
+
 	public List findByExample(Position instance) {
 		log.debug("finding Position instance by example");
 		try {
