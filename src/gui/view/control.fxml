@@ -60,7 +60,7 @@
                </VBox>
             </children>
          </JFXDrawer>
-         <Button layoutX="800.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateMap" text="update" />
+         <Button layoutX="800.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateMap" text="update" visible="false" />
       </children>
    </AnchorPane>
    <JFXDialog fx:id="dialog">

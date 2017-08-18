@@ -64,36 +64,32 @@ public class RadarService {
                             control.getLatitude(), control.getLongitude());
                     if (controlDB == null) {
                         cpDao.save(control);
-                    }else{
+                    } else{
                         controlDB.setActive(control.getActive());
                         controlDB.setPlaceName(control.getPlaceName());
                         doEdit();
                     }
                 }
 
-            if (imp.getWatches() != null)
-                for (Watch watch: imp.getWatches()) {
-                    User user = userDao.findByDni(watch.getUser().getDni());
-                    if (user == null){
-                        user = watch.getUser();
-                        userDao.save(user);
-                    }
+            if (imp.getWatches() != null) {
+
+                for (Watch watch : imp.getWatches()) {
+                    User user = userDao.findById(watch.getUser().getId());
                     watch.setUser(user);
                 }
 
-            for (Watch watch: imp.getWatches()) {
+                for (Watch watch : imp.getWatches()) {
 
-                Watch watchDB = watchDAO.findByTime(watch.getStartTime(), watch.getEndTime());
+                    Watch watchDB = watchDAO.findByTime(watch.getStartTime(), watch.getEndTime());
 
-                if (watchDB == null){
-                    watchDAO.save(watch);
-                    for(Position position: watch.getPositionsList()) {
-                        ControlPosition controlDB = cpDao.findByLatitudeLongitude(
-                                position.getControlPosition().getLatitude(),
-                                position.getControlPosition().getLongitude());
-                        position.setWatch(watch);
-                        position.setControlPosition(controlDB);
-                        posDAO.save(position);
+                    if (watchDB == null) {
+                        watchDAO.save(watch);
+                        for (Position position : watch.getPositionsList()) {
+                            ControlPosition controlDB = cpDao.findById(position.getControlPosition().getId());
+                            position.setWatch(watch);
+                            position.setControlPosition(controlDB);
+                            posDAO.save(position);
+                        }
                     }
                 }
             }

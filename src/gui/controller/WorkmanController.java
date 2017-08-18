@@ -129,6 +129,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         controlList = service.getAllControlActive();
 
         users = service.getAllUserByCompanyActive(getCompany());
+        System.out.println(users.size());
 
         if(users == null) {
             System.err.println("No users");
@@ -238,6 +239,11 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     @Override
     public void handle(MouseEvent event) {
+        if (userListView.getSelectionModel()
+                .getSelectedItem() == null) {
+            System.err.println("nothing selected");
+            return;
+        }
 
         if (event.getButton() == MouseButton.PRIMARY
                 && userListView.getSelectionModel()
