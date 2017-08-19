@@ -1,22 +1,24 @@
 package gui;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import io.datafx.controller.ViewController;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -25,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import model.ControlPosition;
 import model.Position;
 import model.User;
@@ -34,6 +37,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
+import util.Const;
 import util.PointDataSource;
 import util.RadarDate;
 
@@ -102,6 +106,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     private Label markerTimeLabel;
 
+
     /*************CONTROL MARKERS****************/
 
     @FXML
@@ -149,8 +154,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         showWatchesDetail();
         showMarker();
 
-        ImageView reportImage = new ImageView(new Image(getClass()
-                .getResource("img/printer.png").toExternalForm()));
+        ImageView reportImage = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
         printReport.setGraphic(reportImage);
         printReport.setVisible(true);
     }
@@ -182,7 +186,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             hBox.getChildren().addAll(imageHBox, labelsVBox);
             hBox.setUserData(user);
             userData.addAll(hBox);
-       }
+        }
         userListView.setItems(userData);
         userListView.setExpanded(true);
         userListView.setVerticalGap(2.0);
@@ -205,7 +209,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             watchDrawer.setVisible(false);
             setUserFilterField();
         });
-            watchDrawer.setOnDrawerOpened(event -> {
+        watchDrawer.setOnDrawerOpened(event -> {
             setWatchFilterField();
         });
         ///////////////////////////////////////////////////////////////////////////
@@ -237,7 +241,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         userFilterField.setVisible(false);
         watchFilterField.setVisible(true);
         markerFilterField.setVisible(false);
-        printReport.setVisible(false);
+
 
         markerFilterField.clear();
     }
@@ -326,7 +330,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             wDetail.getChildren().add(watchLabel);
             wDetail.setUserData(watch);
             watchData.add(wDetail);
-            
+
         }
 
         watchListView.setItems(watchData);
@@ -351,7 +355,11 @@ public class WorkmanController extends BaseController implements MapComponentIni
         });
     }
 
-    public void printReport() {
+    public void loadPrint() {
+
+        dialogLoadingPrint();
+
+/*
         InputStream inputStream = null;
 
         PointDataSource dataSource = new PointDataSource();
@@ -372,8 +380,12 @@ public class WorkmanController extends BaseController implements MapComponentIni
             System.out.println("Printed");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
-            //ex.printStackTrace();
-        }
+        }*/
+    }
+
+    public void printReport() {
+        dialogType = Const.DIALOG_PRINT_BASIC;
+        showDialogPrint("Debe seleccionar una ruta para guardar el report");
     }
 
 
@@ -385,6 +397,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         Watch watch = (Watch) watchListView.getSelectionModel()
                 .getSelectedItem().getUserData();
 
+
         if(drawerMarkerFirstShow)
             createMarkerDrawer();
 
@@ -395,14 +408,17 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         positionWatch = service.findAllPositionsByWatch(watch);
 
+
+
+        PointDataSource dataSource = new PointDataSource();
+
         for (Position position: positionWatch) {
 
             HBox hBox = new HBox();
             VBox labelsVBox = new VBox();
-            Label placeLabel = new Label("   "+position.getControlPosition().getPlaceName());
+            Label placeLabel = new Label("   "+ position.getControlPosition().getPlaceName());
             placeLabel.setFont(new Font(null, 14));
-            Label timeLabel  = new Label("   "+ RadarDate
-                    .getHora(position.getTime()));
+            Label timeLabel  = new Label("   "+ RadarDate.getHora(position.getTime()));
             timeLabel.setFont( new Font(null, 12));
             timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
             ImageView iconImage = new ImageView(new Image(getClass().getResource("img/marker_in_map_64.png").toExternalForm()));
@@ -414,6 +430,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             hBox.setUserData(position);
             markerData.add(hBox);
         }
+
         addMarkersRoute();
 
         markerListView.setItems(markerData);
@@ -733,4 +750,17 @@ public class WorkmanController extends BaseController implements MapComponentIni
             return false; // Does not match.
         });
     }
+
+    @Override
+    public void onDialogAccept(ActionEvent actionEvent) {
+        super.onDialogAccept(actionEvent);
+        switch (dialogType) {
+            case Const.DIALOG_PRINT_BASIC:
+                //selectDirectory();
+                loadPrint();
+                break;
+        }
+    }
+
+
 }
