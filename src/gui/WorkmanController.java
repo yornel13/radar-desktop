@@ -326,13 +326,14 @@ public class WorkmanController extends BaseController implements MapComponentIni
             wDetail.getChildren().add(watchLabel);
             wDetail.setUserData(watch);
             watchData.add(wDetail);
-            
         }
 
         watchListView.setItems(watchData);
         watchListView.setExpanded(true);
         watchListView.setVerticalGap(2.0);
         watchListView.depthProperty().set(1);
+
+
 
         filterWatch();
     }
@@ -353,27 +354,35 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     public void printReport() {
         InputStream inputStream = null;
-
         PointDataSource dataSource = new PointDataSource();
-        dataSource.setPositionToReport(markerListView.getItems());
 
-        try{
-            inputStream = new FileInputStream("MyReports/watch_points.jrxml");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (watchListView.isVisible()) {
+
+        }
+        else if(markerListView.isVisible()) {
+
+            dataSource.setPositionToReport(markerListView.getItems());
+
+            try{
+                inputStream = new FileInputStream("MyReports/watch_points.jrxml");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
+
+                JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\Joshuan Marval\\Desktop/Detalle_Guardia.pdf");
+                System.out.println("Printed");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
+                //ex.printStackTrace();
+            }
+
         }
 
-        try {
-            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
-            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
-
-            JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\Joshuan Marval\\Desktop/Detalle_Guardia.pdf");
-            System.out.println("Printed");
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
-            //ex.printStackTrace();
-        }
     }
 
 
@@ -395,10 +404,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
         markerData = FXCollections.observableArrayList();
 
         positionWatch = service.findAllPositionsByWatch(watch);
-
-
-
-        PointDataSource dataSource = new PointDataSource();
 
         for (Position position: positionWatch) {
 
@@ -430,7 +435,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         printReport.setOnAction(event ->  printReport());
 
-        markerListView.getItems();
     }
 
     private void showMarker() {
