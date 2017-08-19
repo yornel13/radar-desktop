@@ -54,7 +54,7 @@
                   <children>
                      <HBox fx:id="markerHeadHBox" prefHeight="40.0" prefWidth="275.0">
                         <children>
-                           <JFXButton fx:id="printReport" focusTraversable="false" prefHeight="25.0" prefWidth="35.0" ripplerFill="#2b3297" translateX="220.0" visible="false" />
+                           <JFXButton fx:id="printReport" focusTraversable="false" prefHeight="25.0" prefWidth="35.0" ripplerFill="#2b3297" translateX="220.0" />
                         </children></HBox>
                      <JFXListView fx:id="markerListView" focusTraversable="false" prefHeight="420.0" prefWidth="275.0" />
                   </children>
