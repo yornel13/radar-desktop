@@ -29,12 +29,19 @@ import model.ControlPosition;
 import model.Position;
 import model.User;
 import model.Watch;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
+import util.PointDataSource;
 import util.RadarDate;
 
 import javax.annotation.PostConstruct;
+import javax.swing.*;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +88,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
     @FXML
     private HBox markerHeadHBox;
     @FXML
+    private JFXButton printReport;
+    @FXML
     private VBox markerDrawerBox;
 
     private ObservableList<HBox> markerData;
@@ -92,6 +101,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
     private List<MarkerOptions> markersOptions;
 
     private Label markerTimeLabel;
+
 
     /*************CONTROL MARKERS****************/
 
@@ -223,6 +233,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         userFilterField.setVisible(false);
         watchFilterField.setVisible(true);
         markerFilterField.setVisible(false);
+        printReport.setVisible(false);
 
         markerFilterField.clear();
     }
@@ -336,6 +347,32 @@ public class WorkmanController extends BaseController implements MapComponentIni
         });
     }
 
+    public void printReport() {
+        InputStream inputStream = null;
+
+        PointDataSource dataSource = new PointDataSource();
+        dataSource.setPositionToReport(markerListView.getItems());
+
+        try{
+            inputStream = new FileInputStream("MyReports/watch_points.jrxml");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
+
+            JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\Joshuan Marval\\Desktop/Detalle_Guardia.pdf");
+            System.out.println("Printed");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
+            //ex.printStackTrace();
+        }
+    }
+
+
     public void openedMarkersDrawer() {
 
         markerDrawer.open();
@@ -343,6 +380,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         Watch watch = (Watch) watchListView.getSelectionModel()
                 .getSelectedItem().getUserData();
+
 
         if(drawerMarkerFirstShow)
             createMarkerDrawer();
@@ -354,16 +392,22 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         positionWatch = service.findAllPositionsByWatch(watch);
 
+
+
+        PointDataSource dataSource = new PointDataSource();
+
         for (Position position: positionWatch) {
 
             HBox hBox = new HBox();
             VBox labelsVBox = new VBox();
-            Label placeLabel = new Label("   "+position.getControlPosition().getPlaceName());
+            Label placeLabel = new Label("   "+ position.getControlPosition().getPlaceName());
             placeLabel.setFont(new Font(null, 14));
-            Label timeLabel  = new Label("   "+ RadarDate
-                    .getHora(position.getTime()));
+            Label timeLabel  = new Label("   "+ RadarDate.getHora(position.getTime()));
             timeLabel.setFont( new Font(null, 12));
             timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
+            ImageView reportImage = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
+            printReport.setGraphic(reportImage);
+            printReport.setVisible(true);
             ImageView iconImage = new ImageView(new Image(getClass().getResource("img/marker_in_map_64.png").toExternalForm()));
             iconImage.setFitHeight(40);
             iconImage.setFitWidth(40);
@@ -373,6 +417,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             hBox.setUserData(position);
             markerData.add(hBox);
         }
+
         addMarkersRoute();
 
         markerListView.setItems(markerData);
@@ -381,6 +426,10 @@ public class WorkmanController extends BaseController implements MapComponentIni
         markerListView.depthProperty().set(1);
 
         filterMarker();
+
+        printReport.setOnAction(event ->  printReport());
+
+        markerListView.getItems();
     }
 
     private void showMarker() {
