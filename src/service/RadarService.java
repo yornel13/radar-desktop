@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import dao.*;
 import model.*;
-import org.hibernate.exception.ConstraintViolationException;
 import org.joda.time.DateTime;
 import util.HibernateProxyTypeAdapter;
 import util.HibernateSessionFactory;
