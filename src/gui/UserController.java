@@ -563,7 +563,7 @@ public class UserController extends BaseController {
     }
 
     public void createPopup(Group group, HBox parentHBox) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/popup.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/popup.fxml"));
         InputController inputController = new InputController(this,2);
         loader.setController(inputController);
         JFXPopup popup = new JFXPopup(loader.load());
