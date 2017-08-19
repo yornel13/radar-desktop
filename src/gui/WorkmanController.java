@@ -149,6 +149,10 @@ public class WorkmanController extends BaseController implements MapComponentIni
         }
         showWatchesDetail();
         showMarker();
+
+        ImageView reportImage = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
+        printReport.setGraphic(reportImage);
+        printReport.setVisible(true);
     }
 
     public void loadListView() throws FileNotFoundException {
@@ -233,7 +237,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         userFilterField.setVisible(false);
         watchFilterField.setVisible(true);
         markerFilterField.setVisible(false);
-        printReport.setVisible(false);
+
 
         markerFilterField.clear();
     }
@@ -405,9 +409,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
             Label timeLabel  = new Label("   "+ RadarDate.getHora(position.getTime()));
             timeLabel.setFont( new Font(null, 12));
             timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
-            ImageView reportImage = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
-            printReport.setGraphic(reportImage);
-            printReport.setVisible(true);
             ImageView iconImage = new ImageView(new Image(getClass().getResource("img/marker_in_map_64.png").toExternalForm()));
             iconImage.setFitHeight(40);
             iconImage.setFitWidth(40);
