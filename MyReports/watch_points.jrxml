@@ -178,7 +178,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Detalles de guardia]]></text>
+				<text><![CDATA[Detalles de guardia ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="166" width="140" height="25" uuid="a1044cfb-a267-480f-84a6-6ec4bb7236ff">
