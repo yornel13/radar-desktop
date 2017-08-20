@@ -30,12 +30,12 @@ import model.Position;
 import model.User;
 import model.Watch;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
-import util.PointDataSource;
-import util.RadarDate;
+import util.*;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -43,7 +43,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @ViewController("view/workman.fxml")
 public class WorkmanController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
@@ -102,6 +104,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     private Label markerTimeLabel;
 
+    private User selectedUser;
+
 
     /*************CONTROL MARKERS****************/
 
@@ -150,9 +154,11 @@ public class WorkmanController extends BaseController implements MapComponentIni
         showWatchesDetail();
         showMarker();
 
-        ImageView reportImage = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
+        ImageView reportImage = new ImageView(new Image(getClass()
+                .getResource("img/printer.png").toExternalForm()));
         printReport.setGraphic(reportImage);
         printReport.setVisible(true);
+        printReport.setOnAction(event ->  printReport());
     }
 
     public void loadListView() throws FileNotFoundException {
@@ -300,17 +306,17 @@ public class WorkmanController extends BaseController implements MapComponentIni
         watchDrawer.open();
         watchDrawer.setVisible(true);
 
-        User user = (User) userListView.getSelectionModel().getSelectedItem().getUserData();
+        selectedUser = (User) userListView.getSelectionModel().getSelectedItem().getUserData();
 
         if(drawerWatchFirstShow)
             createWatchDrawer();
 
-        watchNameLabel.setText("   "+user.getLastname()+" "+user.getName());
-        watchDniLabel.setText("     "+user.getDni());
+        watchNameLabel.setText("   "+selectedUser.getLastname()+" "+selectedUser.getName());
+        watchDniLabel.setText("     "+selectedUser.getDni());
 
         watchData = FXCollections.observableArrayList();
 
-        watchesUser = service.getAllUserWatches(user.getId());
+        watchesUser = service.getAllUserWatches(selectedUser.getId());
 
         for (Watch watch: watchesUser) {
 
@@ -353,38 +359,88 @@ public class WorkmanController extends BaseController implements MapComponentIni
     }
 
     public void printReport() {
+
+         if(markerDrawer.isShown()) {
+            printSingleReport();
+
+         } else if (watchDrawer.isShown()) {
+             try {
+                 printMultiReport();
+             } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+             } catch (JRException e) {
+                 e.printStackTrace();
+             }
+         }
+    }
+
+    public void printSingleReport() {
         InputStream inputStream = null;
         PointDataSource dataSource = new PointDataSource();
 
-        if (watchListView.isVisible()) {
+        dataSource.setPositionToReport(markerListView.getItems());
 
-        }
-        else if(markerListView.isVisible()) {
-
-            dataSource.setPositionToReport(markerListView.getItems());
-
-            try{
-                inputStream = new FileInputStream("MyReports/watch_points.jrxml");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
-                JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-                JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
-
-                JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\Joshuan Marval\\Desktop/Detalle_Guardia.pdf");
-                System.out.println("Printed");
-            } catch (JRException ex) {
-                JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
-                //ex.printStackTrace();
-            }
-
+        try{
+            inputStream = new FileInputStream("MyReports/watch_points.jrxml");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
+        try {
+            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
+
+            JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\Joshuan Marval\\Desktop/Detalle_Guardia.pdf");
+            System.out.println("Printed");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
+        }
     }
 
+    public void printMultiReport() throws FileNotFoundException, JRException {
+        ArrayList<WatchMasterReport> dataList = new ArrayList<>();
+        for (HBox hBox: watchListView.getItems()) {
+            Watch watch = (Watch) hBox.getUserData();
+            WatchMasterReport watchMasterReport = new WatchMasterReport();
+            watchMasterReport.setDate(RadarDate.getFechaConMesYHora(watch.getStartTime()));
+            watchMasterReport.setSubReportBeanList(new ArrayList<>());
+            for (Position position : service.findAllPositionsByWatch(watch)) {
+                SubReportBean watchSubReport = new SubReportBean();
+                watchSubReport.setPoint(position.getControlPosition().getPlaceName());
+                watchSubReport.setTime(RadarDate.getHora(position.getTime()));
+                watchMasterReport.getSubReportBeanList().add(watchSubReport);
+            }
+            dataList.add(watchMasterReport);
+        }
+        JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataList);
+        Position position = new Position();
+
+        FileInputStream inputStreamMaster = new FileInputStream("MyReports/watch_performed.jrxml");
+        FileInputStream inputStreamSub = new FileInputStream("MyReports/prueba.jrxml");
+        JasperDesign jasperDesignMaster = JRXmlLoader.load(inputStreamMaster);
+        JasperDesign jasperDesignSub = JRXmlLoader.load(inputStreamSub);
+
+        try {
+         /* Compile the master and sub report */
+            JasperReport jasperMasterReport = JasperCompileManager
+                    .compileReport(jasperDesignMaster);
+            JasperReport jasperSubReport = JasperCompileManager
+                    .compileReport(jasperDesignSub);
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("full_name", selectedUser.getLastname()+" "+selectedUser.getName());
+            parameters.put("subreportParameter", jasperSubReport);
+            parameters.put("company", selectedUser.getCompany().toString());
+            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperMasterReport,
+                    parameters, beanColDataSource);
+            JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\Joshuan Marval\\Desktop/Guardia.pdf");
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Done filling!!! ...");
+    }
 
     public void openedMarkersDrawer() {
 
@@ -432,9 +488,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
         markerListView.depthProperty().set(1);
 
         filterMarker();
-
-        printReport.setOnAction(event ->  printReport());
-
     }
 
     private void showMarker() {

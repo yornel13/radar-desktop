@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.classpath" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.project" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.settings/org.eclipse.core.resources.prefs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/subreport_watchDetail.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/watchDetail_subreport.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/watch_performed.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
+    <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="actualizando a la ultima version de yornel_">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/prueba.jrxml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/PointListDataSource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/SubReportBean.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/WatchMasterReport.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MyReports/subreport_watchDetail.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MyReports/watchDetail_subreport.jrxml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/.gitignore" afterPath="$PROJECT_DIR$/MyReports/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/.project" afterPath="$PROJECT_DIR$/MyReports/.project" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/.settings/org.eclipse.core.resources.prefs" afterPath="$PROJECT_DIR$/MyReports/.settings/org.eclipse.core.resources.prefs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/watch_performed.jrxml" afterPath="$PROJECT_DIR$/MyReports/watch_performed.jrxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/WorkmanController.java" afterPath="$PROJECT_DIR$/src/gui/WorkmanController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/workman.fxml" afterPath="$PROJECT_DIR$/src/gui/view/workman.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/util/PointDataSource.java" afterPath="$PROJECT_DIR$/src/util/PointDataSource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/util/WatchDataSource.java" afterPath="$PROJECT_DIR$/src/util/WatchDataSource.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/GMapsFX/target/" />
@@ -29,11 +34,70 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2240">
-              <caret line="359" column="0" lean-forward="true" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
+            <state relative-caret-position="117">
+              <caret line="434" column="0" lean-forward="false" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="watch_points.jrxml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MyReports/watch_points.jrxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="52">
+              <caret line="180" column="51" lean-forward="false" selection-start-line="180" selection-start-column="51" selection-end-line="180" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WatchDataSource.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="335">
+              <caret line="30" column="69" lean-forward="false" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WatchMasterReport.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/util/WatchMasterReport.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+              <folding>
+                <element signature="e#374#375#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SubReportBean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/util/SubReportBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-8">
+              <caret line="16" column="5" lean-forward="false" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+              <folding>
+                <element signature="e#150#151#0" expanded="true" />
+                <element signature="e#178#179#0" expanded="true" />
+                <element signature="e#284#285#0" expanded="true" />
+                <element signature="e#310#311#0" expanded="true" />
+                <element signature="e#348#349#0" expanded="true" />
+                <element signature="e#378#379#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Watch.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/Watch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -42,24 +106,21 @@
       <file leaf-file-name="PointDataSource.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/PointDataSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="597">
-              <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#527#528#0" expanded="true" />
-                <element signature="e#581#582#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="120">
+              <caret line="31" column="80" lean-forward="false" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="80" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WatchDataSource.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
+      <file leaf-file-name="PointListDataSource.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/util/PointListDataSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="100">
+              <caret line="47" column="23" lean-forward="false" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="23" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#540#541#0" expanded="true" />
+                <element signature="e#594#595#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,6 +147,9 @@
       <find>addLis</find>
       <find>addLi</find>
       <find>debe llena</find>
+      <find>watchHeadHBox</find>
+      <find>watchDrawer</find>
+      <find>prin</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -106,10 +170,15 @@
         <option value="$PROJECT_DIR$/src/gui/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/dao/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/gui/view/workman.fxml" />
-        <option value="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
-        <option value="$PROJECT_DIR$/src/util/PointDataSource.java" />
         <option value="$PROJECT_DIR$/src/util/WatchDataSource.java" />
+        <option value="$PROJECT_DIR$/src/util/PointListDataSource.java" />
+        <option value="$PROJECT_DIR$/src/util/WatchSubReport.java" />
+        <option value="$PROJECT_DIR$/src/util/WatchMasterReport.java" />
+        <option value="$PROJECT_DIR$/src/util/PointDataSource.java" />
         <option value="$PROJECT_DIR$/src/gui/WorkmanController.java" />
+        <option value="$PROJECT_DIR$/src/util/SubReportBean.java" />
+        <option value="$PROJECT_DIR$/MyReports/prueba.jrxml" />
+        <option value="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
       </list>
     </option>
   </component>
@@ -141,26 +210,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="jasperSoft" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
@@ -176,18 +231,15 @@
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="gui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -202,6 +254,9 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/dao/UserDAO.java" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="util" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\gui\img" />
       <recent name="C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\img" />
@@ -457,7 +512,28 @@
       <option name="project" value="LOCAL" />
       <updated>1503171367557</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="actualizando a la ultima version de yornel_">
+      <created>1503177441333</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1503177441333</updated>
+    </task>
+    <task id="LOCAL-00017" summary="actualizando a la ultima version de yornel_">
+      <created>1503269956395</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1503269956396</updated>
+    </task>
+    <task id="LOCAL-00018" summary="actualizando a la ultima version de yornel_">
+      <created>1503270398530</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1503270398530</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -473,29 +549,29 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34210527" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34210527" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20877458" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18381241" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967105" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967105" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -519,45 +595,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
-    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4240">
-          <caret line="227" column="15" lean-forward="true" selection-start-line="227" selection-start-column="15" selection-end-line="227" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1380">
-          <caret line="82" column="15" lean-forward="true" selection-start-line="82" selection-start-column="15" selection-end-line="82" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
-          <caret line="138" column="5" lean-forward="true" selection-start-line="138" selection-start-column="5" selection-end-line="138" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
-    <entry file="file://$PROJECT_DIR$/src/gui/style/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="34" lean-forward="true" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
-    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3700">
-          <caret line="200" column="19" lean-forward="false" selection-start-line="200" selection-start-column="19" selection-end-line="200" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
     <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4540">
@@ -692,25 +729,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MyReports/invoice_logo.png" />
-    <entry file="file://$PROJECT_DIR$/src/gui/view/workman.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="40" column="56" lean-forward="false" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyReports/watch_points.jrxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="174" column="80" lean-forward="false" selection-start-line="174" selection-start-column="80" selection-end-line="174" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -737,35 +755,134 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
+    <entry file="file://$PROJECT_DIR$/src/gui/view/workman.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state relative-caret-position="-163">
+          <caret line="41" column="34" lean-forward="false" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <marker date="1503185220696" expanded="true" signature="3668:3820" ph="..." />
+            <marker date="1503185220696" expanded="true" signature="3668:3843" ph="..." />
+            <marker date="1503185220696" expanded="true" signature="3668:3867" ph="..." />
+            <marker date="1503185220696" expanded="true" signature="3668:3889" ph="..." />
+            <marker date="1503185220696" expanded="true" signature="3668:3907" ph="..." />
+            <marker date="1503185220696" expanded="true" signature="3668:3924" ph="..." />
+            <marker date="1503185220696" expanded="true" signature="3668:3937" ph="..." />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="121" column="58" lean-forward="false" selection-start-line="121" selection-start-column="58" selection-end-line="122" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/StartApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="38" column="18" lean-forward="false" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/watch_performed_1503196533257_941030.java" />
+    <entry file="file://$PROJECT_DIR$/src/model/Watch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/PointListDataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="47" column="23" lean-forward="false" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="23" />
+          <folding>
+            <element signature="e#540#541#0" expanded="true" />
+            <element signature="e#594#595#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/util/PointDataSource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+        <state relative-caret-position="120">
+          <caret line="31" column="80" lean-forward="false" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/SubReportBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="16" column="5" lean-forward="false" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#527#528#0" expanded="true" />
-            <element signature="e#581#582#0" expanded="true" />
+            <element signature="e#150#151#0" expanded="true" />
+            <element signature="e#178#179#0" expanded="true" />
+            <element signature="e#284#285#0" expanded="true" />
+            <element signature="e#310#311#0" expanded="true" />
+            <element signature="e#348#349#0" expanded="true" />
+            <element signature="e#378#379#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="30" column="69" lean-forward="false" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/WatchMasterReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+          <folding>
+            <element signature="e#374#375#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyReports/prueba.jrxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="110" column="24" lean-forward="false" selection-start-line="110" selection-start-column="24" selection-end-line="110" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyReports/watch_performed.jrxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="58" column="51" lean-forward="false" selection-start-line="58" selection-start-column="51" selection-end-line="58" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2240">
-          <caret line="359" column="0" lean-forward="true" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
+        <state relative-caret-position="117">
+          <caret line="434" column="0" lean-forward="false" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyReports/watch_points.jrxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="180" column="51" lean-forward="false" selection-start-line="180" selection-start-column="51" selection-end-line="180" selection-end-column="51" />
           <folding />
         </state>
       </provider>

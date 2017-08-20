@@ -7,15 +7,16 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PointDataSource implements JRDataSource {
+public class PointListDataSource implements JRDataSource {
 
-    private final List<HBox> positionList = new ArrayList<>();
+    private final List<Position> positionList = new ArrayList<>();
     private int indexRow = -1;
 
-    public void setPositionToReport(List<HBox> positionList) {
+    public void setPositionToReport(List<Position> positionList) {
         this.positionList.addAll(positionList);
     }
 
@@ -29,7 +30,7 @@ public class PointDataSource implements JRDataSource {
 
         Object valor = null;
 
-        Position position = (Position) positionList.get(indexRow).getUserData();
+        Position position = positionList.get(indexRow);
         Watch watch = position.getWatch();
 
         if ("full_name".equals(jrField.getName())) {
@@ -38,23 +39,14 @@ public class PointDataSource implements JRDataSource {
         else if ("dni".equals(jrField.getName())) {
             valor = watch.getUser().getDni();
         }
-        else if ("watch_id".equals(jrField.getName())) {
-            valor = watch.getId();
-        }
-        else if ("start_date".equals(jrField.getName())) {
-            valor = watch.getStartTime();
-        }
-        else if ("end_date".equals(jrField.getName())) {
-            valor = watch.getEndTime();
+        else if ("date".equals(jrField.getName())) {
+            valor = RadarDate.getFechaConMes(new DateTime(position.getTime()));
         }
         else if ("company".equals(jrField.getName())) {
             valor = watch.getUser().getCompany().getName();
         }
         else if("point".equals(jrField.getName())) {
             valor = position.getControlPosition().getPlaceName();
-        }
-        else if("mts".equals(jrField.getName())) {
-            valor = position.getLongitude().toString();
         }
         else if("time".equals(jrField.getName())) {
             valor = RadarDate.getHora(position.getTime());

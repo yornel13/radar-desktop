@@ -26,4 +26,16 @@
 		<nature>net.sf.jasperreports.nature</nature>
 		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>sub_reporte_watch.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/MyReports/sub_reporte_watch.jrxml</location>
+		</link>
+		<link>
+			<name>watch_points - copia.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/MyReports/watch_points - copia.jrxml</location>
+		</link>
+	</linkedResources>
 </projectDescription>
