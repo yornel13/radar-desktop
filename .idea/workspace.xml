@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.classpath" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.project" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/.settings/org.eclipse.core.resources.prefs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/subreport_watchDetail.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/watchDetail_subreport.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/watch_performed.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/watch_points.jrxml" afterPath="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/BaseController.java" afterPath="$PROJECT_DIR$/src/gui/BaseController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/WorkmanController.java" afterPath="$PROJECT_DIR$/src/gui/WorkmanController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/async/PrintReportTask.java" afterPath="$PROJECT_DIR$/src/gui/async/PrintReportTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/util/PointDataSource.java" afterPath="$PROJECT_DIR$/src/util/PointDataSource.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/GMapsFX/target/" />
@@ -32,35 +28,9 @@
       <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2240">
-              <caret line="359" column="0" lean-forward="true" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
+            <state relative-caret-position="94">
+              <caret line="341" column="24" lean-forward="true" selection-start-line="341" selection-start-column="24" selection-end-line="341" selection-end-column="24" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PointDataSource.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/PointDataSource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="597">
-              <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#527#528#0" expanded="true" />
-                <element signature="e#581#582#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WatchDataSource.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -86,6 +56,8 @@
       <find>addLis</find>
       <find>addLi</find>
       <find>debe llena</find>
+      <find>gui</find>
+      <find>report</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -106,9 +78,11 @@
         <option value="$PROJECT_DIR$/src/gui/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/dao/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/gui/view/workman.fxml" />
-        <option value="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
-        <option value="$PROJECT_DIR$/src/util/PointDataSource.java" />
         <option value="$PROJECT_DIR$/src/util/WatchDataSource.java" />
+        <option value="$PROJECT_DIR$/src/util/PointDataSource.java" />
+        <option value="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
+        <option value="$PROJECT_DIR$/src/gui/async/PrintReportTask.java" />
+        <option value="$PROJECT_DIR$/src/gui/BaseController.java" />
         <option value="$PROJECT_DIR$/src/gui/WorkmanController.java" />
       </list>
     </option>
@@ -141,26 +115,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="jasperSoft" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
@@ -182,12 +142,30 @@
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+              <item name="async" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -203,6 +181,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\IntelliJ\radar-desktop\MyReports\image" />
       <recent name="C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\gui\img" />
       <recent name="C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\img" />
     </key>
@@ -457,7 +436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503171367557</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="pre merge">
+      <created>1503270188408</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1503270188408</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -470,23 +456,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34210527" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34130436" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20877458" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21108742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967105" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -510,7 +499,8 @@
     <MESSAGE value="last1" />
     <MESSAGE value="actualizando a la ultima version de yornel" />
     <MESSAGE value="actualizando a la ultima version de yornel_" />
-    <option name="LAST_COMMIT_MESSAGE" value="actualizando a la ultima version de yornel_" />
+    <MESSAGE value="pre merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="pre merge" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -519,14 +509,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
-    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4240">
-          <caret line="227" column="15" lean-forward="true" selection-start-line="227" selection-start-column="15" selection-end-line="227" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1380">
@@ -581,22 +563,10 @@
     <entry file="file://$PROJECT_DIR$/src/gui/controller/StartApp.java" />
     <entry file="file://$PROJECT_DIR$/src/gui/controller/MarkerController.java" />
     <entry file="file://$PROJECT_DIR$/src/gui/controller/WorkmanController.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/Labeled.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="721" column="22" lean-forward="false" selection-start-line="721" selection-start-column="22" selection-end-line="721" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/Labeled.java" />
     <entry file="file://$PROJECT_DIR$/src/img/group_16.png" />
     <entry file="file://$PROJECT_DIR$/src/img/group_24.png" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="668" column="37" lean-forward="true" selection-start-line="668" selection-start-column="37" selection-end-line="668" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/Cell.java" />
     <entry file="jar://$PROJECT_DIR$/lib/jfoenix.jar!/com/jfoenix/controls/JFXListView.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -628,20 +598,8 @@
     <entry file="file://$PROJECT_DIR$/GMapsFX/pom.xml" />
     <entry file="file://$PROJECT_DIR$/src/img/delete1_16.png" />
     <entry file="file://$PROJECT_DIR$/src/img/delete2_16.png" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/com/sun/javafx/event/CompositeEventHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/ListCell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="329" column="0" lean-forward="false" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/com/sun/javafx/event/CompositeEventHandler.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/ListCell.java" />
     <entry file="file://$PROJECT_DIR$/src/gui/controller/BaseController.java" />
     <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
     <entry file="file://$PROJECT_DIR$/assets/radar full db.sql">
@@ -659,13 +617,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/view/user.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="127" column="27" lean-forward="false" selection-start-line="127" selection-start-column="27" selection-end-line="127" selection-end-column="27" />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
@@ -683,30 +641,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/BaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1920">
-          <caret line="87" column="19" lean-forward="false" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyReports/invoice_logo.png" />
     <entry file="file://$PROJECT_DIR$/src/gui/view/workman.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="40" column="56" lean-forward="false" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyReports/watch_points.jrxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="174" column="80" lean-forward="false" selection-start-line="174" selection-start-column="80" selection-end-line="174" selection-end-column="80" />
+        <state relative-caret-position="237">
+          <caret line="40" column="56" lean-forward="false" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
           <folding />
         </state>
       </provider>
@@ -742,30 +684,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
+        <state relative-caret-position="170">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/util/PointDataSource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+        <state relative-caret-position="306">
+          <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#527#528#0" expanded="true" />
-            <element signature="e#581#582#0" expanded="true" />
+            <element signature="e#518#519#0" expanded="true" />
+            <element signature="e#572#573#0" expanded="true" />
+            <element signature="e#636#637#0" expanded="true" />
+            <element signature="e#690#691#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyReports/watch_points.jrxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="141" column="43" lean-forward="false" selection-start-line="141" selection-start-column="43" selection-end-line="141" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyReports/subreport_watchDetail.jrxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="238" column="19" lean-forward="false" selection-start-line="238" selection-start-column="19" selection-end-line="238" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/async/PrintReportTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="22" column="11" lean-forward="false" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2240">
-          <caret line="359" column="0" lean-forward="true" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
+        <state relative-caret-position="94">
+          <caret line="341" column="24" lean-forward="true" selection-start-line="341" selection-start-column="24" selection-end-line="341" selection-end-column="24" />
           <folding />
         </state>
       </provider>

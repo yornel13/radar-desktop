@@ -1,5 +1,6 @@
 package gui.async;
 
+import javafx.application.Platform;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -39,14 +40,14 @@ public class PrintReportTask implements Runnable {
         try {
             JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, (Connection) dataSource);
+            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
 
             JasperExportManager.exportReportToPdfFile(jasperPrint,file.getPath() + "\\" + fileName +".pdf");
             System.out.println("Printed");
-            listener.onPrintCompleted();
+            Platform.runLater(() -> listener.onPrintCompleted());
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
-            listener.onPrintFailure("Error");
+            Platform.runLater(() -> listener.onPrintFailure("Error"));
         }
     }
 

@@ -1,14 +1,15 @@
 package gui;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import gui.async.PrintReportTask;
 import io.datafx.controller.ViewController;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,7 +19,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -27,14 +27,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 import model.ControlPosition;
 import model.Position;
 import model.User;
 import model.Watch;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
 import util.Const;
@@ -42,15 +38,16 @@ import util.PointDataSource;
 import util.RadarDate;
 
 import javax.annotation.PostConstruct;
-import javax.swing.*;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @ViewController("view/workman.fxml")
-public class WorkmanController extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
+public class WorkmanController extends BaseController implements MapComponentInitializedListener,
+        EventHandler<MouseEvent>,PrintReportTask.PrintTask {
 
     /*************USERS****************/
     @FXML
@@ -154,7 +151,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
         showWatchesDetail();
         showMarker();
 
-        ImageView reportImage = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
+        ImageView reportImage = new ImageView(new Image(getClass()
+                .getResource("img/printer.png").toExternalForm()));
         printReport.setGraphic(reportImage);
         printReport.setVisible(true);
     }
@@ -355,37 +353,20 @@ public class WorkmanController extends BaseController implements MapComponentIni
         });
     }
 
-    public void loadPrint() {
+    public void loadPrint(File file) {
 
         dialogLoadingPrint();
 
-/*
-        InputStream inputStream = null;
-
-        PointDataSource dataSource = new PointDataSource();
-        dataSource.setPositionToReport(markerListView.getItems());
-
-        try{
-            inputStream = new FileInputStream("MyReports/watch_points.jrxml");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
-            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
-
-            JasperExportManager.exportReportToPdfFile(jasperPrint,"C:\\Users\\Joshuan Marval\\Desktop/Detalle_Guardia.pdf");
-            System.out.println("Printed");
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
-        }*/
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintReportTask(this,
+                new PointDataSource(markerListView.getItems()), file, "guardia");
+        executor.execute(worker);
+        executor.shutdown();
     }
 
     public void printReport() {
         dialogType = Const.DIALOG_PRINT_BASIC;
-        showDialogPrint("Debe seleccionar una ruta para guardar el report");
+        showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
     }
 
 
@@ -407,10 +388,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
         markerData = FXCollections.observableArrayList();
 
         positionWatch = service.findAllPositionsByWatch(watch);
-
-
-
-        PointDataSource dataSource = new PointDataSource();
 
         for (Position position: positionWatch) {
 
@@ -522,40 +499,12 @@ public class WorkmanController extends BaseController implements MapComponentIni
     public void addMarkersRoute() {
         for (Position position: positionWatch) {
 
-            /*ControlPosition control = null;
-            for (ControlPosition controlPosition: controlList) {
-                if (position.getControlPosition().getId().equals(controlPosition.getId())) {
-                    control = controlPosition;
-                }
-            }
-
-            if (control != null) {
-                map.removeMarker(markers.get(controlList.indexOf(control)));
-                LatLong latLong = new LatLong(control.getLatitude(), control.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLong);
-                markerOptions.animation(Animation.DROP);
-                markerOptions.icon("flag_blue_32.png");
-                Marker marker = new Marker(markerOptions);
-                marker.setTitle(control.getPlaceName());
-                map.addMarker(marker);
-                ControlPosition finalControl = control;
-                map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
-                    showSnackBar(finalControl.getPlaceName());
-                    System.out.println("You clicked the line at LatLong: lat: " +
-                            finalControl.getLatitude() + " lng: " + finalControl.getLongitude());
-                });
-            } else {
-                System.err.println("The control position didn't has match");
-            }*/
-
             LatLong latLong = new LatLong(position.getLatitude(), position.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLong);
             markerOptions.animation(Animation.DROP);
             markerOptions.icon("flag_blue_32.png");
             Marker marker = new Marker(markerOptions);
-            //marker.setTitle(position.getPlaceName());
             map.addMarker(marker);
             map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
                 showSnackBar(RadarDate.getHora(position.getTime()));
@@ -756,11 +705,23 @@ public class WorkmanController extends BaseController implements MapComponentIni
         super.onDialogAccept(actionEvent);
         switch (dialogType) {
             case Const.DIALOG_PRINT_BASIC:
-                //selectDirectory();
-                loadPrint();
+                File file = selectDirectory();
+                if (file != null)
+                    loadPrint(file);
                 break;
         }
     }
 
 
+    @Override
+    public void onPrintCompleted() {
+        closeDialogLoading();
+        showSnackBar("Guardado completado");
+    }
+
+    @Override
+    public void onPrintFailure(String message) {
+        closeDialogLoading();
+        showSnackBar("Guardado fallido");
+    }
 }

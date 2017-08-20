@@ -139,7 +139,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression><![CDATA["C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/img/policeman_64.png"]]></imageExpression>
+				<imageExpression><![CDATA["image/policeman_64.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" x="210" y="90" width="150" height="25" uuid="a414f084-44fd-4b7d-9d9d-f1e32235779d">

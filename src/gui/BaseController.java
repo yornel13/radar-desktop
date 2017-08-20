@@ -256,7 +256,9 @@ public class BaseController {
         dialogLoading.getDialogPane().setContent(loader);
         dialogLoading.getDialogPane().setStyle("-fx-background-color: #E0E0E0;");
         dialogLoading.getDialogPane().setPrefSize(300, 50);
-        dialogLoading.getDialogPane().setStyle("-fx-border-color:#0288D1; -fx-border-width:0.5; -fx-background-color: white;");
+        dialogLoading.getDialogPane().setStyle("" + "-fx-border-color:#0288D1; "
+                +"-fx-border-width:0.5; "
+                +"-fx-background-color: white;");
         DropShadow ds = new DropShadow();
         ds.setOffsetX(1.3);
         ds.setOffsetY(1.3);

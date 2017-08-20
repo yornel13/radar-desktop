@@ -15,6 +15,10 @@ public class PointDataSource implements JRDataSource {
     private final List<HBox> positionList = new ArrayList<>();
     private int indexRow = -1;
 
+    public PointDataSource(List<HBox> positionList) {
+        this.positionList.addAll(positionList);
+    }
+
     public void setPositionToReport(List<HBox> positionList) {
         this.positionList.addAll(positionList);
     }
