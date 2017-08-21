@@ -28,6 +28,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>master_watch_points.jasper</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/MyReports/master_watch_points.jasper</location>
+		</link>
+		<link>
+			<name>master_watch_points.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/MyReports/master_watch_points.jrxml</location>
+		</link>
+		<link>
 			<name>sub_reporte_watch.jrxml</name>
 			<type>1</type>
 			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/MyReports/sub_reporte_watch.jrxml</location>
