@@ -588,14 +588,20 @@ public class ControlController  extends BaseController implements MapComponentIn
 
     private Integer getMeters(Position position) {
 
-        LatLong loc1 = new LatLong(position.getControlPosition().getLatitude(),
-                position.getControlPosition().getLongitude());
+        double radioEarth = 6371000;
+        double dLat = Math.toRadians(position.getLatitude()
+                - position.getControlPosition().getLatitude());
+        double dLng = Math.toRadians(position.getLongitude()
+                - position.getControlPosition().getLongitude());
+        double sLat = Math.sin(dLat / 2);
+        double sLng = Math.sin(dLng / 2);
+        double va1 = Math.pow(sLat, 2) + Math.pow(sLng, 2)
+                * Math.cos(Math.toRadians(position.getControlPosition().getLatitude()))
+                * Math.cos(Math.toRadians(position.getLatitude()));
+        double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+        Double distance = radioEarth * va2;
 
-        LatLong loc2 = new LatLong(position.getLatitude(), position.getLongitude());
-
-        Double distanceInMeters = loc1.distanceFrom(loc2);
-
-        return distanceInMeters.intValue();
+        return distance.intValue();
     }
 
     private void filterWatch() {
