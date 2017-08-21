@@ -32,7 +32,7 @@ public class PrintReportPointsTask implements Runnable {
         InputStream inputStream = null;
 
         try{
-            inputStream = new FileInputStream("MyReports/near_points.jrxml");
+            inputStream = new FileInputStream("report/near_points.jrxml");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

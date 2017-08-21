@@ -33,8 +33,8 @@ public class PrintReportWatchsTask implements Runnable {
         FileInputStream inputStreamSub = null;
 
         try{
-            inputStreamMaster = new FileInputStream("MyReports/master_watch_points.jrxml");
-            inputStreamSub = new FileInputStream("MyReports/sub_watch_points.jrxml");
+            inputStreamMaster = new FileInputStream("report/master_watch_points.jrxml");
+            inputStreamSub = new FileInputStream("report/sub_watch_points.jrxml");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

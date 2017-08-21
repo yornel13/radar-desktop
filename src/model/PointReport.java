@@ -1,4 +1,4 @@
-package report.model;
+package model;
 
 public class PointReport {
 

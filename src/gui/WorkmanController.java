@@ -28,24 +28,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.ControlPosition;
-import model.Position;
-import model.User;
-import model.Watch;
-import net.sf.jasperreports.engine.*;
+import model.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
-import report.model.PointReport;
-import report.model.WatchReport;
 import util.Const;
 import util.RadarDate;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -422,7 +413,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
                 PointReport watchSubReport = new PointReport();
                 watchSubReport.setPoint(position.getControlPosition().getPlaceName());
                 watchSubReport.setTime(RadarDate.getHora(position.getTime()));
-                watchSubReport.setDistance("a 3 metros");
+                watchSubReport.setDistanceMeters(getMeters(position));
                 watchMasterReport.getPointReportList().add(watchSubReport);
             }
             dataList.add(watchMasterReport);

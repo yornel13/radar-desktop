@@ -1,4 +1,4 @@
-package report.model;
+package model;
 
 import java.util.List;
 
