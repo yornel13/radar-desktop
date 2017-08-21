@@ -238,7 +238,7 @@ public class BaseController {
 
     protected File selectDirectory() {
         DirectoryChooser fileChooser = new DirectoryChooser();
-        fileChooser.setTitle("Selecciona un directorio para guardar la auditoria");
+        fileChooser.setTitle("Selecciona un directorio para guardar el reporte");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         return fileChooser.showDialog(root.getScene().getWindow());
     }

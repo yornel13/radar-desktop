@@ -5,16 +5,13 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
-import javax.sql.DataSource;
-import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.Map;
 
-public class PrintReportWatchTask implements Runnable {
+public class PrintReportPointsTask implements Runnable {
 
     private PrintTask listener;
     private JRDataSource dataSource;
@@ -22,7 +19,7 @@ public class PrintReportWatchTask implements Runnable {
     private String fileName;
     private Map<String, Object> parameters;
 
-    public PrintReportWatchTask(PrintTask listener, JRDataSource dataSource, Map<String, Object> parameters, File file, String fileName) {
+    public PrintReportPointsTask(PrintTask listener, JRDataSource dataSource, Map<String, Object> parameters, File file, String fileName) {
         this.listener = listener;
         this.dataSource = dataSource;
         this.file = file;
@@ -35,7 +32,7 @@ public class PrintReportWatchTask implements Runnable {
         InputStream inputStream = null;
 
         try{
-            inputStream = new FileInputStream("report/watch_points.jrxml");
+            inputStream = new FileInputStream("report/near_points.jrxml");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

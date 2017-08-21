@@ -28,24 +28,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.ControlPosition;
-import model.Position;
-import model.User;
-import model.Watch;
-import net.sf.jasperreports.engine.*;
+import model.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
-import report.model.PointReport;
-import report.model.WatchReport;
 import util.Const;
 import util.RadarDate;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -394,14 +385,15 @@ public class WorkmanController extends BaseController implements MapComponentIni
             Position position = (Position) hBox.getUserData();
             PointReport pointReport = new PointReport();
             pointReport.setPoint(position.getControlPosition().getPlaceName());
-            pointReport.setDistance("a 3 metros");
+            pointReport.setDistanceMeters(getMeters(position));
             pointReport.setTime(RadarDate.getDiaMesConHora(position.getTime()));
             pointReportList.add(pointReport);
         }
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportWatchTask(this,
-                new JRBeanCollectionDataSource(pointReportList), parameters, file, "guardia");
+                new JRBeanCollectionDataSource(pointReportList), parameters, file,
+                "watch_"+selectedWatch.getId().toString());
         executor.execute(worker);
         executor.shutdown();
     }
@@ -421,6 +413,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
                 PointReport watchSubReport = new PointReport();
                 watchSubReport.setPoint(position.getControlPosition().getPlaceName());
                 watchSubReport.setTime(RadarDate.getHora(position.getTime()));
+                watchSubReport.setDistanceMeters(getMeters(position));
                 watchMasterReport.getPointReportList().add(watchSubReport);
             }
             dataList.add(watchMasterReport);
@@ -433,7 +426,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportWatchsTask(this,
-                new JRBeanCollectionDataSource(dataList), parameters, file, "guardias");
+                new JRBeanCollectionDataSource(dataList), parameters, file,
+                selectedUser.getLastname()+"_"+new DateTime().getMillis());
         executor.execute(worker);
         executor.shutdown();
     }
@@ -612,6 +606,18 @@ public class WorkmanController extends BaseController implements MapComponentIni
             latLongBounds.extend(latLong);
         }
         map.fitBounds(latLongBounds);
+    }
+
+    private Integer getMeters(Position position) {
+
+        LatLong loc1 = new LatLong(position.getControlPosition().getLatitude(),
+                position.getControlPosition().getLongitude());
+
+        LatLong loc2 = new LatLong(position.getLatitude(), position.getLongitude());
+
+        Double distanceInMeters = loc1.distanceFrom(loc2);
+
+        return distanceInMeters.intValue();
     }
 
     private void filterUser() {
