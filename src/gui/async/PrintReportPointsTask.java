@@ -29,16 +29,9 @@ public class PrintReportPointsTask implements Runnable {
 
     @Override
     public void run() {
-        InputStream inputStream = null;
-
-        try{
-            inputStream = new FileInputStream("report/near_points.jrxml");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
         try {
-            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+            JasperDesign jasperDesign = JRXmlLoader.load(getClass().getResourceAsStream("report/near_points.jrxml"));
             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
             JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
