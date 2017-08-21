@@ -394,14 +394,15 @@ public class WorkmanController extends BaseController implements MapComponentIni
             Position position = (Position) hBox.getUserData();
             PointReport pointReport = new PointReport();
             pointReport.setPoint(position.getControlPosition().getPlaceName());
-            pointReport.setDistance("a 3 metros");
+            pointReport.setDistanceMeters(getMeters(position));
             pointReport.setTime(RadarDate.getDiaMesConHora(position.getTime()));
             pointReportList.add(pointReport);
         }
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportWatchTask(this,
-                new JRBeanCollectionDataSource(pointReportList), parameters, file, "guardia");
+                new JRBeanCollectionDataSource(pointReportList), parameters, file,
+                "watch_"+selectedWatch.getId().toString());
         executor.execute(worker);
         executor.shutdown();
     }
@@ -421,6 +422,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
                 PointReport watchSubReport = new PointReport();
                 watchSubReport.setPoint(position.getControlPosition().getPlaceName());
                 watchSubReport.setTime(RadarDate.getHora(position.getTime()));
+                watchSubReport.setDistance("a 3 metros");
                 watchMasterReport.getPointReportList().add(watchSubReport);
             }
             dataList.add(watchMasterReport);
@@ -433,7 +435,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportWatchsTask(this,
-                new JRBeanCollectionDataSource(dataList), parameters, file, "guardias");
+                new JRBeanCollectionDataSource(dataList), parameters, file,
+                selectedUser.getLastname()+"_"+new DateTime().getMillis());
         executor.execute(worker);
         executor.shutdown();
     }
@@ -612,6 +615,18 @@ public class WorkmanController extends BaseController implements MapComponentIni
             latLongBounds.extend(latLong);
         }
         map.fitBounds(latLongBounds);
+    }
+
+    private Integer getMeters(Position position) {
+
+        LatLong loc1 = new LatLong(position.getControlPosition().getLatitude(),
+                position.getControlPosition().getLongitude());
+
+        LatLong loc2 = new LatLong(position.getLatitude(), position.getLongitude());
+
+        Double distanceInMeters = loc1.distanceFrom(loc2);
+
+        return distanceInMeters.intValue();
     }
 
     private void filterUser() {
