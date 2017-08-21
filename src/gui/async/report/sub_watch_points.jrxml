@@ -69,11 +69,12 @@
 			<band height="30">
 				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				<frame>
-					<reportElement x="0" y="0" width="556" height="30" uuid="aa44de30-5d0f-4170-9a0c-66c382dc77ce">
+					<reportElement x="0" y="0" width="555" height="30" uuid="aa44de30-5d0f-4170-9a0c-66c382dc77ce">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<frame>
-						<reportElement mode="Opaque" x="0" y="0" width="556" height="30" printWhenGroupChanges="Gruppo1" backcolor="#2DB0E3" uuid="d5466b1c-7ad3-4cd8-987a-80f07cf5099e">
+						<reportElement mode="Opaque" x="0" y="-18" width="555" height="30" printWhenGroupChanges="Gruppo1" backcolor="#2DB0E3" uuid="d5466b1c-7ad3-4cd8-987a-80f07cf5099e">
 							<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -81,34 +82,34 @@
 						</reportElement>
 					</frame>
 					<staticText>
-						<reportElement positionType="FixRelativeToBottom" x="0" y="5" width="80" height="25" uuid="e3ed1454-2239-4f34-acaa-0b9eb726eff7">
+						<reportElement positionType="FixRelativeToBottom" x="0" y="-13" width="80" height="25" uuid="e3ed1454-2239-4f34-acaa-0b9eb726eff7">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font size="16" isBold="true"/>
 						</textElement>
 						<text><![CDATA[Puntos:]]></text>
 					</staticText>
 					<staticText>
-						<reportElement positionType="FixRelativeToBottom" x="180" y="5" width="100" height="25" uuid="29e10a07-0dff-444d-8dce-1a95a628156a">
+						<reportElement positionType="FixRelativeToBottom" x="180" y="-13" width="100" height="25" uuid="29e10a07-0dff-444d-8dce-1a95a628156a">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						</reportElement>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font size="16" isBold="true"/>
 						</textElement>
 						<text><![CDATA[Distancia]]></text>
 					</staticText>
 					<staticText>
-						<reportElement positionType="FixRelativeToBottom" x="380" y="5" width="100" height="25" uuid="a43af987-b425-4418-8ac1-4a11a5a99bef">
+						<reportElement positionType="FixRelativeToBottom" x="380" y="-13" width="100" height="25" uuid="a43af987-b425-4418-8ac1-4a11a5a99bef">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						</reportElement>
-						<textElement>
+						<textElement textAlignment="Center">
 							<font size="16" isBold="true"/>
 						</textElement>
 						<text><![CDATA[Hora:]]></text>
@@ -124,22 +125,24 @@
 		</groupFooter>
 	</group>
 	<detail>
-		<band height="30">
+		<band height="20">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="0" y="5" width="100" height="20" uuid="030a4f70-124f-4eda-aac6-4c8b26069e89">
+				<reportElement x="3" y="-15" width="176" height="15" uuid="030a4f70-124f-4eda-aac6-4c8b26069e89">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{point}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" x="180" y="5" width="100" height="20" uuid="22409417-bd17-4479-b1c8-0b7182d3b4c1">
+				<reportElement key="" x="183" y="-15" width="196" height="15" uuid="22409417-bd17-4479-b1c8-0b7182d3b4c1">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{distance}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="5" width="100" height="20" uuid="cb699125-f465-4d0a-b9aa-1c83df1dda02">
+				<reportElement x="383" y="-15" width="172" height="15" uuid="cb699125-f465-4d0a-b9aa-1c83df1dda02">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
