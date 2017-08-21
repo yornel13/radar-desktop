@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="actualizando a la ultima version de yornel_">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MyReports/prueba.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/PointListDataSource.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/SubReportBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/util/WatchMasterReport.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MyReports/subreport_watchDetail.jrxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MyReports/watchDetail_subreport.jrxml" afterPath="" />
+    <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/.gitignore" afterPath="$PROJECT_DIR$/MyReports/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/.project" afterPath="$PROJECT_DIR$/MyReports/.project" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/.settings/org.eclipse.core.resources.prefs" afterPath="$PROJECT_DIR$/MyReports/.settings/org.eclipse.core.resources.prefs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/prueba.jrxml" afterPath="$PROJECT_DIR$/MyReports/prueba.jrxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyReports/watch_performed.jrxml" afterPath="$PROJECT_DIR$/MyReports/watch_performed.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/WorkmanController.java" afterPath="$PROJECT_DIR$/src/gui/WorkmanController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/workman.fxml" afterPath="$PROJECT_DIR$/src/gui/view/workman.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/util/PointDataSource.java" afterPath="$PROJECT_DIR$/src/util/PointDataSource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/util/WatchDataSource.java" afterPath="$PROJECT_DIR$/src/util/WatchDataSource.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/GMapsFX/target/" />
@@ -34,17 +22,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="434" column="0" lean-forward="false" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
+            <state relative-caret-position="217">
+              <caret line="433" column="72" lean-forward="false" selection-start-line="433" selection-start-column="72" selection-end-line="433" selection-end-column="72" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="watch_points.jrxml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="watch_points.jrxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MyReports/watch_points.jrxml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="52">
@@ -67,7 +55,7 @@
       <file leaf-file-name="WatchMasterReport.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/WatchMasterReport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
+            <state relative-caret-position="200">
               <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
               <folding>
                 <element signature="e#374#375#0" expanded="true" />
@@ -533,7 +521,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503270398530</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="actualizando a la ultima version de yornel_">
+      <created>1503270515278</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1503270515278</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -845,16 +840,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/WatchMasterReport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
-          <folding>
-            <element signature="e#374#375#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyReports/prueba.jrxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -871,18 +856,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="434" column="0" lean-forward="false" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyReports/watch_points.jrxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="52">
           <caret line="180" column="51" lean-forward="false" selection-start-line="180" selection-start-column="51" selection-end-line="180" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/WatchMasterReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="17" column="55" lean-forward="false" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+          <folding>
+            <element signature="e#374#375#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="433" column="72" lean-forward="false" selection-start-line="433" selection-start-column="72" selection-end-line="433" selection-end-column="72" />
           <folding />
         </state>
       </provider>
