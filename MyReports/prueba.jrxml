@@ -9,6 +9,7 @@
 	<field name="time" class="java.lang.String"/>
 	<field name="mts" class="java.lang.String"/>
 	<field name="date" class="java.lang.String"/>
+	<field name="subReportBeanList" class="java.util.List"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -58,16 +59,15 @@
 				</textElement>
 				<text><![CDATA[Hora:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="80" y="10" width="100" height="20" uuid="2b79f58a-70e3-4984-8417-f5e553d2da9c"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="1" y="10" width="79" height="20" uuid="203f193c-38e2-4987-8683-cb3aea16c33f"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="80" y="10" width="100" height="20" uuid="07302f1b-15be-4fd5-8028-9b6e0d8ba193"/>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>

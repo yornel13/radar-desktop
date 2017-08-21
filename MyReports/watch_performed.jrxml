@@ -9,8 +9,6 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="date" class="java.lang.String"/>
-	<field name="subReportBeanList" class="java.util.List"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -27,11 +25,18 @@
 					<textFieldExpression><![CDATA[$P{full_name}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="480" y="16" width="100" height="24" forecolor="#FFFFFF" uuid="11490ac6-9534-4262-869d-a9e482f82d14"/>
-					<textElement>
+					<reportElement x="480" y="38" width="100" height="24" forecolor="#FFFFFF" uuid="11490ac6-9534-4262-869d-a9e482f82d14"/>
+					<textElement textAlignment="Right">
 						<font size="16"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement x="400" y="18" width="180" height="22" forecolor="#FFFFFF" uuid="8e865e91-726b-4299-8984-c2e2bef7519d"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 			</frame>
 			<staticText>
@@ -57,32 +62,17 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="58"/>
+		<band height="56"/>
 	</pageHeader>
 	<detail>
 		<band height="137" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
-				<reportElement positionType="Float" x="2" y="40" width="550" height="90" isRemoveLineWhenBlank="true" backcolor="#99CCFF" uuid="368b2976-6fad-4a34-8031-eac4a260499c"/>
+				<reportElement positionType="Float" x="2" y="30" width="550" height="90" isRemoveLineWhenBlank="true" backcolor="#99CCFF" uuid="368b2976-6fad-4a34-8031-eac4a260499c"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
                   ($F{subReportBeanList})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/MyReports/prueba.jasper"]]></subreportExpression>
 			</subreport>
-			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="109" y="-32" width="201" height="30" uuid="d44b8feb-2521-42f7-ac83-cff6536c5540">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="-32" width="100" height="30" uuid="3907ef04-3f15-424c-bc84-6f59aed32a5e">
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Fecha]]></text>
-			</staticText>
 		</band>
 	</detail>
 </jasperReport>
