@@ -60,6 +60,7 @@
 	<parameter name="full_name" class="java.lang.String"/>
 	<parameter name="company" class="java.lang.String"/>
 	<parameter name="dni" class="java.lang.String"/>
+	<parameter name="subReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -147,7 +148,7 @@
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="40" width="549" height="130" isRemoveLineWhenBlank="true" uuid="f9e24428-95c1-4a4e-9a7c-1fcd98964449"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
 	                  ($F{pointReportList})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:/Projects/IntelliJ/radar-desktop/MyReports/sub_watch_points.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{subReport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

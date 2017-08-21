@@ -5,6 +5,8 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import gui.async.PrintReportPointsTask;
+import gui.async.PrintReportWatchTask;
 import io.datafx.controller.ViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,18 +30,27 @@ import javafx.scene.text.Font;
 import model.ControlPosition;
 import model.Position;
 import model.User;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
+import report.model.PointReport;
+import util.Const;
 import util.RadarDate;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @ViewController("view/control.fxml")
-public class ControlController  extends BaseController implements MapComponentInitializedListener, EventHandler<MouseEvent> {
+public class ControlController  extends BaseController implements MapComponentInitializedListener,
+        EventHandler<MouseEvent>,PrintReportPointsTask.PrintTask {
 
     /*************USERS****************/
     @FXML
@@ -74,8 +85,6 @@ public class ControlController  extends BaseController implements MapComponentIn
     private JFXTextField markerFilterField;
     @FXML
     private JFXDrawer markerDrawer;
-    @FXML
-    private JFXListView<HBox> markerListView;
     @FXML
     private HBox markerHeadHBox;
     @FXML
@@ -121,6 +130,9 @@ public class ControlController  extends BaseController implements MapComponentIn
     @FXML
     private JFXDatePicker toPicker;
 
+    @FXML
+    private JFXButton printReport;
+
     private boolean drawerWatchFirstShow = true;
     private boolean drawerMarkerFirstShow = true;
 
@@ -129,6 +141,8 @@ public class ControlController  extends BaseController implements MapComponentIn
     private boolean isDateReady = false;
     private Date from;
     private Date to;
+
+    private ControlPosition selectedControl;
 
     public void updateMap(ActionEvent event) {
         mapView.addMapInializedListener(this);
@@ -158,8 +172,14 @@ public class ControlController  extends BaseController implements MapComponentIn
             e.printStackTrace();
         }
         showWatchesDetail();
-        showMarker();
+
         createDateFilter();
+
+        ImageView reportImage = new ImageView(new Image(getClass()
+                .getResource("img/printer.png").toExternalForm()));
+
+        printReport.setOnAction(event ->  printReport());
+        printReport.setGraphic(reportImage);
     }
 
     private void createDateFilter() {
@@ -303,19 +323,19 @@ public class ControlController  extends BaseController implements MapComponentIn
         watchDrawer.open();
         watchDrawer.setVisible(true);
 
-        ControlPosition control = (ControlPosition) controlListView.getSelectionModel().getSelectedItem().getUserData();
-        addMarker(control);
+        selectedControl = (ControlPosition) controlListView.getSelectionModel().getSelectedItem().getUserData();
+        addMarker(selectedControl);
 
         if(drawerWatchFirstShow)
             createWatchDrawer();
 
-        watchNameLabel.setText("   "+control.getPlaceName());
-        watchDniLabel.setText("     "+(control.getActive()?"Activo":"Desactivo"));
+        watchNameLabel.setText("   "+selectedControl.getPlaceName());
+        watchDniLabel.setText("     "+(selectedControl.getActive()?"Activo":"Desactivo"));
 
         watchData = FXCollections.observableArrayList();
 
         if (isDateReady && fromPicker.getValue() != null && toPicker.getValue() != null)
-            positionsUser = service.findAllPositionsByControlAndCompany(control, getCompany(), from, to);
+            positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), from, to);
         else {
             watchDrawer.close();
             showSnackBar("Seleccionar el rango de preciosa y presione buscar.");
@@ -358,6 +378,40 @@ public class ControlController  extends BaseController implements MapComponentIn
         filterWatch();
     }
 
+    public void loadPrint(File file) {
+
+        dialogLoadingPrint();
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("company", getCompany().getName());
+        parameters.put("place_name", selectedControl.getPlaceName());
+        parameters.put("date_start", RadarDate.getFechaConMesYHora(from.getTime()));
+        parameters.put("date_finish", RadarDate.getFechaConMesYHora(to.getTime()));
+
+        List<PointReport> pointReportList = new ArrayList<>();
+        for (HBox hBox : watchListView.getItems()) {
+            Position position = (Position) hBox.getUserData();
+            PointReport pointReport = new PointReport();
+            pointReport.setId(position.getWatch().getId().toString());
+            pointReport.setUser(position.getWatch().getUser().getFullName());
+            pointReport.setDistanceMeters(getMeters(position));
+            pointReport.setTime(RadarDate.getDiaMesConHora(position.getTime()));
+            pointReportList.add(pointReport);
+        }
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintReportPointsTask(this,
+                new JRBeanCollectionDataSource(pointReportList), parameters, file,
+                "points_"+new DateTime().getMillis());
+        executor.execute(worker);
+        executor.shutdown();
+    }
+
+    public void printReport() {
+        dialogType = Const.DIALOG_PRINT_BASIC;
+        showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
+    }
+
     private void showWatchesDetail() {
         watchListView.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY
@@ -370,20 +424,6 @@ public class ControlController  extends BaseController implements MapComponentIn
                 //openedMarkersDrawer();
                 addFlag((Position) watchListView.getSelectionModel()
                         .getSelectedItem().getUserData());
-            }
-        });
-    }
-
-    private void showMarker() {
-        markerListView.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY
-                    && markerListView.getSelectionModel()
-                    .getSelectedItem().getUserData() != null) {
-                Position position = (Position)
-                        markerListView.getSelectionModel().getSelectedItem().getUserData();
-                LatLong latLong = new LatLong(position.getControlPosition().getLatitude(),
-                        position.getControlPosition().getLongitude());
-                centerMap(latLong);
             }
         });
     }
@@ -442,9 +482,6 @@ public class ControlController  extends BaseController implements MapComponentIn
             System.out.println("You clicked the line at LatLong: lat: " +
                     position.getLatitude() + " lng: " + position.getLongitude());
         });
-
-
-        //centerMap(new LatLong(position.getLatitude(), position.getLongitude()));
     }
 
     public void addMarkers() {
@@ -548,6 +585,18 @@ public class ControlController  extends BaseController implements MapComponentIn
             latLongBounds.extend(latLong);
         }
         map.fitBounds(latLongBounds);
+    }
+
+    private Integer getMeters(Position position) {
+
+        LatLong loc1 = new LatLong(position.getControlPosition().getLatitude(),
+                position.getControlPosition().getLongitude());
+
+        LatLong loc2 = new LatLong(position.getLatitude(), position.getLongitude());
+
+        Double distanceInMeters = loc1.distanceFrom(loc2);
+
+        return distanceInMeters.intValue();
     }
 
     private void filterWatch() {
@@ -655,6 +704,31 @@ public class ControlController  extends BaseController implements MapComponentIn
             }
             return false; // Does not match.
         });
+    }
+
+    @Override
+    public void onDialogAccept(ActionEvent actionEvent) {
+        super.onDialogAccept(actionEvent);
+        switch (dialogType) {
+            case Const.DIALOG_PRINT_BASIC:
+                File file = selectDirectory();
+                if (file != null)
+                    loadPrint(file);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onPrintCompleted() {
+        closeDialogLoading();
+        showSnackBar("Guardado completado");
+    }
+
+    @Override
+    public void onPrintFailure(String message) {
+        closeDialogLoading();
+        showSnackBar("Guardado fallido");
     }
 }
 
