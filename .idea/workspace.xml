@@ -23,8 +23,8 @@
       <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="434" column="0" lean-forward="false" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
+            <state relative-caret-position="177">
+              <caret line="431" column="34" lean-forward="true" selection-start-line="431" selection-start-column="34" selection-end-line="431" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -505,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503280857641</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="actualizando a la ultima version jasper">
+      <created>1503280899135</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1503280899135</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -861,8 +868,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="434" column="0" lean-forward="false" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
+        <state relative-caret-position="177">
+          <caret line="431" column="34" lean-forward="true" selection-start-line="431" selection-start-column="34" selection-end-line="431" selection-end-column="34" />
           <folding />
         </state>
       </provider>
