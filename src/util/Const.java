@@ -11,4 +11,5 @@ public class Const {
     public static final int DIALOG_DISABLE = 4;
     public static final int DIALOG_ENABLE = 5;
     public static final int DIALOG_NOTIFICATION = 9;
+    public static final int DIALOG_PRINT_BASIC = 20;
 }

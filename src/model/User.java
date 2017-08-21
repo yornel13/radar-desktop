@@ -103,6 +103,10 @@ public class User implements java.io.Serializable {
 		this.lastname = lastname;
 	}
 
+	public String getFullName() {
+		return lastname+" "+name;
+	}
+
 	public String getPassword() {
 		return this.password;
 	}

@@ -280,10 +280,10 @@ public class MarkerController extends BaseController implements MapComponentInit
         drawerListView.setVisible(true);
         controlListView.setVisible(false);
         if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 0) {
-            openFloatingButton();
+            loadDrawerListView();
             drawerFilterField.clear();
             filterDrawerData();
-            loadDrawerListView();
+            openFloatingButton();
         }
     }
 
@@ -500,7 +500,7 @@ public class MarkerController extends BaseController implements MapComponentInit
 
             if (!control.getActive()) {
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/popup.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/popup.fxml"));
                 InputController inputController = new InputController(this);
                 loader.setController(inputController);
                 JFXPopup popup = new JFXPopup(loader.load());
