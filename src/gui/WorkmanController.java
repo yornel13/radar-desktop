@@ -31,6 +31,7 @@ import model.ControlPosition;
 import model.Position;
 import model.User;
 import model.Watch;
+import net.sf.jasperreports.engine.JRException;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
 import util.Const;
@@ -157,8 +158,9 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         ImageView reportImage = new ImageView(new Image(getClass()
                 .getResource("img/printer.png").toExternalForm()));
+
+        printReport.setOnAction(event ->  printReport());
         printReport.setGraphic(reportImage);
-        printReport.setVisible(true);
     }
 
     public void loadListView() throws FileNotFoundException {
@@ -359,6 +361,16 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
     public void loadPrint(File file) {
 
+        if(markerDrawer.isShown()) {
+            printSingleReport(file);
+        } else if (watchDrawer.isShown()) {
+            printMultiReport(file);
+        }
+
+
+    }
+
+    public void printSingleReport(File file) {
         dialogLoadingPrint();
 
         Map<String, Object> parameters = new HashMap<>();
@@ -374,6 +386,10 @@ public class WorkmanController extends BaseController implements MapComponentIni
                 new PointDataSource(markerListView.getItems()), parameters, file, "guardia");
         executor.execute(worker);
         executor.shutdown();
+    }
+
+    public void printMultiReport(File file)  {
+
     }
 
     public void printReport() {
@@ -428,8 +444,6 @@ public class WorkmanController extends BaseController implements MapComponentIni
         markerListView.depthProperty().set(1);
 
         filterMarker();
-
-        printReport.setOnAction(event ->  printReport());
 
         markerListView.getItems();
     }

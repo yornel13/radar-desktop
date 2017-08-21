@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -39,13 +40,18 @@
             <children>
                <VBox fx:id="watchDrawerBox" prefHeight="540.0" prefWidth="275.0">
                   <children>
-                     <HBox fx:id="watchHeadHBox" alignment="BOTTOM_LEFT" prefHeight="60.0" prefWidth="200.0" />
-                     <Label prefHeight="20.0" text="   Lista de guardias efectuadas" textFill="#000000a3">
-                        <font>
-                           <Font name="Segoe UI Historic" size="12.0" />
-                        </font>
-                     </Label>
-                     <JFXListView fx:id="watchListView" focusTraversable="false" prefHeight="460.0" prefWidth="275.0" />
+                     <Pane prefHeight="100.0" prefWidth="200.0">
+                        <children>
+                           <HBox fx:id="watchHeadHBox" alignment="BOTTOM_LEFT" prefHeight="80.0" prefWidth="275.0" />
+                           <Label layoutY="80.0" prefHeight="20.0" text="   Lista de guardias efectuadas" textFill="#000000a3">
+                              <font>
+                                 <Font name="Segoe UI Historic" size="12.0" />
+                              </font>
+                           </Label>
+                           <JFXButton fx:id="printReport" focusTraversable="false" layoutX="230.0" layoutY="45.0" prefHeight="35.0" prefWidth="35.0" ripplerFill="#2b3297" />
+                        </children>
+                     </Pane>
+                     <JFXListView fx:id="watchListView" focusTraversable="false" prefHeight="440.0" prefWidth="275.0" />
                   </children>
                </VBox>
             </children>
@@ -54,10 +60,7 @@
             <children>
                <VBox fx:id="markerDrawerBox" prefHeight="460.0" prefWidth="275.0">
                   <children>
-                     <HBox fx:id="markerHeadHBox" prefHeight="40.0" prefWidth="275.0">
-                        <children>
-                           <JFXButton fx:id="printReport" focusTraversable="false" prefHeight="25.0" prefWidth="35.0" ripplerFill="#2b3297" translateX="220.0" />
-                        </children></HBox>
+                     <HBox fx:id="markerHeadHBox" prefHeight="40.0" prefWidth="275.0" />
                      <JFXListView fx:id="markerListView" focusTraversable="false" prefHeight="420.0" prefWidth="275.0" />
                   </children>
                </VBox>
