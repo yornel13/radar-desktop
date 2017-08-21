@@ -30,7 +30,7 @@
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </JFXButton>
-               <JFXButton fx:id="optionEnterprise" focusTraversable="false" layoutX="200.0" layoutY="14.0" text="Empresas" textFill="WHITE">
+               <JFXButton fx:id="optionEnterprise" focusTraversable="false" layoutX="200.0" layoutY="14.0" text="Empresa" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -38,21 +38,23 @@
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </JFXButton>
-               <JFXButton fx:id="optionControl" focusTraversable="false" layoutX="340.0" layoutY="14.0" text="Marcadores" textFill="WHITE">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </JFXButton>
-               <Label fx:id="labelEmpresa" layoutX="490.0" layoutY="272.0" text="Empresa" textFill="WHITE" textOverrun="CLIP">
+               <Label fx:id="labelEmpresa" layoutX="490.0" layoutY="272.0" text="Empresa" textFill="WHITE" textOverrun="CLIP" visible="false">
                   <font>
                      <Font size="14.0" />
                   </font>
                </Label>
-               <JFXButton layoutX="695.0" layoutY="355.0" onAction="#onEnter" prefWidth="90.0" style="-fx-background-color: #ffc107;" text="ENTRAR" />
-               <ComboBox fx:id="selector" layoutX="490.0" layoutY="305.0" onAction="#onSelectCompany" prefWidth="300.0" style="-fx-background-color: white;" />
+               <JFXButton layoutX="611.0" layoutY="358.0" onAction="#onEnter" prefWidth="90.0" style="-fx-background-color: #ffc107;" text="ENTRAR" />
+               <ComboBox fx:id="selector" layoutX="490.0" layoutY="305.0" onAction="#onSelectCompany" prefWidth="300.0" style="-fx-background-color: white;" visible="false" />
+               <Label fx:id="companyName" layoutX="110.0" layoutY="210.0" prefHeight="55.0" prefWidth="736.0" textFill="WHITE">
+                  <font>
+                     <Font name="Arial" size="48.0" />
+                  </font>
+               </Label>
+               <Label fx:id="numeration" layoutX="112.0" layoutY="279.0" prefHeight="20.0" prefWidth="172.0" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
             </children>
          </Pane>
       </children>

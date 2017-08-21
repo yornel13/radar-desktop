@@ -158,6 +158,16 @@ public class BaseController {
         acceptButton.setVisible(false);
     }
 
+    protected void showDialogLogin(String title) {
+        dialogTitle.setText(title);
+        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        dialog.show(root);
+        cancelButton.setText("ACEPTAR");
+        cancelButton.setText("CANCELAR");
+        cancelButton.setVisible(true);
+        acceptButton.setVisible(true);
+    }
+
     @FXML
     public void onDialogCancel(ActionEvent actionEvent) {
         dialog.close();

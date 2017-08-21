@@ -23,6 +23,9 @@ public class SyncController extends BaseController {
     @ActionTrigger("employee")
     private JFXButton optionEmployee;
     @FXML
+    @ActionTrigger("marker")
+    private JFXButton optionControl;
+    @FXML
     @ActionTrigger("assign")
     private JFXButton optionAssign;
 
@@ -38,8 +41,9 @@ public class SyncController extends BaseController {
 
         buttonMap2.setOnMouseEntered(event -> buttonMap2.setStyle(" -fx-background-color: #d6d6d6"));
         buttonMap2.setOnMouseExited( event -> buttonMap2.setStyle(" -fx-background-color: #ffc107"));
-
         optionEmployee.setGraphic(new ImageView(new Image(getClass().getResource("img/employee_32.png").toExternalForm())));
+
+        optionControl.setGraphic(new ImageView(new Image(getClass().getResource("img/pointer_32.png").toExternalForm())));
         optionAssign.setGraphic(new ImageView(new Image(getClass().getResource("img/assign_32.png").toExternalForm())));
 
         ImageView mapImage1 = new ImageView(new Image(getClass().getResource("img/control_user.png").toExternalForm()));

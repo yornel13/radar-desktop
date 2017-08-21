@@ -79,7 +79,7 @@ public class CompanyController extends BaseController implements EventHandler<Mo
     public void init() {
 
         setTitle("Empresas");
-        setBackButtonImageBlack();
+        setBackButtonImageWhite();
 
         loadListView();
         loadSelectedCompany();
@@ -87,6 +87,13 @@ public class CompanyController extends BaseController implements EventHandler<Mo
         addCompany();
 
         numerationField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
+
+        selectCompany = service.getCompany();
+        if (selectCompany != null) {
+            loadCompany(selectCompany);
+        } else {
+            createCompany();
+        }
 
     }
 
@@ -263,19 +270,21 @@ public class CompanyController extends BaseController implements EventHandler<Mo
 
                 nonEditableCompany();
 
-                Company company = (Company) companyListView.getSelectionModel().getSelectedItem().getUserData();
-
-                if(!company.getActive()) {
-                    nonCompanyInfo();
-                    return;
-                }
-
-                companyNameField.setText(company.getName());
-                acronymField.setText(company.getAcronym());
-                numerationField.setText(company.getNumeration());
-                saveChanges(company.getName(), company.getAcronym(), company.getNumeration());
+                loadCompany((Company) companyListView.getSelectionModel().getSelectedItem().getUserData());
             }
         });
+    }
+
+    void loadCompany(Company company) {
+
+        selectCompany = company;
+
+        nonEditableCompany();
+
+        companyNameField.setText(company.getName());
+        acronymField.setText(company.getAcronym());
+        numerationField.setText(company.getNumeration());
+        saveChanges(company.getName(), company.getAcronym(), company.getNumeration());
     }
 
     private void editAdmin() {
@@ -319,7 +328,7 @@ public class CompanyController extends BaseController implements EventHandler<Mo
     }
 
     private void addCompany() {
-        JFXButton floatingButton = new JFXButton("+");
+        /*JFXButton floatingButton = new JFXButton("+");
         floatingButton.setButtonType(JFXButton.ButtonType.RAISED);
         floatingButton.getStyleClass().addAll("floatingButton");
         floatingButton.setLayoutX(230);
@@ -350,7 +359,30 @@ public class CompanyController extends BaseController implements EventHandler<Mo
                             "¿Seguro que desea crear la empresa: "+companyNameField.getText()+"?");
                 }
             });
-        } );
+        } );*/
+
+        saveButton.setOnAction(event -> {
+            if ((companyNameField.getText().isEmpty()
+                    || numerationField.getText().isEmpty())
+                    || acronymField.getText().isEmpty()) {
+
+                dialogType = Const.DIALOG_NOTIFICATION;
+                showDialogNotification("Campo vacio",
+                        "Debe llenar todos los campos para la modificacion de la empresa");
+            } else if (service.findCompanyByAcronym(acronymField.getText()) != null){
+                dialogType = Const.DIALOG_NOTIFICATION;
+                showDialogNotification("Error en siglas de empresa",
+                        "Estas siglas de empresa esta siendo usado por otro empresa");
+            } else if (service.findCompanyByNumeration(numerationField.getText()) != null) {
+                dialogType = Const.DIALOG_NOTIFICATION;
+                showDialogNotification("Error de numeracion",
+                        "La numeracion de la empresa ya esta siendo usada por otra empresa");
+            }  else {
+                dialogType = Const.DIALOG_SAVE;
+                showDialog("Confirmacion",
+                        "¿Seguro que desea crear la empresa: "+companyNameField.getText()+"?");
+            }
+        });
     }
 
     @Override
@@ -359,13 +391,12 @@ public class CompanyController extends BaseController implements EventHandler<Mo
         Company company;
         switch (dialogType) {
             case Const.DIALOG_SAVE_EDIT:
-                company = service.findCompanyById(((Company)
-                        companyListView.getSelectionModel().getSelectedItem().getUserData()).getId());
+                company = selectCompany;
                 company.setName(companyNameField.getText());
                 company.setAcronym(acronymField.getText());
                 company.setNumeration(numerationField.getText());
                 service.doEdit();
-                loadListView();
+                loadCompany(selectCompany);
                 showSnackBar("Empresa modificada con exito");
                 break;
             case Const.DIALOG_SAVE:
@@ -375,13 +406,13 @@ public class CompanyController extends BaseController implements EventHandler<Mo
                 company.setNumeration(numerationField.getText());
                 company.setActive(true);
                 service.saveCompany(company);
-                loadListView();
+                loadCompany(company);
                 showSnackBar("Empresa creada con exito");
                 break;
             case Const.DIALOG_DELETE:
                 company = service.findCompanyById(selectCompany.getId());
                 service.deleteCompany(company);
-                loadListView();
+                nonCompanyInfo();
                 showSnackBar("Empresa borrada");
                 break;
         }

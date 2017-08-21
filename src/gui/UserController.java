@@ -153,7 +153,7 @@ public class UserController extends BaseController {
 
     private void loadUserListView() throws IOException {
 
-        userList = service.getAllUserByCompany(getCompany());
+        userList = service.getAllUser();
 
         empData = FXCollections.observableArrayList();
 
@@ -599,7 +599,7 @@ public class UserController extends BaseController {
             selectedGroup = group;
 
             groupNameField.setText(selectedGroup.getName());
-            userList = service.findUsersByGroupIdAndCompany(selectedGroup.getId(), getCompany());
+            userList = service.findUserByGroupId(selectedGroup.getId());
 
             ImageView editIcon = new ImageView(new Image(getClass().getResource("img/bluePencil_16.png").toExternalForm()));
             editGroup.setVisible(true);
@@ -642,7 +642,7 @@ public class UserController extends BaseController {
     private void loadAllEmpGroupListView(Group group) {
 
         editGroup.setVisible(false);
-        empGroupList = service.findAllOrderByGroup(getCompany());
+        empGroupList = service.findAllOrderByGroup();
 
         empGroupData = FXCollections.observableArrayList();
 
