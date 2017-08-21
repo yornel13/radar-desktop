@@ -165,7 +165,7 @@
 					<textElement>
 						<font size="20" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Guadias en punto de control]]></text>
+					<text><![CDATA[Guardias en punto de control]]></text>
 				</staticText>
 			</frame>
 			<textField>
