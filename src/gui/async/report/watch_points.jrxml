@@ -97,7 +97,7 @@
 						<text><![CDATA[Puntos:]]></text>
 					</staticText>
 					<staticText>
-						<reportElement positionType="FixRelativeToBottom" x="180" y="5" width="100" height="25" uuid="29e10a07-0dff-444d-8dce-1a95a628156a">
+						<reportElement positionType="FixRelativeToBottom" x="230" y="5" width="100" height="25" uuid="29e10a07-0dff-444d-8dce-1a95a628156a">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -170,40 +170,20 @@
 				</textElement>
 				<text><![CDATA[Detalles de guardia]]></text>
 			</staticText>
-			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="120" width="150" height="20" uuid="a1044cfb-a267-480f-84a6-6ec4bb7236ff">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha de inicio:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="150" y="120" width="230" height="20" uuid="07f28a65-5c2b-480d-9cef-f7dde92cb12f">
+				<reportElement mode="Opaque" x="0" y="136" width="555" height="20" backcolor="#E8E8E8" uuid="07f28a65-5c2b-480d-9cef-f7dde92cb12f">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{date_start}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fecha de inicio: "+$P{date_start}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="143" width="150" height="20" uuid="b4743f7d-f52f-45e4-b118-b484249e3666">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha de finalizacion:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="150" y="143" width="230" height="20" uuid="3d49bc5c-7f51-4c9f-b8a7-61f947042393">
+				<reportElement mode="Opaque" x="0" y="156" width="555" height="20" backcolor="#E8E8E8" uuid="3d49bc5c-7f51-4c9f-b8a7-61f947042393">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{date_finish}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fecha de finalizacion: "+$P{date_finish}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="450" y="90" width="100" height="30" uuid="3b2aba87-e234-41eb-98fb-a0fa60817aff"/>
@@ -215,22 +195,22 @@
 		</band>
 	</title>
 	<detail>
-		<band height="30">
+		<band height="20">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="0" y="5" width="100" height="20" uuid="030a4f70-124f-4eda-aac6-4c8b26069e89">
+				<reportElement x="0" y="5" width="230" height="14" uuid="030a4f70-124f-4eda-aac6-4c8b26069e89">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{point}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" x="180" y="5" width="100" height="20" uuid="22409417-bd17-4479-b1c8-0b7182d3b4c1">
+				<reportElement key="" x="230" y="5" width="150" height="14" uuid="22409417-bd17-4479-b1c8-0b7182d3b4c1">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{distance}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="380" y="5" width="100" height="20" uuid="cb699125-f465-4d0a-b9aa-1c83df1dda02">
+				<reportElement x="380" y="5" width="176" height="14" uuid="cb699125-f465-4d0a-b9aa-1c83df1dda02">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
