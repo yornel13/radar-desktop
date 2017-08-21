@@ -122,6 +122,14 @@ public class RadarDate {
         String date = "a las "+dateTime.toString("HH:mm:ss");
         return date;
     }
+
+    public static String getDiaMesConHora(Long longDate) {
+        DateTime dateTime = new DateTime(longDate);
+        String fecha = dateTime.getDayOfMonth() + " de "
+                + getMonthName(dateTime.getMonthOfYear())
+                + " a las "+ dateTime.toString("HH:mm:ss");
+        return fecha;
+    }
     
     public static String differenceBetweenHours(Time time1, Time time2) {
         DateTime dateTime1 = new DateTime(time1.getTime());

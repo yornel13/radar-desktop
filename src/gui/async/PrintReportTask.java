@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.util.Map;
 
 public class PrintReportTask implements Runnable {
 
@@ -19,12 +20,14 @@ public class PrintReportTask implements Runnable {
     private JRDataSource dataSource;
     private File file;
     private String fileName;
+    private Map<String, Object> parameters;
 
-    public PrintReportTask(PrintTask listener, JRDataSource dataSource, File file, String fileName) {
+    public PrintReportTask(PrintTask listener, JRDataSource dataSource, Map<String, Object> parameters, File file, String fileName) {
         this.listener = listener;
         this.dataSource = dataSource;
         this.file = file;
         this.fileName = fileName;
+        this.parameters = parameters;
     }
 
     @Override
@@ -40,13 +43,13 @@ public class PrintReportTask implements Runnable {
         try {
             JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
             JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, null, dataSource);
+            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
             JasperExportManager.exportReportToPdfFile(jasperPrint,file.getPath() + "\\" + fileName +".pdf");
             System.out.println("Printed");
             Platform.runLater(() -> listener.onPrintCompleted());
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null,"Error al cargar fichero jrml jasper report "+ex.getMessage());
+            ex.printStackTrace();
             Platform.runLater(() -> listener.onPrintFailure("Error"));
         }
     }

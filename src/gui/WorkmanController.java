@@ -41,7 +41,9 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -102,6 +104,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
     private List<MarkerOptions> markersOptions;
 
     private Label markerTimeLabel;
+
+    private Watch selectedWatch;
 
 
     /*************CONTROL MARKERS****************/
@@ -357,9 +361,17 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         dialogLoadingPrint();
 
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("full_name", selectedWatch.getUser().getFullName());
+        parameters.put("company", getCompany().getName());
+        parameters.put("dni", selectedWatch.getUser().getDni());
+        parameters.put("id", selectedWatch.getId().toString());
+        parameters.put("date_start", RadarDate.getFechaConMesYHora(selectedWatch.getStartTime()));
+        parameters.put("date_finish", RadarDate.getFechaConMesYHora(selectedWatch.getEndTime()));
+
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportTask(this,
-                new PointDataSource(markerListView.getItems()), file, "guardia");
+                new PointDataSource(markerListView.getItems()), parameters, file, "guardia");
         executor.execute(worker);
         executor.shutdown();
     }
@@ -375,7 +387,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         markerDrawer.open();
         markerDrawer.setVisible(true);
 
-        Watch watch = (Watch) watchListView.getSelectionModel()
+        selectedWatch = (Watch) watchListView.getSelectionModel()
                 .getSelectedItem().getUserData();
 
 
@@ -383,11 +395,11 @@ public class WorkmanController extends BaseController implements MapComponentIni
             createMarkerDrawer();
 
         markerTimeLabel.setText("   "+ RadarDate
-                .getFechaConMes(new DateTime(watch.getStartTime())));
+                .getFechaConMes(new DateTime(selectedWatch.getStartTime())));
 
         markerData = FXCollections.observableArrayList();
 
-        positionWatch = service.findAllPositionsByWatch(watch);
+        positionWatch = service.findAllPositionsByWatch(selectedWatch);
 
         for (Position position: positionWatch) {
 
