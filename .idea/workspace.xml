@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="947f779a-21e7-4193-a88e-04da133ca9ed" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MyReports/policeman_64.png" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/gui/async/PrintReportWatchsTask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/report/model/PointReport.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/report/model/WatchReport.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/util/PointDataSource.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/util/WatchDataSource.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/async/PrintReportTask.java" afterPath="$PROJECT_DIR$/src/gui/async/PrintReportWatchTask.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/WorkmanController.java" afterPath="$PROJECT_DIR$/src/gui/WorkmanController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/view/workman.fxml" afterPath="$PROJECT_DIR$/src/gui/view/workman.fxml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/GMapsFX/target/" />
@@ -23,31 +27,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="WorkmanController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="226" column="37" lean-forward="false" selection-start-line="226" selection-start-column="37" selection-end-line="226" selection-end-column="37" />
+            <state relative-caret-position="-4738">
+              <caret line="58" column="97" lean-forward="false" selection-start-line="58" selection-start-column="97" selection-end-line="58" selection-end-column="97" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/gui/BaseController.java">
+      <file leaf-file-name="PrintReportWatchTask.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/async/PrintReportWatchTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="140" column="0" lean-forward="false" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+            <state relative-caret-position="464">
+              <caret line="45" column="104" lean-forward="false" selection-start-line="45" selection-start-column="94" selection-end-line="45" selection-end-column="104" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrintReportTask.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/async/PrintReportTask.java">
+      <file leaf-file-name="PrintReportWatchsTask.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/async/PrintReportWatchsTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="43" column="70" lean-forward="true" selection-start-line="43" selection-start-column="70" selection-end-line="43" selection-end-column="70" />
+            <state relative-caret-position="731">
+              <caret line="52" column="98" lean-forward="false" selection-start-line="52" selection-start-column="90" selection-end-line="52" selection-end-column="98" />
               <folding />
             </state>
           </provider>
@@ -105,8 +109,12 @@
         <option value="$PROJECT_DIR$/MyReports/watch_points.jrxml" />
         <option value="$PROJECT_DIR$/src/model/User.java" />
         <option value="$PROJECT_DIR$/src/gui/async/PrintReportTask.java" />
-        <option value="$PROJECT_DIR$/src/gui/WorkmanController.java" />
         <option value="$PROJECT_DIR$/src/gui/view/workman.fxml" />
+        <option value="$PROJECT_DIR$/src/report/model/PointReport.java" />
+        <option value="$PROJECT_DIR$/src/report/model/WatchReport.java" />
+        <option value="$PROJECT_DIR$/src/gui/async/PrintReportWatchTask.java" />
+        <option value="$PROJECT_DIR$/src/gui/async/PrintReportWatchsTask.java" />
+        <option value="$PROJECT_DIR$/src/gui/WorkmanController.java" />
       </list>
     </option>
   </component>
@@ -166,14 +174,13 @@
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="gui" type="462c0819:PsiDirectoryNode" />
-              <item name="async" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
               <item name="radar-desktop" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="gui" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radar-desktop" type="b2602c69:ProjectViewProjectNode" />
@@ -205,6 +212,9 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Projects\IntelliJ\radar-desktop\MyReports" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="gui.async" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Projects\IntelliJ\radar-desktop\MyReports\image" />
@@ -483,7 +493,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503274230693</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="guardando">
+      <created>1503275166203</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1503275166203</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -497,7 +514,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -512,8 +528,8 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21108742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21108742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32826087" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -541,7 +557,8 @@
     <MESSAGE value="actualizando a la ultima version de yornel" />
     <MESSAGE value="actualizando a la ultima version de yornel_" />
     <MESSAGE value="pre merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="pre merge" />
+    <MESSAGE value="guardando" />
+    <option name="LAST_COMMIT_MESSAGE" value="guardando" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -550,22 +567,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
-    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3700">
-          <caret line="200" column="19" lean-forward="false" selection-start-line="200" selection-start-column="19" selection-end-line="200" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/controller/UserController.java" />
-    <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4540">
-          <caret line="227" column="37" lean-forward="false" selection-start-line="227" selection-start-column="37" selection-end-line="227" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dao/UserDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1640">
@@ -700,18 +701,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/PointDataSource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="11" lean-forward="false" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#467#468#0" expanded="true" />
-            <element signature="e#521#522#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/service/RadarService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
@@ -719,14 +708,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -770,14 +751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/async/PrintReportTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="43" column="70" lean-forward="true" selection-start-line="43" selection-start-column="70" selection-end-line="43" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/view/workman.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -789,18 +762,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="226" column="37" lean-forward="false" selection-start-line="226" selection-start-column="37" selection-end-line="226" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/BaseController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="140" column="0" lean-forward="false" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/report/model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/WatchDataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/PointDataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="40" column="66" lean-forward="false" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/report/model/PointReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding>
+            <element signature="e#331#332#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/report/model/WatchReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="24" lean-forward="false" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="24" />
+          <folding>
+            <element signature="e#225#226#0" expanded="true" />
+            <element signature="e#250#251#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/async/PrintReportWatchsTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="52" column="98" lean-forward="false" selection-start-line="52" selection-start-column="90" selection-end-line="52" selection-end-column="98" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/async/PrintReportWatchTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="45" column="104" lean-forward="false" selection-start-line="45" selection-start-column="94" selection-end-line="45" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/WorkmanController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4738">
+          <caret line="58" column="97" lean-forward="false" selection-start-line="58" selection-start-column="97" selection-end-line="58" selection-end-column="97" />
           <folding />
         </state>
       </provider>

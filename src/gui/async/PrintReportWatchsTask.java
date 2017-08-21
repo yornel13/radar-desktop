@@ -5,16 +5,13 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
-import javax.sql.DataSource;
-import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.Map;
 
-public class PrintReportTask implements Runnable {
+public class PrintReportWatchsTask implements Runnable {
 
     private PrintTask listener;
     private JRDataSource dataSource;
@@ -22,7 +19,7 @@ public class PrintReportTask implements Runnable {
     private String fileName;
     private Map<String, Object> parameters;
 
-    public PrintReportTask(PrintTask listener, JRDataSource dataSource, Map<String, Object> parameters, File file, String fileName) {
+    public PrintReportWatchsTask(PrintTask listener, JRDataSource dataSource, Map<String, Object> parameters, File file, String fileName) {
         this.listener = listener;
         this.dataSource = dataSource;
         this.file = file;
@@ -32,18 +29,26 @@ public class PrintReportTask implements Runnable {
 
     @Override
     public void run() {
-        InputStream inputStream = null;
+        FileInputStream inputStreamMaster = null;
+        FileInputStream inputStreamSub = null;
 
         try{
-            inputStream = new FileInputStream("MyReports/watch_points.jrxml");
+            inputStreamMaster = new FileInputStream("MyReports/master_watch_points.jrxml");
+            inputStreamSub = new FileInputStream("MyReports/sub_watch_points.jrxml");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         try {
-            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
-            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            JasperDesign jasperDesignMaster = JRXmlLoader.load(inputStreamMaster);
+            JasperDesign jasperDesignSub = JRXmlLoader.load(inputStreamSub);
+            JasperReport jasperMasterReport = JasperCompileManager
+                    .compileReport(jasperDesignMaster);
+            JasperReport jasperSubReport = JasperCompileManager
+                    .compileReport(jasperDesignSub);
+            parameters.put("subreportParameter", jasperSubReport);
+            JasperPrint jasperPrint  = JasperFillManager.fillReport(jasperMasterReport,
+                    parameters, dataSource);
 
             JasperExportManager.exportReportToPdfFile(jasperPrint,file.getPath() + "\\" + fileName +".pdf");
             System.out.println("Printed");

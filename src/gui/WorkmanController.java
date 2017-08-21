@@ -8,7 +8,8 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
-import gui.async.PrintReportTask;
+import gui.async.PrintReportWatchTask;
+import gui.async.PrintReportWatchsTask;
 import io.datafx.controller.ViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,15 +32,20 @@ import model.ControlPosition;
 import model.Position;
 import model.User;
 import model.Watch;
-import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
+import report.model.PointReport;
+import report.model.WatchReport;
 import util.Const;
-import util.PointDataSource;
 import util.RadarDate;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +56,7 @@ import java.util.concurrent.Executors;
 
 @ViewController("view/workman.fxml")
 public class WorkmanController extends BaseController implements MapComponentInitializedListener,
-        EventHandler<MouseEvent>,PrintReportTask.PrintTask {
+        EventHandler<MouseEvent>,PrintReportWatchTask.PrintTask, PrintReportWatchsTask.PrintTask {
 
     /*************USERS****************/
     @FXML
@@ -107,6 +113,8 @@ public class WorkmanController extends BaseController implements MapComponentIni
     private Label markerTimeLabel;
 
     private Watch selectedWatch;
+
+    private User selectedUser;
 
 
     /*************CONTROL MARKERS****************/
@@ -308,17 +316,17 @@ public class WorkmanController extends BaseController implements MapComponentIni
         watchDrawer.open();
         watchDrawer.setVisible(true);
 
-        User user = (User) userListView.getSelectionModel().getSelectedItem().getUserData();
+        selectedUser = (User) userListView.getSelectionModel().getSelectedItem().getUserData();
 
         if(drawerWatchFirstShow)
             createWatchDrawer();
 
-        watchNameLabel.setText("   "+user.getLastname()+" "+user.getName());
-        watchDniLabel.setText("     "+user.getDni());
+        watchNameLabel.setText("   "+selectedUser.getFullName());
+        watchDniLabel.setText("     "+selectedUser.getDni());
 
         watchData = FXCollections.observableArrayList();
 
-        watchesUser = service.getAllUserWatches(user.getId());
+        watchesUser = service.getAllUserWatches(selectedUser.getId());
 
         for (Watch watch: watchesUser) {
 
@@ -381,15 +389,53 @@ public class WorkmanController extends BaseController implements MapComponentIni
         parameters.put("date_start", RadarDate.getFechaConMesYHora(selectedWatch.getStartTime()));
         parameters.put("date_finish", RadarDate.getFechaConMesYHora(selectedWatch.getEndTime()));
 
+        List<PointReport> pointReportList = new ArrayList<>();
+        for (HBox hBox : markerListView.getItems()) {
+            Position position = (Position) hBox.getUserData();
+            PointReport pointReport = new PointReport();
+            pointReport.setPoint(position.getControlPosition().getPlaceName());
+            pointReport.setDistance("a 3 metros");
+            pointReport.setTime(RadarDate.getDiaMesConHora(position.getTime()));
+            pointReportList.add(pointReport);
+        }
+
         ExecutorService executor = Executors.newFixedThreadPool(1);
-        Runnable worker = new PrintReportTask(this,
-                new PointDataSource(markerListView.getItems()), parameters, file, "guardia");
+        Runnable worker = new PrintReportWatchTask(this,
+                new JRBeanCollectionDataSource(pointReportList), parameters, file, "guardia");
         executor.execute(worker);
         executor.shutdown();
     }
 
-    public void printMultiReport(File file)  {
+    public void printMultiReport(File file) {
+        dialogLoadingPrint();
 
+        ArrayList<WatchReport> dataList = new ArrayList<>();
+        for (HBox hBox: watchListView.getItems()) {
+            Watch watch = (Watch) hBox.getUserData();
+            WatchReport watchMasterReport = new WatchReport();
+            watchMasterReport.setId(watch.getId().toString());
+            watchMasterReport.setStart(RadarDate.getFechaConMesYHora(watch.getStartTime()));
+            watchMasterReport.setFinish(RadarDate.getFechaConMesYHora(watch.getEndTime()));
+            watchMasterReport.setPointReportList(new ArrayList<>());
+            for (Position position : service.findAllPositionsByWatch(watch)) {
+                PointReport watchSubReport = new PointReport();
+                watchSubReport.setPoint(position.getControlPosition().getPlaceName());
+                watchSubReport.setTime(RadarDate.getHora(position.getTime()));
+                watchMasterReport.getPointReportList().add(watchSubReport);
+            }
+            dataList.add(watchMasterReport);
+        }
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("full_name", selectedUser.getFullName());
+        parameters.put("company", getCompany().getName());
+        parameters.put("dni", selectedUser.getDni());
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintReportWatchsTask(this,
+                new JRBeanCollectionDataSource(dataList), parameters, file, "guardias");
+        executor.execute(worker);
+        executor.shutdown();
     }
 
     public void printReport() {
