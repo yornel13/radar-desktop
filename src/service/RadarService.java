@@ -183,14 +183,6 @@ public class RadarService {
         return companies;
     }
 
-    public Company getCompany() {
-        List<Company> companies = companyDAO.findAll();
-        if (!companies.isEmpty())
-            return companies.get(0);
-        else
-            return null;
-    }
-
     public List<Company> getAllCompaniesActive() {
         List<Company> companies = companyDAO.findAllActive();
         return companies;

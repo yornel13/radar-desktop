@@ -158,16 +158,6 @@ public class BaseController {
         acceptButton.setVisible(false);
     }
 
-    protected void showDialogLogin(String title) {
-        dialogTitle.setText(title);
-        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
-        dialog.show(root);
-        cancelButton.setText("ACEPTAR");
-        cancelButton.setText("CANCELAR");
-        cancelButton.setVisible(true);
-        acceptButton.setVisible(true);
-    }
-
     @FXML
     public void onDialogCancel(ActionEvent actionEvent) {
         dialog.close();
@@ -203,16 +193,16 @@ public class BaseController {
 
     protected void setTitle(String title) {
         new Timer().schedule(
-            new TimerTask() {
-                @Override
-                public void run() {
-                    cancel();
-                    Platform.runLater(() -> {
-                        Stage stage = (Stage) flowContext.getRegisteredObject("Stage");
-                        stage.setTitle(title);
-                    });
-                }
-            }, 500, 500
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            Stage stage = (Stage) flowContext.getRegisteredObject("Stage");
+                            stage.setTitle(title);
+                        });
+                    }
+                }, 500, 500
         );
         flowContext.register("root", root);
         flowContext.register("dialog", dialog);
@@ -231,7 +221,7 @@ public class BaseController {
                             if (title == null || title.isEmpty())
                                 stage.setTitle(getCompany().getName());
                             else
-                            stage.setTitle(getCompany().getName()+" - "+title);
+                                stage.setTitle(getCompany().getName()+" - "+title);
                         });
                     }
                 }, 500, 500
@@ -241,7 +231,7 @@ public class BaseController {
 
     protected void setBackButtonImageBlack() {
         backButton.setGraphic(new ImageView(
-                    new Image(getClass().getResource("img/arrow_back_icon16.png").toExternalForm())));
+                new Image(getClass().getResource("img/arrow_back_icon16.png").toExternalForm())));
 
     }
 

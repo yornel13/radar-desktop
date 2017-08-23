@@ -1,12 +1,12 @@
 package dao;
 
 import model.Admin;
+import model.User;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
 
@@ -17,7 +17,7 @@ import java.util.List;
  * augmented to handle user-managed Spring transactions. Each of these methods
  * provides additional information for how to configure it for the desired type
  * of transaction control.
- * 
+ *
  * @see model.Admin
  * @author MyEclipse Persistence Tools
  */

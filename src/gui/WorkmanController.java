@@ -139,7 +139,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
 
         controlList = service.getAllControlActive();
 
-        users = service.getAllUserActive();
+        users = service.getAllUserByCompanyActive(getCompany());
 
         if(users == null) {
             System.err.println("No users");

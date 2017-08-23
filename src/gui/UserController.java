@@ -154,7 +154,7 @@ public class UserController extends BaseController {
 
     private void loadUserListView() throws IOException {
 
-        userList = service.getAllUser();
+        userList = service.getAllUserByCompany(getCompany());
 
         empData = FXCollections.observableArrayList();
 
@@ -296,7 +296,7 @@ public class UserController extends BaseController {
         employeeListView.setOnMouseClicked(event -> {
 
             if (event.getButton() == MouseButton.PRIMARY
-                                  && employeeListView.getSelectionModel().getSelectedItem() != null) {
+                    && employeeListView.getSelectionModel().getSelectedItem() != null) {
                 editingPassword = false;
                 nonEditableUser();
 
@@ -603,7 +603,7 @@ public class UserController extends BaseController {
             selectedGroup = group;
 
             groupNameField.setText(selectedGroup.getName());
-            userList = service.findUserByGroupId(selectedGroup.getId());
+            userList = service.findUsersByGroupIdAndCompany(selectedGroup.getId(), getCompany());
 
             ImageView editIcon = new ImageView(new Image(getClass().getResource("img/bluePencil_16.png").toExternalForm()));
             editGroup.setVisible(true);
@@ -646,7 +646,7 @@ public class UserController extends BaseController {
     private void loadAllEmpGroupListView(Group group) {
 
         editGroup.setVisible(false);
-        empGroupList = service.findAllOrderByGroup();
+        empGroupList = service.findAllOrderByGroup(getCompany());
 
         empGroupData = FXCollections.observableArrayList();
 
@@ -729,7 +729,7 @@ public class UserController extends BaseController {
                 } catch (NullPointerException e ){
                 }
             }else {
-                    groupHBox.getChildren().addAll( iconGroup, groupLabel);
+                groupHBox.getChildren().addAll( iconGroup, groupLabel);
             }
         }
 

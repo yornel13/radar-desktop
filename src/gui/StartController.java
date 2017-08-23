@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
@@ -28,10 +27,6 @@ public class StartController extends BaseController {
     private JFXButton buttonImport;
     @FXML
     private JFXButton buttonExport;
-    @FXML
-    private Label companyName;
-    @FXML
-    private Label numeration;
 
     @FXML
     @ActionTrigger("admin")
@@ -39,7 +34,9 @@ public class StartController extends BaseController {
     @FXML
     @ActionTrigger("company")
     private JFXButton optionEnterprise;
-
+    @FXML
+    @ActionTrigger("marker")
+    private JFXButton optionControl;
     @FXML
     private ComboBox selector;
 
@@ -51,18 +48,11 @@ public class StartController extends BaseController {
 
         setTitle("Radar app");
 
+        optionControl.setGraphic(new ImageView(new Image(getClass().getResource("img/pointer_32.png").toExternalForm())));
         optionAdmin.setGraphic(new ImageView(new Image(getClass().getResource("img/admin_32.png").toExternalForm())));
         optionEnterprise.setGraphic(new ImageView(new Image(getClass().getResource("img/enterprise_32.png").toExternalForm())));
 
-        loadCompany();
-    }
-
-    private void loadCompany() {
-        company = service.getCompany();
-        if (company != null) {
-            companyName.setText(company.getName());
-            numeration.setText(company.getNumeration());
-        }
+        loadCompanies();
     }
 
     private void loadCompanies() {
@@ -95,8 +85,8 @@ public class StartController extends BaseController {
 
             if(file.exists()) {
 
-               while((line = br.readLine()) != null) {
-                   json += line+"\n";
+                while((line = br.readLine()) != null) {
+                    json += line+"\n";
                 }
             }
 
@@ -176,17 +166,11 @@ public class StartController extends BaseController {
     }
 
     public void onEnter(ActionEvent event) throws VetoException, FlowException {
-        /*if (!companies.isEmpty() && !selector.getSelectionModel().isEmpty()) {
+        if (!companies.isEmpty() && !selector.getSelectionModel().isEmpty()) {
             flowContext.register("company", companies.get(selector.getSelectionModel().getSelectedIndex()));
             actionHandler.handle("sync");
         }  else {
             showSnackBar("Selecciona una empresa primero.");
-        }*/
-        if (company != null) {
-            flowContext.register("company", company);
-            actionHandler.handle("sync");
-        }  else {
-            showSnackBar("Se deben crear primero los detalles de la empresa.");
         }
         //showDialogLogin("Login");
     }

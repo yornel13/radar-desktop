@@ -277,9 +277,9 @@ public class ControlController  extends BaseController implements MapComponentIn
     @Override
     public void handle(MouseEvent event) {
 
-        if (event.getButton() == MouseButton.PRIMARY &&
-                controlListView.getSelectionModel().getSelectedItem() != null &&
-                controlListView.getSelectionModel().getSelectedItem().getUserData() != null) {
+        if (event.getButton() == MouseButton.PRIMARY
+                && controlListView.getSelectionModel()
+                .getSelectedItem().getUserData() != null) {
             if (isDateReady)
                 openedWatchDrawer();
             else
@@ -334,7 +334,7 @@ public class ControlController  extends BaseController implements MapComponentIn
         watchData = FXCollections.observableArrayList();
 
         if (isDateReady && fromPicker.getValue() != null && toPicker.getValue() != null)
-            positionsUser = service.findAllPositionsByControl(selectedControl, from, to);
+            positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), from, to);
         else {
             watchDrawer.close();
             showSnackBar("Seleccionar el rango de preciosa y presione buscar.");
