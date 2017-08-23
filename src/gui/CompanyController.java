@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -333,6 +334,9 @@ public class CompanyController extends BaseController implements EventHandler<Mo
         floatingButton.getStyleClass().addAll("floatingButton");
         floatingButton.setLayoutX(230);
         floatingButton.setLayoutY(525);
+        floatingButton.setTooltip(
+                new Tooltip("Agregar empresa")
+        );
         anchorPane.getChildren().add(floatingButton);
 
         floatingButton.setOnAction(eventAction -> {

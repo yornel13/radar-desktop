@@ -214,6 +214,10 @@ public class BaseController {
                 }
             }, 500, 500
         );
+        flowContext.register("root", root);
+        flowContext.register("dialog", dialog);
+        flowContext.register("dialogTitle", dialogTitle);
+        flowContext.register("dialogContent", dialogContent);
     }
 
     protected void setTitleToCompany(String title) {
@@ -232,6 +236,7 @@ public class BaseController {
                     }
                 }, 500, 500
         );
+        flowContext.register("root", root);
     }
 
     protected void setBackButtonImageBlack() {

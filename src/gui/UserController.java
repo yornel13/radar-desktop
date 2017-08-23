@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Tab;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -215,6 +216,9 @@ public class UserController extends BaseController {
         floatingButton.setLayoutX(230);
         floatingButton.setLayoutY(525);
         anchorPane.getChildren().add(floatingButton);
+        floatingButton.setTooltip(
+                new Tooltip("Agregar empleado")
+        );
 
         floatingButton.setOnMouseClicked(event -> {
             if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 0) {
@@ -881,12 +885,18 @@ public class UserController extends BaseController {
             if((int) t1.getUserData() == 0) {
                 initializeFields();
                 setFilterUser();
+                floatingButton.setTooltip(
+                        new Tooltip("Agregar empleado")
+                );
             } else {
                 setTabGroupFields();
                 loadGroupListView();
                 editGroup();
 
                 setFilterGroup();
+                floatingButton.setTooltip(
+                        new Tooltip("Agregar grupo")
+                );
             }
         });
 

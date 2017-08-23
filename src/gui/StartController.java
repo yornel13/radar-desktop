@@ -188,6 +188,7 @@ public class StartController extends BaseController {
         }  else {
             showSnackBar("Se deben crear primero los detalles de la empresa.");
         }
+        //showDialogLogin("Login");
     }
 }
 

@@ -36,7 +36,12 @@ public class Admin implements java.io.Serializable {
 		this.active = active;
 	}
 
-	// Property accessors
+	public Admin(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+    // Property accessors
 
 	public Long getId() {
 		return this.id;

@@ -18,10 +18,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -208,19 +205,6 @@ public class MarkerController extends BaseController implements MapComponentInit
 
     public void createTabPane() {
 
-        routeListView = new JFXListView<>();
-        routeListView.setPrefWidth(275);
-        routeListView.setExpanded(true);
-        routeListView.setVerticalGap(1.0);
-        routeListView.depthProperty().set(1);
-
-        Tab tabR = new Tab();
-        tabR.setText("Rutas");
-        tabR.setContent(routeListView);
-        tabR.setUserData(0);
-        tabPane.getTabs().add(tabR);
-
-
         markerListView = new JFXListView<>();
         markerListView.setPrefWidth(275);
         markerListView.setExpanded(true);
@@ -233,12 +217,25 @@ public class MarkerController extends BaseController implements MapComponentInit
         tabM.setUserData(1);
         tabPane.getTabs().add(tabM);
 
+        routeListView = new JFXListView<>();
+        routeListView.setPrefWidth(275);
+        routeListView.setExpanded(true);
+        routeListView.setVerticalGap(1.0);
+        routeListView.depthProperty().set(1);
+
+        Tab tabR = new Tab();
+        tabR.setText("Rutas");
+        tabR.setContent(routeListView);
+        tabR.setUserData(0);
+        tabPane.getTabs().add(tabR);
+
         floatingButton = new JFXButton("+");
         floatingButton.setButtonType(JFXButton.ButtonType.RAISED);
         floatingButton.getStyleClass().addAll("floatingButton");
         floatingButton.setLayoutX(210);
         floatingButton.setLayoutY(525);
         anchorPane.getChildren().add(floatingButton);
+        floatingButton.setVisible(false);
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, t, t1) -> {
             if ((int) t1.getUserData() == 1) {
@@ -247,6 +244,9 @@ public class MarkerController extends BaseController implements MapComponentInit
             } else if ((int) t1.getUserData() == 0) {
                 floatingButton.setGraphic(null);
                 floatingButton.setText("+");
+                floatingButton.setTooltip(
+                        new Tooltip("Agregar ruta")
+                );
                 openFloatingButton();
             }
             if (addPane.isVisible())
@@ -291,6 +291,9 @@ public class MarkerController extends BaseController implements MapComponentInit
         drawer.close();
         floatingButton.setGraphic(null);
         floatingButton.setText("+");
+        floatingButton.setTooltip(
+                new Tooltip("Agregar ruta")
+        );
         openFloatingButton();
     }
 
@@ -570,7 +573,8 @@ public class MarkerController extends BaseController implements MapComponentInit
 
         routeListView.setItems(routeData);
         routeListView.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && !addPane.isVisible()) {
+            if (event.getButton() == MouseButton.PRIMARY && !addPane.isVisible()
+                    && routeListView.getSelectionModel().getSelectedItem() != null) {
                 selectedRoute = (Route) routeListView
                         .getSelectionModel().getSelectedItem().getUserData();
                 openedDrawer();
@@ -681,6 +685,9 @@ public class MarkerController extends BaseController implements MapComponentInit
                 .getResource("img/pencil_edit_16.png").toExternalForm()));
         floatingButton.setText("");
         floatingButton.setGraphic(editImage);
+        floatingButton.setTooltip(
+                new Tooltip("Editar Ruta")
+        );
         openFloatingButton();
 
         drawerListView.setOnMouseClicked(event -> {
