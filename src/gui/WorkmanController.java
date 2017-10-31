@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -102,6 +103,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
     private List<MarkerOptions> markersOptions;
 
     private Label markerTimeLabel;
+    private Label markerDurationLabel;
 
     private Watch selectedWatch;
 
@@ -322,15 +324,21 @@ public class WorkmanController extends BaseController implements MapComponentIni
         for (Watch watch: watchesUser) {
 
             HBox wDetail = new HBox();
+            VBox watchVBox = new VBox();
             Label watchLabel = new Label();
+            Label numberLabel = new Label();
             ImageView iconImage = new ImageView(new Image(getClass()
                     .getResource("img/icon_multiple_marker_64.png").toExternalForm()));
             iconImage.setFitHeight(30);
             iconImage.setFitWidth(30);
-            watchLabel.setGraphic(iconImage);
             watchLabel.setText("   "+ RadarDate
-                    .getFechaConMes(new DateTime(watch.getStartTime())));
-            wDetail.getChildren().add(watchLabel);
+                    .getDateWithMonth(new DateTime(watch.getStartTime())));
+            numberLabel.setText("    Guardia Nro: "+watch.getId());
+            numberLabel.setFont( new Font(null, 10));
+            numberLabel.setTextFill(Color.valueOf("#4B919F"));
+
+            watchVBox.getChildren().addAll(watchLabel, numberLabel);
+            wDetail.getChildren().addAll(iconImage, watchVBox);
             wDetail.setUserData(watch);
             watchData.add(wDetail);
 
@@ -375,16 +383,18 @@ public class WorkmanController extends BaseController implements MapComponentIni
         parameters.put("company", getCompany().getName());
         parameters.put("dni", selectedWatch.getUser().getDni());
         parameters.put("id", selectedWatch.getId().toString());
-        parameters.put("date_start", RadarDate.getFechaConMesYHora(selectedWatch.getStartTime()));
-        parameters.put("date_finish", RadarDate.getFechaConMesYHora(selectedWatch.getEndTime()));
+        parameters.put("date_start", RadarDate.getDateWithMonthAndTime(selectedWatch.getStartTime()));
+        parameters.put("date_finish", RadarDate.getDateWithMonthAndTime(selectedWatch.getEndTime()));
 
         List<PointReport> pointReportList = new ArrayList<>();
         for (HBox hBox : markerListView.getItems()) {
             Position position = (Position) hBox.getUserData();
             PointReport pointReport = new PointReport();
             pointReport.setPoint(position.getControlPosition().getPlaceName());
+            pointReport.setDuration(RadarDate
+                    .secondsToMinutesBest(Math.abs(position.getUpdateTime().intValue())));
             pointReport.setDistanceMeters(getMeters(position));
-            pointReport.setTime(RadarDate.getDiaMesConHora(position.getTime()));
+            pointReport.setTime(RadarDate.getDayMonthHour(position.getTime()));
             pointReportList.add(pointReport);
         }
 
@@ -404,13 +414,14 @@ public class WorkmanController extends BaseController implements MapComponentIni
             Watch watch = (Watch) hBox.getUserData();
             WatchReport watchMasterReport = new WatchReport();
             watchMasterReport.setId(watch.getId().toString());
-            watchMasterReport.setStart(RadarDate.getFechaConMesYHora(watch.getStartTime()));
-            watchMasterReport.setFinish(RadarDate.getFechaConMesYHora(watch.getEndTime()));
+            watchMasterReport.setStart(RadarDate.getDateWithMonthAndTime(watch.getStartTime()));
+            watchMasterReport.setFinish(RadarDate.getDateWithMonthAndTime(watch.getEndTime()));
             watchMasterReport.setPointReportList(new ArrayList<>());
             for (Position position : service.findAllPositionsByWatch(watch)) {
                 PointReport watchSubReport = new PointReport();
                 watchSubReport.setPoint(position.getControlPosition().getPlaceName());
-                watchSubReport.setTime(RadarDate.getHora(position.getTime()));
+                watchSubReport.setDuration(RadarDate.secondsToMinutesBest(position.getUpdateTime().intValue()));
+                watchSubReport.setTime(RadarDate.getDayMonthHour(position.getTime()));
                 watchSubReport.setDistanceMeters(getMeters(position));
                 watchMasterReport.getPointReportList().add(watchSubReport);
             }
@@ -449,11 +460,13 @@ public class WorkmanController extends BaseController implements MapComponentIni
             createMarkerDrawer();
 
         markerTimeLabel.setText("   "+ RadarDate
-                .getFechaConMes(new DateTime(selectedWatch.getStartTime())));
+                .getDateWithMonth(new DateTime(selectedWatch.getStartTime())));
+        markerDurationLabel.setText("   Duración de guardia: "+ RadarDate
+                .differenceBetweenHMS(selectedWatch.getEndTime(), selectedWatch.getStartTime()));
 
         markerData = FXCollections.observableArrayList();
 
-        positionWatch = service.findAllPositionsByWatch(selectedWatch);
+        positionWatch = service.findAllPositionsByWatchUpdateTime(selectedWatch);
 
         for (Position position: positionWatch) {
 
@@ -461,13 +474,16 @@ public class WorkmanController extends BaseController implements MapComponentIni
             VBox labelsVBox = new VBox();
             Label placeLabel = new Label("   "+ position.getControlPosition().getPlaceName());
             placeLabel.setFont(new Font(null, 14));
-            Label timeLabel  = new Label("   "+ RadarDate.getHora(position.getTime()));
+            Label timeLabel  = new Label("   "+ RadarDate.getHours(position.getTime()));
             timeLabel.setFont( new Font(null, 12));
             timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
+            Label updateLabel  = new Label("   "+ position.getDifferent());
+            updateLabel.setFont( new Font(null, 10));
+            updateLabel.setTextFill(Color.valueOf("#4B919F"));
             ImageView iconImage = new ImageView(new Image(getClass().getResource("img/marker_in_map_64.png").toExternalForm()));
             iconImage.setFitHeight(40);
             iconImage.setFitWidth(40);
-            labelsVBox.getChildren().addAll(placeLabel, timeLabel);
+            labelsVBox.getChildren().addAll(placeLabel, timeLabel, updateLabel);
             hBox.getChildren().addAll(iconImage, labelsVBox);
 
             hBox.setUserData(position);
@@ -501,9 +517,16 @@ public class WorkmanController extends BaseController implements MapComponentIni
     }
 
     public void createMarkerDrawer() {
+        VBox labelsVBox = new VBox();
         markerTimeLabel = new Label();
         markerTimeLabel.setFont(new Font(null, 12));
-        markerHeadHBox.getChildren().addAll(markerTimeLabel);
+        markerDurationLabel = new Label();
+        markerDurationLabel.setFont(new Font(null, 10));
+        markerDurationLabel.setTextFill(Color.valueOf("#4B919F"));
+        markerDurationLabel.setAlignment(Pos.TOP_RIGHT);
+        markerDurationLabel.setPrefWidth(260);
+        labelsVBox.getChildren().addAll(markerTimeLabel, markerDurationLabel);
+        markerHeadHBox.getChildren().add(labelsVBox);
         drawerMarkerFirstShow = false;
     }
 
@@ -571,7 +594,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             Marker marker = new Marker(markerOptions);
             map.addMarker(marker);
             map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
-                showSnackBar(RadarDate.getHora(position.getTime()));
+                showSnackBar(RadarDate.getHours(position.getTime()));
                 System.out.println("You clicked the line at LatLong: lat: " +
                         position.getLatitude() + " lng: " + position.getLongitude());
             });
@@ -699,7 +722,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
                 String lowerCaseFilter = watchFilterField.getText().toLowerCase();
 
                 String timeString = RadarDate
-                        .getFechaConMes(new DateTime(watch.getStartTime()));
+                        .getDateWithMonth(new DateTime(watch.getStartTime()));
                 if (timeString.toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches first name.
                 }
@@ -726,7 +749,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
             String lowerCaseFilter = watchFilterField.getText().toLowerCase();
 
             String timeString = RadarDate
-                    .getFechaConMes(new DateTime(watch.getStartTime()));
+                    .getDateWithMonth(new DateTime(watch.getStartTime()));
             if (timeString.toLowerCase().contains(lowerCaseFilter)) {
                 return true; // Filter matches first name.
             }

@@ -5,6 +5,7 @@ public class PointReport {
     private String id;
     private String user;
     private String point;
+    private String duration;
     private String distance;
     private String time;
 
@@ -38,6 +39,14 @@ public class PointReport {
 
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public void setDistanceMeters(int distance) {

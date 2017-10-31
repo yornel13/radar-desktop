@@ -1,13 +1,20 @@
 package model;
 
+import dao.UserDAO;
+import org.hibernate.internal.util.SerializationHelper;
+import service.RadarService;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
 
-public class User implements java.io.Serializable {
+public class User implements java.io.Serializable, Cloneable {
 
 	// Fields
 
@@ -171,4 +178,12 @@ public class User implements java.io.Serializable {
 		this.selected = selected;
 	}
 
+	public static List<User> cloneList(List<User> list) {
+		List<User> clone = new ArrayList<>();
+		for (User item
+				: list) {
+			clone.add(RadarService.clone(User.class, item));
+		}
+		return clone;
+	}
 }

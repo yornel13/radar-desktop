@@ -1,5 +1,8 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,5 +93,11 @@ public class Watch implements java.io.Serializable {
 
 	public void setPositionsList(List<Position> positionsList) {
 		this.positionsList = positionsList;
+	}
+
+	public static List<Watch> cloneList(List<Watch> list) {
+		List<Watch> clone = new ArrayList<>(list.size());
+		for (Watch item : list) clone.add(RadarService.clone(Watch.class, item));
+		return clone;
 	}
 }

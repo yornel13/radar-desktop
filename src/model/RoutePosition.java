@@ -1,5 +1,10 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * RoutePosition entity. @author MyEclipse Persistence Tools
  */
@@ -59,6 +64,12 @@ public class RoutePosition implements java.io.Serializable {
 
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
+	}
+
+	public static List<RoutePosition> cloneList(List<RoutePosition> list) {
+		List<RoutePosition> clone = new ArrayList<>(list.size());
+		for (RoutePosition item : list) clone.add(RadarService.clone(RoutePosition.class, item));
+		return clone;
 	}
 
 }

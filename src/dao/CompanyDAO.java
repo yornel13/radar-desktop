@@ -139,7 +139,7 @@ public class CompanyDAO extends BaseHibernateDAO {
 
 	public List<Company> findAllActive() {
 		Query query = getSession()
-				.createSQLQuery("SELECT * FROM company where active = true")
+				.createSQLQuery("SELECT * FROM company where active = TRUE")
 				.addEntity(Company.class);
 		Object result = query.list();
 		return (List<Company>) result;

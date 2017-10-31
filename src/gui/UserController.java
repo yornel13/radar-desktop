@@ -91,12 +91,17 @@ public class UserController extends BaseController {
     @FXML
     private Label createGroupLabel;
     @FXML
+    private JFXTextField filterFieldGroup;
+    @FXML
+    private JFXTextField filterFieldGroupUser;
+    @FXML
     private Label editGroupLabel;
     @FXML
     private JFXButton editGroup;
     @FXML
     private JFXTextField groupNameField;
     private Group selectedGroup;
+
 
 
     /**********OTHERS*********/
@@ -109,8 +114,7 @@ public class UserController extends BaseController {
     private JFXButton backButton;
     @FXML
     private JFXTextField filterField;
-    @FXML
-    private JFXTextField filterFieldGroup;
+
     private User selectedUser;
     private boolean editingPassword = false;
 
@@ -131,7 +135,12 @@ public class UserController extends BaseController {
         passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
 
-        cancelGroupButton.setOnAction(event -> setTabGroupFields());
+        cancelGroupButton.setOnAction(event -> {
+            setTabGroupFields();
+            loadAllEmpGroupListView(null);
+            editGroup.setVisible(true);
+            filterFieldGroupUser.setVisible(false);
+         });
     }
 
     @Override
@@ -226,6 +235,8 @@ public class UserController extends BaseController {
             } else if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 1) {
                 setCreateGroupFields();
                 loadAllEmpGroupListView(null);
+                filterUserGroup();
+                filterFieldGroupUser.clear();
             }
         });
     }
@@ -238,6 +249,7 @@ public class UserController extends BaseController {
         createGroupLabel.setVisible(false);
         groupLabel.setVisible(false);
 
+        filterFieldGroupUser.clear();
         groupNameField.setDisable(false);
         groupNameField.setEditable(true);
         dniField.setVisible(false);
@@ -263,6 +275,8 @@ public class UserController extends BaseController {
         addLabel.setVisible(false);
 
         editGroup.setVisible(false);
+        filterFieldGroupUser.setVisible(true);
+        filterFieldGroupUser.setDisable(false);
         groupNameField.clear();
         groupNameField.setDisable(false);
         groupNameField.setEditable(true);
@@ -339,6 +353,7 @@ public class UserController extends BaseController {
         addLabel.setVisible(false);
         groupLabel.setVisible(false);
 
+        filterFieldGroupUser.setVisible(false);
         editGroup.setVisible(false);
         dniField.setVisible(true);
         dniField.setEditable(false);
@@ -478,8 +493,14 @@ public class UserController extends BaseController {
 
     private void editGroup() {
         editGroup.setOnMouseClicked(event -> {
-            setEditGroupFields();
-            loadAllEmpGroupListView(selectedGroup);
+            if(!groupNameField.getText().isEmpty()) {
+                setEditGroupFields();
+                loadAllEmpGroupListView(selectedGroup);
+                filterUserGroup();
+            }else {
+                showDialogNotification("Seleccione un Grupo!",
+                        "Debe seleccionar un grupo para editar");
+            }
         });
     }
 
@@ -496,6 +517,7 @@ public class UserController extends BaseController {
         lastNameField.clear();
         passwordField.clear();
         groupNameField.clear();
+        filterFieldGroupUser.clear();
 
         groupNameField.setVisible(true);
         groupNameField.setDisable(true);
@@ -508,7 +530,7 @@ public class UserController extends BaseController {
         passwordField.setVisible(false);
         passwordField.setDisable(true);
         empGroupListView.setVisible(true);
-        empGroupListView.getItems().clear();
+        //empGroupListView.getItems().clear();
 
         editButton.setVisible(false);
 
@@ -598,8 +620,11 @@ public class UserController extends BaseController {
     }
 
     public void groupListViewClick(MouseEvent event, Group group) {
-        if (event.getButton() == MouseButton.PRIMARY) {
 
+        if (event.getButton() == MouseButton.PRIMARY) {
+            filterFieldGroupUser.setDisable(false);
+            filterFieldGroupUser.setVisible(true);
+            filterFieldGroupUser.clear();
             selectedGroup = group;
 
             groupNameField.setText(selectedGroup.getName());
@@ -611,6 +636,8 @@ public class UserController extends BaseController {
 
             setTabGroupFields();
             loadEmpGroupListView();
+            filterUserGroup();
+
         }
     }
 
@@ -641,6 +668,7 @@ public class UserController extends BaseController {
             };
             return cell ;
         });
+
     }
 
     private void loadAllEmpGroupListView(Group group) {
@@ -893,6 +921,7 @@ public class UserController extends BaseController {
                 loadGroupListView();
                 editGroup();
 
+
                 setFilterGroup();
                 floatingButton.setTooltip(
                         new Tooltip("Agregar grupo")
@@ -909,8 +938,16 @@ public class UserController extends BaseController {
         filterFieldGroup.setVisible(false);
     }
 
+
     void setFilterGroup() {
         filterGroup();
+        filterFieldGroup.setOnMouseClicked(event -> {
+            filterFieldGroup.clear();
+            filterFieldGroupUser.clear();
+            loadAllEmpGroupListView(null);
+            filterFieldGroupUser.setVisible(false);
+            setTabGroupFields();
+        });
         filterFieldGroup.clear();
         filterField.setVisible(false);
         filterFieldGroup.setVisible(true);
@@ -981,10 +1018,69 @@ public class UserController extends BaseController {
         checkFilter(filteredData);
     }
 
+    void filterUserGroup() {
+        filterFieldGroup.clear();
+        FilteredList<User> filteredData = new FilteredList<>(empGroupData, p -> true);
+        filterFieldGroupUser.textProperty().addListener((observable, oldValue, newValue) -> {
+            //nonUserInfo();
+            filteredData.setPredicate(user -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                if (user == null)
+                    return false;
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = filterFieldGroupUser.getText().toLowerCase();
+
+                String fullName = user.getLastname()+" "+user.getName();
+                if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        SortedList<User> sortedData = new SortedList<>(filteredData);
+        empGroupListView.setItems(sortedData);
+        checkEmpGroupFilter(filteredData);
+    }
+
+    void checkEmpGroupFilter(FilteredList<User> filteredData){
+        filteredData.setPredicate(user -> {
+            if(filterFieldGroupUser.getText() == null || filterFieldGroupUser.getText() == null ) {
+                return  true;
+            }
+            String lowerCaseFilter = filterFieldGroupUser.getText().toLowerCase();
+
+            String fullName = user.getLastname()+" "+user.getName();
+            if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches first name.
+            } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            }
+            return false; // Does not match.
+
+        });
+    }
+
     private void filterGroup() {
+
         FilteredList<HBox> filteredData = new FilteredList<>(groupData, p -> true);
         filterFieldGroup.textProperty().addListener((observable, oldValue, newValue) -> {
-            nonUserInfo();
+            //nonUserInfo();
+
             filteredData.setPredicate(hBox -> {
                 // If filter text is empty, display all persons.
                 if (newValue == null || newValue.isEmpty()) {

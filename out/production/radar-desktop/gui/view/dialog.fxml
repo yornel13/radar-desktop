@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import javafx.scene.control.Label?>
+
+<JFXDialog fx:id="dialog" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DialogController">
+    <JFXDialogLayout>
+        <heading>
+            <Label fx:id="dialogTitle" text="Advertencia!" />
+        </heading>
+        <body>
+            <Label fx:id="dialogContent" text="¿Seguro que desea salir de la aplicación?" />
+        </body>
+        <actions>
+            <JFXButton fx:id="acceptButton" onAction="#onDialogAccept" styleClass="dialog-accept">SALIR
+            </JFXButton>
+            <JFXButton fx:id="cancelButton" onAction="#onDialogCancel" styleClass="dialog-accept">CANCELAR
+            </JFXButton>
+        </actions>
+    </JFXDialogLayout>
+</JFXDialog>

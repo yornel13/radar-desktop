@@ -1,5 +1,10 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * RouteMarker entity. @author MyEclipse Persistence Tools
  */
@@ -59,6 +64,12 @@ public class RouteMarker implements java.io.Serializable {
 
 	public void setCreateDate(Long createDate) {
 		this.createDate = createDate;
+	}
+
+	public static List<RouteMarker> cloneList(List<RouteMarker> list) {
+		List<RouteMarker> clone = new ArrayList<>(list.size());
+		for (RouteMarker item : list) clone.add(RadarService.clone(RouteMarker.class, item));
+		return clone;
 	}
 
 }

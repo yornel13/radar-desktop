@@ -384,9 +384,10 @@ public class CompanyController extends BaseController implements EventHandler<Mo
                 break;
             case Const.DIALOG_DELETE:
                 company = service.findCompanyById(selectCompany.getId());
-                service.deleteCompany(company);
-                loadListView();
-                showSnackBar("Empresa borrada");
+                if (service.deleteCompany(company)) {
+                    loadListView();
+                    showSnackBar("Empresa borrada");
+                }
                 break;
         }
 

@@ -1,8 +1,11 @@
 package model;
 
 import com.google.gson.Gson;
+import service.RadarService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -102,5 +105,11 @@ public class Group implements java.io.Serializable {
 
 	public void setUsers(Set users) {
 		this.users = users;
+	}
+
+	public static List<Group> cloneList(List<Group> list) {
+		List<Group> clone = new ArrayList<>(list.size());
+		for (Group item : list) clone.add(RadarService.clone(Group.class, item));
+		return clone;
 	}
 }

@@ -9,6 +9,7 @@ import com.lynden.gmapsfx.javascript.object.*;
 import io.datafx.controller.ViewController;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,12 +31,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ControlPosition;
 import model.Route;
 import model.RoutePosition;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
+import service.RadarService;
 import util.Const;
 
 import javax.annotation.PostConstruct;
@@ -43,10 +46,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @ViewController("view/marker.fxml")
 public class MarkerController extends BaseController implements MapComponentInitializedListener,
-        EventHandler<MouseEvent>,MapReadyListener {
+        EventHandler<MouseEvent>,MapReadyListener, RadarService.ErrorCases {
 
     @FXML
     private AnchorPane anchorPane;
@@ -459,6 +464,12 @@ public class MarkerController extends BaseController implements MapComponentInit
                 "¿Estas seguro que deseas activar nuevamente este punto de control?");
     }
 
+    public void deleteControl() {
+        dialogType = Const.DIALOG_DELETE;
+        showDialog("Confirmacion",
+                "¿Estas seguro que deseas borrar este punto de control?");
+    }
+
     private void deleteRoute() {
         dialogType = Const.DIALOG_DELETE;
         showDialog("Confirmacion",
@@ -503,7 +514,7 @@ public class MarkerController extends BaseController implements MapComponentInit
 
             if (!control.getActive()) {
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/popup.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/popup_dual.fxml"));
                 InputController inputController = new InputController(this);
                 loader.setController(inputController);
                 JFXPopup popup = new JFXPopup(loader.load());
@@ -1019,6 +1030,8 @@ public class MarkerController extends BaseController implements MapComponentInit
     public void onDialogAccept(ActionEvent actionEvent) {
         super.onDialogAccept(actionEvent);
 
+        service.setListener(null);
+
         ControlPosition control;
         Route route;
 
@@ -1039,8 +1052,14 @@ public class MarkerController extends BaseController implements MapComponentInit
                 service.doEdit();
                 break;
             case Const.DIALOG_DELETE:
-                route = service.findRouteById(selectedRoute.getId());
-                service.deleteRoute(route);
+                service.setListener(this);
+                if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 1) {
+                    control = service.findCPById(selectedMarker.getId());
+                    service.deleteControl(control);
+                } else if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 0) {
+                    route = service.findRouteById(selectedRoute.getId());
+                    service.deleteRoute(route);
+                }
                 break;
         }
 
@@ -1245,6 +1264,36 @@ public class MarkerController extends BaseController implements MapComponentInit
         addMarkers();
     }
 
+    @Override
+    public void onError(String error) {
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            showDialogNotification("Error", error);
+                        });
+                    }
+                }, 500, 500
+        );
+    }
+
+    @Override
+    public void onSuccess(String message) {
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            showSnackBar(message);
+                        });
+                    }
+                }, 500, 500
+        );
+    }
+
     public class InputController {
 
         @FXML
@@ -1252,6 +1301,9 @@ public class MarkerController extends BaseController implements MapComponentInit
 
         @FXML
         private Label popupLabel;
+
+        @FXML
+        private Label popupLabel_delete;
 
         private MarkerController principal;
 
@@ -1268,8 +1320,10 @@ public class MarkerController extends BaseController implements MapComponentInit
             if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 0) {
                 if (popupLabel.getText().equals("Borrar"))
                     principal.deleteRoute();
-                 else
+                else
                     principal.enableControl();
+            } else if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 1) {
+                principal.deleteControl();
             }
         }
 

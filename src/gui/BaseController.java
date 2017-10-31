@@ -40,7 +40,7 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BaseController {
+public class BaseController implements RadarService.ErrorCases {
 
     @ActionHandler
     protected FlowActionHandler actionHandler;
@@ -208,6 +208,7 @@ public class BaseController {
         flowContext.register("dialog", dialog);
         flowContext.register("dialogTitle", dialogTitle);
         flowContext.register("dialogContent", dialogContent);
+        service.setListener(this);
     }
 
     protected void setTitleToCompany(String title) {
@@ -282,6 +283,23 @@ public class BaseController {
         }
     }
 
+    @Override
+    public void onError(String error) {
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            showDialogNotification("Error", error);
+                        });
+                    }
+                }, 500, 500
+        );
+    }
 
+    @Override
+    public void onSuccess(String message) {
 
+    }
 }

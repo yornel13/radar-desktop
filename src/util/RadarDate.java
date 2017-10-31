@@ -21,6 +21,10 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
+import org.joda.time.Minutes;
+import org.joda.time.Seconds;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -53,82 +57,90 @@ public class RadarDate {
         return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
     }
     
-    public static String getFechaConMes(DateTime dateTime) {
-        String fecha = dateTime.getDayOfMonth() + " de " 
+    public static String getDateWithMonth(DateTime dateTime) {
+        String dateString = dateTime.getDayOfMonth() + " de "
                 + getMonthName(dateTime.getMonthOfYear()) 
                 + " " + dateTime.getYear();
-        return fecha;
+        return dateString;
     }
-    
-    public static String getFechaConMesSinAno(DateTime dateTime) {
-        String fecha = dateTime.getDayOfMonth() + " de " 
-                + getMonthName(dateTime.getMonthOfYear());
-        return fecha;
+
+    public static String getDateWithMonth(Long date) {
+        DateTime dateTime = new DateTime(date);
+        String dateString = dateTime.getDayOfMonth() + " de "
+                + getMonthName(dateTime.getMonthOfYear())
+                + " " + dateTime.getYear();
+        return dateString;
     }
-    
-    public static String getFechaConMes(Date date) {
+
+    public static String getDateWithMonth(Date date) {
         DateTime dateTime = new DateTime(date.getTime());
-        String fecha = dateTime.getDayOfMonth() + " de " 
-                + getMonthName(dateTime.getMonthOfYear()) 
+        String dateString = dateTime.getDayOfMonth() + " de "
+                + getMonthName(dateTime.getMonthOfYear())
                 + " " + dateTime.getYear();
-        return fecha;
+        return dateString;
     }
     
-    public static String getFechaConMes(Timestamp timestamp) {
+    public static String getDateWithMonthWithoutYear(DateTime dateTime) {
+        String dateString = dateTime.getDayOfMonth() + " de "
+                + getMonthName(dateTime.getMonthOfYear());
+        return dateString;
+    }
+    
+    public static String getDateWithMonth(Timestamp timestamp) {
         DateTime dateTime = new DateTime(timestamp.getTime());
-        String fecha = dateTime.getDayOfMonth() + " de " 
+        String dateString = dateTime.getDayOfMonth() + " de "
                 + getMonthName(dateTime.getMonthOfYear()) 
                 + " " + dateTime.getYear();
-        return fecha;
+        return dateString;
     }
     
-    public static String getFechaConMesYHora(DateTime dateTime) {
-        String fecha = dateTime.getDayOfMonth() + " de " 
+    public static String getDateWithMonthAndTime(DateTime dateTime) {
+        String dateString = dateTime.getDayOfMonth() + " de "
                 + getMonthName(dateTime.getMonthOfYear()) 
                 + " " + dateTime.getYear() + " a las "
                 + dateTime.toString("HH:mm:ss");
-        return fecha;
+        return dateString;
     }
     
-    public static String getFechaConMesYHora(Timestamp timestamp) {
+    public static String getDateWithMonthAndTime(Timestamp timestamp) {
         DateTime dateTime = new DateTime(timestamp.getTime());
-        String fecha = dateTime.getDayOfMonth() + " de " 
+        String dateString = dateTime.getDayOfMonth() + " de "
                 + getMonthName(dateTime.getMonthOfYear()) 
                 + " " + dateTime.getYear() + " a las " 
                 + dateTime.toString("HH:mm:ss");
-        return fecha;
+        return dateString;
     }
 
-    public static String getFechaConMesYHora(Long longDate) {
+    public static String getDateWithMonthAndTime(Long longDate) {
         DateTime dateTime = new DateTime(longDate);
-        String fecha = dateTime.getDayOfMonth() + " de "
+        String dateString = dateTime.getDayOfMonth() + " de "
                 + getMonthName(dateTime.getMonthOfYear())
                 + " " + dateTime.getYear() + " a las "
                 + dateTime.toString("HH:mm:ss");
-        return fecha;
+        return dateString;
     }
     
-    public static String getHora(Time time) {
+    public static String getHours(Time time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mma");
         return formatter.format(getLocalFromTime(time));
     }
-    public static String getHora(DateTime dateTime) {
-        String fecha = "a las "+dateTime.toString("HH:mm:ss");
-        return fecha;
+    public static String getHours(DateTime dateTime) {
+        String dateString = "a las "+dateTime.toString("HH:mm:ss");
+        return dateString;
     }
 
-    public static String getHora(Long longDate) {
+    public static String getHours(Long longDate) {
         DateTime dateTime = new DateTime(longDate);
-        String date = "a las "+dateTime.toString("HH:mm:ss");
-        return date;
+        String dateString = "a las "+dateTime.toString("HH:mm:ss");
+        return dateString;
     }
 
-    public static String getDiaMesConHora(Long longDate) {
+    public static String getDayMonthHour(Long longDate) {
         DateTime dateTime = new DateTime(longDate);
-        String fecha = dateTime.getDayOfMonth() + " de "
+        String dateString = dateTime.getDayOfMonth() + " de "
                 + getMonthName(dateTime.getMonthOfYear())
                 + " a las "+ dateTime.toString("HH:mm:ss");
-        return fecha;
+        return dateString;
     }
     
     public static String differenceBetweenHours(Time time1, Time time2) {
@@ -143,18 +155,80 @@ public class RadarDate {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return formatter.format(getLocalFromTime(diff));
     }
+
+    public static String differenceBetweenHours(Long time1, Long time2) {
+        DateTime dateTime1 = new DateTime(time1);
+        DateTime dateTime2 = new DateTime(time2);
+        Seconds seconds = Seconds.secondsBetween(dateTime2, dateTime1);
+        return secondsToMinutesBest(seconds.getSeconds());
+    }
+
+    public static String differenceBetweenHMS(Long time1, Long time2) {
+        DateTime dateTime1 = new DateTime(time1);
+        DateTime dateTime2 = new DateTime(time2);
+        Seconds seconds = Seconds.secondsBetween(dateTime2, dateTime1);
+        return secondsToMinutesBest(seconds.getSeconds());
+    }
+
+    public static int differenceBetweenMinutes(Long time1, Long time2) {
+        DateTime dateTime1 = new DateTime(time1);
+        DateTime dateTime2 = new DateTime(time2);
+        Minutes minutes = Minutes.minutesBetween(dateTime2, dateTime1);
+        return minutes.getMinutes();
+    }
+
+    public static Integer differenceBetweenSeconds(Long time1, Long time2) {
+        DateTime dateTime1 = new DateTime(time1);
+        DateTime dateTime2 = new DateTime(time2);
+        Seconds seconds = Seconds.secondsBetween(dateTime2, dateTime1);
+        return seconds.getSeconds();
+    }
+
+    public static String secondsToMinutes(int seconds) {
+        int minutes = 0;
+        int hours = 0;
+        while (seconds > 59) {
+            seconds -= 60;
+            minutes++;
+        }
+        while (minutes > 59) {
+            minutes -= 60;
+            hours++;
+        }
+        return hours+":"+minutes+":"+seconds;
+    }
+
+    public static String secondsToMinutesBest(int seconds) {
+        int minutes = 0;
+        int hours = 0;
+        while (seconds > 59) {
+            seconds -= 60;
+            minutes++;
+        }
+        while (minutes > 59) {
+            minutes -= 60;
+            hours++;
+        }
+        if (hours == 0 && minutes == 0) {
+            return seconds+"s";
+        }
+        if (hours == 0) {
+            return minutes+"m "+seconds+"s";
+        }
+        return hours+"h "+minutes+"m "+seconds+"s";
+    }
     
-    public static String getFechaCorta(Timestamp timestamp) {
+    public static String getDateShort(Timestamp timestamp) {
         DateTime dateTime = new DateTime(timestamp.getTime());
         return dateTime.toString("dd/MM/yyyy");
     }
     
-    public static String getFechaCorta(Date date) {
+    public static String getDateShort(Date date) {
         DateTime dateTime = new DateTime(date.getTime());
         return dateTime.toString("dd/MM/yyyy");
     }
     
-    public static String getFechaCorta(DateTime dateTime) {
+    public static String getDateShort(DateTime dateTime) {
         return dateTime.toString("dd/MM/yyyy");
     }
     
@@ -178,69 +252,11 @@ public class RadarDate {
         
         return new Timestamp(todayWithZeroTime.getTime());
     }
-     
-    public static ObservableList<String> arraySpinnerDia() {
-        String[] items = new String[30];
-        items[0] = "01";
-        items[1] = "02";
-        items[2] = "03";
-        items[3] = "04";
-        items[4] = "05";
-        items[5] = "06";
-        items[6] = "07";
-        items[7] = "08";
-        items[8] = "09";
-        items[9] = "10";
-        items[10] = "11";
-        items[11] = "12";
-        items[12] = "13";
-        items[13] = "14";
-        items[14] = "15";
-        items[15] = "16";
-        items[16] = "17";
-        items[17] = "18";
-        items[18] = "19";
-        items[19] = "20";
-        items[20] = "21";
-        items[21] = "22";
-        items[22] = "23";
-        items[23] = "24";
-        items[24] = "25";
-        items[25] = "26";
-        items[26] = "27";
-        items[27] = "28";
-        items[28] = "29";
-        items[29] = "30";
-        return FXCollections.observableArrayList(items);
-    }
-    
-    public static ObservableList<String> arraySpinnerMes() {
-        String[] items = new String[12];
-        items[0] = "01";
-        items[1] = "02";
-        items[2] = "03";
-        items[3] = "04";
-        items[4] = "05";
-        items[5] = "06";
-        items[6] = "07";
-        items[7] = "08";
-        items[8] = "09";
-        items[9] = "10";
-        items[10] = "11";
-        items[11] = "12";
-        return FXCollections.observableArrayList(items);
-    }
-    
-    public static ObservableList<String> arraySpinnerAno() {
-        String[] items = new String[20];
-        Integer count = 0;
-        
-        Integer secuencia = (new DateTime().getYear()) - 10;
-        for (String number : items) {
-            items[count] = secuencia.toString();
-            secuencia++;
-            count++;
-        }
-        return FXCollections.observableArrayList(items);
+
+    public static void main(String[] args) {
+        //System.out.println(differenceBetweenHMS(DateTimeUtils.currentTimeMillis(), Long.valueOf("1503010000849")));
+        //System.out.println(getDateWithMonthAndTime(DateTimeUtils.currentTimeMillis()));
+        //System.out.println(getDateWithMonthAndTime(Long.valueOf("1503010000849")));
+        System.out.println(Long.valueOf("1503010000849").intValue());
     }
 }

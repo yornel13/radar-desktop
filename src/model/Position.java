@@ -1,5 +1,10 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Position entity. @author MyEclipse Persistence Tools
  */
@@ -15,6 +20,10 @@ public class Position implements java.io.Serializable {
 	private Double longitude;
 	private Long time;
 	private Long updateTime;
+
+	// Local
+	private String different;
+	private int minutes;
 
 	// Constructors
 
@@ -91,4 +100,25 @@ public class Position implements java.io.Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public String getDifferent() {
+		return different;
+	}
+
+	public void setDifferent(String different) {
+		this.different = different;
+	}
+
+	public int getMinutes() {
+		return minutes;
+	}
+
+	public void setMinutes(int minutes) {
+		this.minutes = minutes;
+	}
+
+	public static List<Position> cloneList(List<Position> list) {
+		List<Position> clone = new ArrayList<>(list.size());
+		for (Position item : list) clone.add(RadarService.clone(Position.class, item));
+		return clone;
+	}
 }

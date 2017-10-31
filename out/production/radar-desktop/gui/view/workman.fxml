@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.lynden.gmapsfx.GoogleMapView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane prefHeight="585.0" prefWidth="860.0">
+      <children>
+         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="275.0" style="-fx-background-color: white;" />
+         <JFXTextField fx:id="userFilterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
+         <JFXTextField fx:id="watchFilterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090" visible="false">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
+         <JFXTextField fx:id="markerFilterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090" visible="false">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
+         <JFXListView fx:id="userListView" layoutX="-2.0" layoutY="45.0" prefHeight="540.0" prefWidth="275.0" />
+         <GoogleMapView fx:id="mapView" layoutX="273.0" prefHeight="585.0" prefWidth="585.0" />
+         <JFXDrawer fx:id="watchDrawer" defaultDrawerSize="300.0" layoutX="-3.0" layoutY="45.0" prefHeight="540.0" prefWidth="275.0" visible="false">
+            <children>
+               <VBox fx:id="watchDrawerBox" prefHeight="540.0" prefWidth="275.0">
+                  <children>
+                     <Pane prefHeight="100.0" prefWidth="200.0">
+                        <children>
+                           <HBox fx:id="watchHeadHBox" alignment="BOTTOM_LEFT" prefHeight="80.0" prefWidth="275.0" />
+                           <Label layoutY="80.0" prefHeight="20.0" text="   Lista de guardias efectuadas" textFill="#000000a3">
+                              <font>
+                                 <Font name="Segoe UI Historic" size="12.0" />
+                              </font>
+                           </Label>
+                           <JFXButton fx:id="printReport" focusTraversable="false" layoutX="230.0" layoutY="45.0" prefHeight="35.0" prefWidth="35.0" ripplerFill="#2b3297" />
+                        </children>
+                     </Pane>
+                     <JFXListView fx:id="watchListView" focusTraversable="false" prefHeight="440.0" prefWidth="275.0" />
+                  </children>
+               </VBox>
+            </children>
+         </JFXDrawer>
+         <JFXDrawer fx:id="markerDrawer" defaultDrawerSize="300.0" layoutX="-3.0" layoutY="125.0" prefHeight="460.0" prefWidth="275.0" visible="false">
+            <children>
+               <VBox fx:id="markerDrawerBox" prefHeight="460.0" prefWidth="275.0">
+                  <children>
+                     <HBox fx:id="markerHeadHBox" prefHeight="40.0" prefWidth="275.0" />
+                     <JFXListView fx:id="markerListView" focusTraversable="false" prefHeight="420.0" prefWidth="275.0" />
+                  </children>
+               </VBox>
+            </children>
+         </JFXDrawer>
+      </children>
+   </AnchorPane>
+   <JFXDialog fx:id="dialog">
+      <JFXDialogLayout>
+         <heading>
+            <Label fx:id="dialogTitle" />
+         </heading>
+         <body>
+            <Label fx:id="dialogContent" />
+         </body>
+         <actions>
+            <JFXButton fx:id="acceptButton" onAction="#onDialogAccept" styleClass="dialog-accept">ACEPTAR
+            </JFXButton>
+            <JFXButton fx:id="cancelButton" onAction="#onDialogCancel" styleClass="dialog-accept">CANCELAR
+            </JFXButton>
+         </actions>
+      </JFXDialogLayout>
+   </JFXDialog>
+</StackPane>

@@ -4,12 +4,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import dao.*;
 import model.*;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.internal.util.SerializationHelper;
 import org.joda.time.DateTime;
 import util.HibernateProxyTypeAdapter;
 import util.HibernateSessionFactory;
+import util.RadarDate;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,11 +33,16 @@ public class RadarService {
     RouteMarkerDAO rmDAO;
     CompanyDAO companyDAO;
     Gson gson;
+    ErrorCases listener;
 
     private static RadarService ourInstance = new RadarService();
 
     public static RadarService getInstance() {
         return ourInstance;
+    }
+
+    public void setListener(ErrorCases listener) {
+        this.listener = listener;
     }
 
     private RadarService() {
@@ -48,36 +59,52 @@ public class RadarService {
         gson = new Gson();
     }
 
+    public static <T> T clone(Class<T> clazz, T dtls) {
+        T clonedObject = (T) SerializationHelper.clone((Serializable) dtls);
+        return clonedObject;
+    }
+
     public void doEdit() {
         HibernateSessionFactory.getSession().flush();
+    }
+
+    public Boolean doDelete() {
+        try {
+            HibernateSessionFactory.getSession().flush();
+            return true;
+        } catch (ConstraintViolationException e) {
+            System.err.println("can't delete");
+            HibernateSessionFactory.getSession().clear();
+            HibernateSessionFactory.getSession().flush();
+            listener.onError("No se puede borrar porque esta en uso");
+            return false;
+        }
     }
 
     public Boolean saveImport(String json){
         try {
             Import imp = gson.fromJson(json, Import.class);
 
-            if (imp.getControlPositions() != null)
-                for (ControlPosition control: imp.getControlPositions()) {
+            if (imp.getControlPositions() != null) {
+                for (ControlPosition control : imp.getControlPositions()) {
 
                     ControlPosition controlDB = cpDao.findByLatitudeLongitude(
                             control.getLatitude(), control.getLongitude());
                     if (controlDB == null) {
                         cpDao.save(control);
-                    } else{
+                    } else {
                         controlDB.setActive(control.getActive());
                         controlDB.setPlaceName(control.getPlaceName());
                         doEdit();
                     }
                 }
+            }
 
             if (imp.getWatches() != null) {
 
                 for (Watch watch : imp.getWatches()) {
                     User user = userDao.findById(watch.getUser().getId());
                     watch.setUser(user);
-                }
-
-                for (Watch watch : imp.getWatches()) {
 
                     Watch watchDB = watchDAO.findByTime(watch.getStartTime(), watch.getEndTime());
 
@@ -224,9 +251,44 @@ public class RadarService {
         return positions;
     }
 
+    public List<Watch> findAllWatch() {
+        List<Watch> watches = watchDAO.findAll();
+        return watches;
+    }
+
+    public List<Position> findAllPositionsByWatchUpdateTime(Watch watch) {
+        List<Position> positions = posDAO.findAllByWatchId(watch.getId());
+        for (Position position :
+                positions) {
+            if (positions.indexOf(position) == positions.size()-1) {
+                position.setDifferent("Duración "+RadarDate.differenceBetweenHMS(position.getTime(),
+                        watch.getStartTime()));
+                position.setMinutes(RadarDate.differenceBetweenMinutes(position.getTime(),
+                        watch.getStartTime()));
+            } else {
+                position.setDifferent("Duración "+RadarDate.differenceBetweenHMS(position.getTime(),
+                        positions.get(positions.indexOf(position)+1).getTime()));
+                position.setMinutes(RadarDate.differenceBetweenMinutes(position.getTime(),
+                        positions.get(positions.indexOf(position)+1).getTime()));
+            }
+        }
+        return positions;
+    }
+
     public List<Position> findAllPositionsByControl(ControlPosition control) {
         List<Position> positions = posDAO.findAllByControlId(control.getId());
         return positions;
+    }
+
+    public List<Position> findAllPositionsByControlAndCompany(ControlPosition control, Company company) {
+        List<Position> positions = posDAO.findAllByControlId(control.getId());
+        List<Position> positionsFilter = new ArrayList<>();
+        for (Position position: positions) {
+            if (position.getWatch().getUser().getCompany().getId().equals(company.getId())) {
+                positionsFilter.add(position);
+            }
+        }
+        return positionsFilter;
     }
 
     public List<Position> findAllPositionsByControl(ControlPosition control, Date dateFrom, Date dateTo) {
@@ -242,6 +304,35 @@ public class RadarService {
         for (Position position: positions) {
             if (position.getWatch().getUser().getCompany().getId().equals(company.getId())) {
                 positionsFilter.add(position);
+            }
+        }
+        return positionsFilter;
+    }
+
+    public List<Position> findAllPositionsByControlAndCompany(ControlPosition control, Company company, Date dateFrom, Date dateTo, int min, int max) {
+        List<Position> positions = posDAO.findAllByControlIdBetween(control.getId(), dateFrom.getTime(),
+                new DateTime(dateTo.getTime()).plusDays(1).getMillis());
+        List<Position> positionsFilter = new ArrayList<>();
+        for (Position position: positions) {
+            if (position.getWatch().getUser().getCompany().getId().equals(company.getId())) {
+                int updateTime = position.getUpdateTime().intValue()/60;
+                if (updateTime >= min && updateTime <= max) {
+                    positionsFilter.add(position);
+                }
+            }
+        }
+        return positionsFilter;
+    }
+
+    public List<Position> findAllPositionsByControlAndCompany(ControlPosition control, Company company, int min, int max) {
+        List<Position> positions = posDAO.findAllByControlId(control.getId());
+        List<Position> positionsFilter = new ArrayList<>();
+        for (Position position: positions) {
+            if (position.getWatch().getUser().getCompany().getId().equals(company.getId())) {
+                int updateTime = position.getUpdateTime().intValue()/60;
+                if (updateTime >= min && updateTime <= max) {
+                    positionsFilter.add(position);
+                }
             }
         }
         return positionsFilter;
@@ -268,24 +359,24 @@ public class RadarService {
             user.setActive(false);
             isDeleted = false;
         }
-        doEdit();
+        doDelete();
         return isDeleted;
     }
 
     public Boolean deleteGroup(Group group) {
         groupDAO.delete(group);
-        doEdit();
+        doDelete();
         return true;
     }
 
     public void deleteAdmin(Admin admin) {
         adminDAO.delete(admin);
-        doEdit();
+        doDelete();
     }
 
-    public void deleteCompany(Company company) {
+    public Boolean deleteCompany(Company company) {
         companyDAO.delete(company);
-        doEdit();
+        return doDelete();
     }
 
     public User findUserById(Long id) {
@@ -370,7 +461,7 @@ public class RadarService {
     public void deleteRoute(Route route) {
         deleteAllRPByRouteId(route);
         routeDAO.delete(route);
-        doEdit();
+        doDelete();
     }
 
     public Route findRouteById(Long id) {
@@ -387,11 +478,29 @@ public class RadarService {
         for (RoutePosition routePosition: findAllRPByRouteId(route)) {
             rpDAO.delete(routePosition);
         }
-        doEdit();
+        doDelete();
     }
 
     public void saveRoutePosition(RoutePosition routePosition) {
         rpDAO.save(routePosition);
     }
 
+    public void deleteControl(ControlPosition control) {
+        if (posDAO.findAllByControlId(control.getId()).isEmpty()
+                && rpDAO.findAllByControlId(control.getId()).isEmpty()
+                && rmDAO.findAllByControlId(control.getId()).isEmpty()) {
+            cpDao.delete(control);
+            doDelete();
+            listener.onSuccess("Borrado hecho con exito.");
+        } else {
+            listener.onError("No se puede borrar esta ubicacion porque esta en uso!");
+        }
+    }
+
+    public interface ErrorCases {
+
+        void onError(String error);
+
+        void onSuccess(String message);
+    }
 }

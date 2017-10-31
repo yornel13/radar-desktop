@@ -1,6 +1,10 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -71,5 +75,11 @@ public class Company implements java.io.Serializable {
 
 	public void setUsers(Set users) {
 		this.users = users;
+	}
+
+	public static List<Company> cloneList(List<Company> list) {
+		List<Company> clone = new ArrayList<>(list.size());
+		for (Company item : list) clone.add(RadarService.clone(Company.class, item));
+		return clone;
 	}
 }

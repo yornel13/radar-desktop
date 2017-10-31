@@ -1,6 +1,5 @@
 package util;
 
-import javafx.scene.layout.HBox;
 import model.Position;
 import model.Watch;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -40,7 +39,7 @@ public class PointListDataSource implements JRDataSource {
             valor = watch.getUser().getDni();
         }
         else if ("date".equals(jrField.getName())) {
-            valor = RadarDate.getFechaConMes(new DateTime(position.getTime()));
+            valor = RadarDate.getDateWithMonth(new DateTime(position.getTime()));
         }
         else if ("company".equals(jrField.getName())) {
             valor = watch.getUser().getCompany().getName();
@@ -49,7 +48,7 @@ public class PointListDataSource implements JRDataSource {
             valor = position.getControlPosition().getPlaceName();
         }
         else if("time".equals(jrField.getName())) {
-            valor = RadarDate.getHora(position.getTime());
+            valor = RadarDate.getHours(position.getTime());
         }
         return valor;
 

@@ -7,6 +7,8 @@ import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import gui.async.PrintReportPointsTask;
 import io.datafx.controller.ViewController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,33 +19,34 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.ControlPosition;
-import model.PointReport;
-import model.Position;
-import model.User;
+import model.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
+import service.RadarService;
 import util.Const;
+import util.HibernateSessionFactory;
 import util.RadarDate;
+import util.RadarFilters;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -132,14 +135,35 @@ public class ControlController  extends BaseController implements MapComponentIn
     @FXML
     private JFXButton printReport;
 
+    @FXML
+    private Pane paneDate;
+
+    @FXML
+    private Pane paneDuration;
+
+    @FXML
+    private JFXButton buttonDate;
+
+    @FXML
+    private JFXButton buttonDuration;
+
+    @FXML
+    private TextField filterMin;
+
+    @FXML
+    private TextField filterMax;
+
     private boolean drawerWatchFirstShow = true;
     private boolean drawerMarkerFirstShow = true;
 
     public boolean isMapReady = false;
 
     private boolean isDateReady = false;
+    private boolean isDurationReady = false;
     private Date from;
     private Date to;
+    private int min;
+    private int max;
 
     private ControlPosition selectedControl;
 
@@ -179,6 +203,71 @@ public class ControlController  extends BaseController implements MapComponentIn
 
         printReport.setOnAction(event ->  printReport());
         printReport.setGraphic(reportImage);
+
+        buttonDate.setOnAction(event -> {
+            if (paneDate.isVisible()) {
+                toPicker.getEditor().clear();
+                toPicker.setValue(null);
+                fromPicker.getEditor().clear();
+                fromPicker.setValue(null);
+                paneDate.setVisible(false);
+                setPanesSize();
+            } else {
+                paneDate.setVisible(true);
+                setPanesSize();
+            }
+        });
+        buttonDuration.setOnAction(event -> {
+            if (paneDuration.isVisible()) {
+                filterMax.clear();
+                filterMin.clear();
+                paneDuration.setVisible(false);
+                setPanesSize();
+            } else {
+                paneDuration.setVisible(true);
+                setPanesSize();
+            }
+        });
+
+        filterMin.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
+        filterMax.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
+
+        fromPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            isDateReady = false;
+        });
+        toPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            isDateReady = false;
+        });
+        filterMin.textProperty().addListener((observable, oldValue, newValue) -> {
+            isDurationReady = false;
+        });
+        filterMax.textProperty().addListener((observable, oldValue, newValue) -> {
+            isDurationReady = false;
+        });
+    }
+
+    private void setPanesSize() {
+        if (paneDate.isVisible() && paneDuration.isVisible()) {
+            paneDate.setPrefHeight(30);
+            paneDuration.setPrefHeight(30);
+            controlListView.setPrefHeight(510-30-30);
+            searchButton.setVisible(true);
+        } else if (paneDate.isVisible()) {
+            paneDate.setPrefHeight(30);
+            paneDuration.setPrefHeight(0);
+            controlListView.setPrefHeight(510-30);
+            searchButton.setVisible(true);
+        } else if (paneDuration.isVisible()) {
+            paneDuration.setPrefHeight(30);
+            paneDate.setPrefHeight(0);
+            controlListView.setPrefHeight(510-30);
+            searchButton.setVisible(true);
+        } else {
+            paneDuration.setPrefHeight(0);
+            paneDate.setPrefHeight(0);
+            controlListView.setPrefHeight(510);
+            searchButton.setVisible(false);
+        }
     }
 
     private void createDateFilter() {
@@ -189,19 +278,38 @@ public class ControlController  extends BaseController implements MapComponentIn
         searchButton.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 isDateReady = false;
-                try {
-                    from = Date.valueOf(fromPicker.getValue());
-                    to = Date.valueOf(toPicker.getValue());
-                    if (to.before(from)) {
+                isDurationReady = false;
+                if (paneDate.isVisible()) {
+                    try {
+                        from = Date.valueOf(fromPicker.getValue());
+                        to = Date.valueOf(toPicker.getValue());
+                        if (to.before(from)) {
+                            showDialogNotification("Error", "Rango de fechas incorrecto");
+                            return;
+                        }
+                        if (isMapReady)
+                            addMarkers();
+                        isDateReady = true;
+                    } catch (NullPointerException e) {
+                        //e.printStackTrace();
                         showDialogNotification("Error", "Rango de fechas incorrecto");
-                        return;
                     }
-                    if (isMapReady)
-                        addMarkers();
-                    isDateReady = true;
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                    showDialogNotification("Error", "Rango de fechas incorrecto");
+                }
+                if (paneDuration.isVisible()) {
+                    try {
+                        min = Integer.valueOf(filterMin.getText());
+                        max = Integer.valueOf(filterMax.getText());
+                        if (max < min) {
+                            showDialogNotification("Error", "Rango de minutos incorrecto");
+                            return;
+                        }
+                        if (isMapReady)
+                            addMarkers();
+                        isDurationReady = true;
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                        showDialogNotification("Error", "Rango de minutos incorrecto");
+                    }
                 }
             }
         });
@@ -278,12 +386,13 @@ public class ControlController  extends BaseController implements MapComponentIn
     public void handle(MouseEvent event) {
 
         if (event.getButton() == MouseButton.PRIMARY
-                && controlListView.getSelectionModel()
-                .getSelectedItem().getUserData() != null) {
-            if (isDateReady)
-                openedWatchDrawer();
-            else
-                showSnackBar("Seleccione el rango de fechas primero y presione buscar");
+                && controlListView.getSelectionModel().getSelectedItem() != null
+                && controlListView.getSelectionModel().getSelectedItem().getUserData() != null) {
+            if (!isMapReady) {
+                showSnackBar("Espere que se cargue el mapa");
+                return;
+            }
+            openedWatchDrawer();
         }
     }
 
@@ -323,7 +432,6 @@ public class ControlController  extends BaseController implements MapComponentIn
         watchDrawer.setVisible(true);
 
         selectedControl = (ControlPosition) controlListView.getSelectionModel().getSelectedItem().getUserData();
-        addMarker(selectedControl);
 
         if(drawerWatchFirstShow)
             createWatchDrawer();
@@ -333,13 +441,42 @@ public class ControlController  extends BaseController implements MapComponentIn
 
         watchData = FXCollections.observableArrayList();
 
-        if (isDateReady && fromPicker.getValue() != null && toPicker.getValue() != null)
-            positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), from, to);
-        else {
-            watchDrawer.close();
-            showSnackBar("Seleccionar el rango de preciosa y presione buscar.");
-            return;
+        if (paneDate.isVisible() && paneDuration.isVisible()) {
+            if (isDateReady
+                    && fromPicker.getValue() != null
+                    && toPicker.getValue() != null
+                    && isDurationReady
+                    && filterMin.getText() != null && !filterMin.getText().isEmpty()
+                    && filterMax.getText() != null && !filterMax.getText().isEmpty()) {
+                positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), from, to, min, max);
+            } else {
+                watchDrawer.close();
+                showSnackBar("Seleccionar lo rangos correctamente y luego presione buscar.");
+                return;
+            }
+        } else if (paneDate.isVisible()) {
+            if (isDateReady && fromPicker.getValue() != null && toPicker.getValue() != null) {
+                positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), from, to);
+            } else {
+                watchDrawer.close();
+                showSnackBar("Seleccionar lo rangos correctamente y luego presione buscar.");
+                return;
+            }
+        } else if (paneDuration.isVisible()) {
+            if (isDurationReady
+                    && filterMin.getText() != null && !filterMin.getText().isEmpty()
+                    && filterMax.getText() != null && !filterMax.getText().isEmpty()) {
+                positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), min, max);
+            } else {
+                watchDrawer.close();
+                showSnackBar("Seleccionar lo rangos correctamente y luego presione buscar.");
+                return;
+            }
+        } else {
+            positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany());
         }
+
+        addMarker(selectedControl);
 
         for (Position position: positionsUser) {
 
@@ -349,7 +486,7 @@ public class ControlController  extends BaseController implements MapComponentIn
                     +" "+position.getWatch().getUser().getName());
             nameLabel.setFont(new Font(null, 14));
             Label timeLabel  = new Label("   "+ RadarDate
-                    .getFechaConMesYHora(position.getTime()));
+                    .getDateWithMonthAndTime(position.getTime()));
             timeLabel.setFont( new Font(null, 12));
             timeLabel.setTextFill(Color.valueOf("#aaaaaa"));
             Label watchLabel  = new Label("   Guardia Nro: "+position.getWatch().getId());
@@ -357,16 +494,18 @@ public class ControlController  extends BaseController implements MapComponentIn
             watchLabel.setTextFill(Color.valueOf("#4B919F"));
             watchLabel.setAlignment(Pos.TOP_RIGHT);
             watchLabel.setPrefWidth(200);
+            Label updateLabel  = new Label("    Duración "+RadarDate.secondsToMinutesBest(
+                    Math.abs(position.getUpdateTime().intValue())));
+            updateLabel.setFont( new Font(null, 10));
             ImageView iconImage = new ImageView(
                     new Image(getClass().getResource("img/icon_multiple_marker_64.png").toExternalForm()));
             iconImage.setFitHeight(45);
             iconImage.setFitWidth(45);
-            labelsVBox.getChildren().addAll(nameLabel, timeLabel, watchLabel);
+            labelsVBox.getChildren().addAll(nameLabel, timeLabel, updateLabel, watchLabel);
             hBox.getChildren().addAll(iconImage, labelsVBox);
 
             hBox.setUserData(position);
             watchData.add(hBox);
-
         }
 
         watchListView.setItems(watchData);
@@ -384,8 +523,16 @@ public class ControlController  extends BaseController implements MapComponentIn
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("company", getCompany().getName());
         parameters.put("place_name", selectedControl.getPlaceName());
-        parameters.put("date_start", RadarDate.getFechaConMesYHora(from.getTime()));
-        parameters.put("date_finish", RadarDate.getFechaConMesYHora(to.getTime()));
+        if (paneDate.isVisible()) {
+            parameters.put("date_start", "Rango de fechas: Del "+RadarDate.getDateWithMonth(from.getTime())+" al "+RadarDate.getDateWithMonth(to.getTime()));
+        } else {
+            parameters.put("date_start", "Rango de fechas: Cualquier fecha.");
+        }
+        if (paneDuration.isVisible()) {
+            parameters.put("date_finish", "Duración: de "+min+"m a "+max+"m");
+        } else {
+            parameters.put("date_finish", "Duración: Cualquier duración.");
+        }
 
         List<PointReport> pointReportList = new ArrayList<>();
         for (HBox hBox : watchListView.getItems()) {
@@ -393,8 +540,10 @@ public class ControlController  extends BaseController implements MapComponentIn
             PointReport pointReport = new PointReport();
             pointReport.setId(position.getWatch().getId().toString());
             pointReport.setUser(position.getWatch().getUser().getFullName());
+            pointReport.setDuration(RadarDate
+                    .secondsToMinutesBest(Math.abs(position.getUpdateTime().intValue())));
             pointReport.setDistanceMeters(getMeters(position));
-            pointReport.setTime(RadarDate.getDiaMesConHora(position.getTime()));
+            pointReport.setTime(RadarDate.getDayMonthHour(position.getTime()));
             pointReportList.add(pointReport);
         }
 
@@ -477,7 +626,7 @@ public class ControlController  extends BaseController implements MapComponentIn
         map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
             showSnackBar(position.getWatch().getUser().getLastname()
                     +" "+position.getWatch().getUser().getName()+"\n"+ RadarDate
-                    .getFechaConMesYHora(position.getTime()));
+                    .getDateWithMonthAndTime(position.getTime()));
             System.out.println("You clicked the line at LatLong: lat: " +
                     position.getLatitude() + " lng: " + position.getLongitude());
         });
@@ -551,7 +700,7 @@ public class ControlController  extends BaseController implements MapComponentIn
             //marker.setTitle(position.getPlaceName());
             map.addMarker(marker);
             map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
-                showSnackBar(RadarDate.getHora(position.getTime()));
+                showSnackBar(RadarDate.getHours(position.getTime()));
                 System.out.println("You clicked the line at LatLong: lat: " +
                         position.getLatitude() + " lng: " + position.getLongitude());
             });
@@ -620,7 +769,7 @@ public class ControlController  extends BaseController implements MapComponentIn
                 String lowerCaseFilter = watchFilterField.getText().toLowerCase();
 
                 String timeString = RadarDate
-                        .getFechaConMes(new DateTime(position.getTime()));
+                        .getDateWithMonth(new DateTime(position.getTime()));
                 String fullName = position.getWatch().getUser().getLastname()
                         +" "+position.getWatch().getUser().getName();
                 if (timeString.toLowerCase().contains(lowerCaseFilter)) {
@@ -651,7 +800,7 @@ public class ControlController  extends BaseController implements MapComponentIn
             String lowerCaseFilter = watchFilterField.getText().toLowerCase();
 
             String timeString = RadarDate
-                    .getFechaConMes(new DateTime(position.getTime()));
+                    .getDateWithMonth(new DateTime(position.getTime()));
             String fullName = position.getWatch().getUser().getLastname()
                     +" "+position.getWatch().getUser().getName();
             if (timeString.toLowerCase().contains(lowerCaseFilter)) {
