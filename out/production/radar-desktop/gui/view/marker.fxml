@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.lynden.gmapsfx.GoogleMapView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <AnchorPane fx:id="anchorPane" prefHeight="585.0" prefWidth="860.0">
+        <children>
+         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="275.0" style="-fx-background-color: white;" />
+         <JFXTextField fx:id="filterField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
+         <JFXTextField fx:id="drawerFilterField" alignment="BASELINE_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090" visible="false">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </JFXTextField>
+         <JFXTabPane fx:id="tabPane" layoutY="45.0" maxHeight="540.0" maxWidth="540.0" minHeight="540.0" minWidth="275.0" />
+         <JFXDrawer fx:id="drawer" defaultDrawerSize="300.0" layoutX="-1.0" layoutY="81.0" prefHeight="504.0" prefWidth="275.0" visible="false">
+            <children>
+               <VBox fx:id="drawerBox" prefHeight="540.0" prefWidth="275.0">
+                  <children>
+                     <HBox fx:id="headHBox" alignment="BOTTOM_LEFT" cache="true" prefHeight="60.0" prefWidth="275.0" style="-fx-background-color: white;" />
+                     <Pane prefHeight="450.0" prefWidth="275.0">
+                        <children>
+                           <JFXListView fx:id="controlListView" maxHeight="424.0" prefHeight="447.0" prefWidth="276.0" visible="false" />
+                           <JFXListView fx:id="drawerListView" focusTraversable="false" maxHeight="424.0" prefHeight="447.0" prefWidth="276.0" />
+                        </children>
+                     </Pane>
+                  </children>
+               </VBox>
+            </children>
+         </JFXDrawer>
+            <GoogleMapView fx:id="mapView" layoutX="275.0" prefHeight="585.0" prefWidth="585.0" />
+            <Pane fx:id="bar" layoutX="275.0" layoutY="485.0" prefHeight="100.0" prefWidth="585.0" visible="false">
+                <children>
+                    <Pane prefHeight="100.0" prefWidth="585.0">
+                        <children>
+                            <Pane layoutX="0.0" layoutY="0.0" prefHeight="100.0" prefWidth="585.0" style="-fx-background-color: white;">
+                                <children>
+                                    <TextField fx:id="nameField" layoutX="27.0" layoutY="38.0" prefHeight="25.0" prefWidth="372.0" />
+                                    <JFXButton fx:id="editButton" layoutX="425.0" layoutY="38.0" mnemonicParsing="false" onAction="#editControl" text="Editar" />
+                                    <JFXButton fx:id="disableButton" layoutX="491.0" layoutY="38.0" mnemonicParsing="false" onAction="#disableControl" text="Desactivar" />
+                                    <Label layoutX="29.0" layoutY="17.0" text="Nombre del punto de control:" />
+                                    <JFXButton layoutX="557.0" layoutY="-1.0" onAction="#hideMarkerBar" text="x">
+                                        <font>
+                                            <Font name="MS PGothic" size="15.0" />
+                                        </font>
+                                    </JFXButton>
+                                </children>
+                            </Pane>
+                        </children>
+                    </Pane>
+                </children>
+            </Pane>
+         <Pane fx:id="barEditRoute" layoutX="275.0" layoutY="505.0" prefHeight="80.0" prefWidth="585.0" style="-fx-background-color: white;" visible="false">
+            <children>
+               <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="40.0" layoutY="18.0" onAction="#saveAction" prefHeight="44.0" prefWidth="215.0" style="-fx-background-color: #03a9f4;" text="Guardar" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </JFXButton>
+               <JFXButton alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" focusTraversable="false" layoutX="304.0" layoutY="18.0" onAction="#cancelAction" prefHeight="44.0" prefWidth="232.0" style="-fx-background-color: red;" text="Cancelar" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </JFXButton>
+            </children>
+         </Pane>
+         <Pane fx:id="addPane" layoutX="275.0" prefHeight="585.0" prefWidth="585.0" visible="false">
+            <children>
+               <Pane prefHeight="585.0" prefWidth="585.0" style="-fx-background-color: white;">
+                  <children>
+                     <Pane prefHeight="80.0" prefWidth="585.0" style="-fx-background-color: #03a9f4;">
+                        <children>
+                           <Label fx:id="editLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="35.0" prefWidth="460.0" text="Editar Ruta" textAlignment="CENTER" textFill="WHITE" visible="false">
+                              <font>
+                                 <Font size="25.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="addLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefWidth="460.0" text="Crear Ruta" textAlignment="CENTER" textFill="WHITE" visible="false">
+                              <font>
+                                 <Font size="25.0" />
+                              </font>
+                           </Label>
+                        </children>
+                        <effect>
+                           <DropShadow blurType="GAUSSIAN" color="#a3a2a2eb" height="62.41" offsetY="1.0" radius="15.1025" width="0.0" />
+                        </effect>
+                     </Pane>
+                     <JFXTextField fx:id="nameRouteField" alignment="TOP_LEFT" focusColor="#0288d1" labelFloat="true" layoutX="133.0" layoutY="223.0" prefHeight="28.0" prefWidth="320.0" promptText="Nombre de ruta">
+                        <cursor>
+                           <Cursor fx:constant="TEXT" />
+                        </cursor>
+                        <font>
+                           <Font size="18.0" />
+                        </font>
+                     </JFXTextField>
+                     <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="133.0" layoutY="343.0" onAction="#saveAction" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: #03a9f4;" text="Guardar" textFill="WHITE">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </JFXButton>
+                     <JFXButton alignment="CENTER" buttonType="RAISED" cancelButton="true" contentDisplay="CENTER" focusTraversable="false" layoutX="133.0" layoutY="412.0" onAction="#cancelAction" prefHeight="44.0" prefWidth="320.0" style="-fx-background-color: red;" text="Cancelar" textFill="WHITE">
+                        <font>
+                           <Font size="14.0" />
+                        </font>
+                     </JFXButton>
+                  </children>
+               </Pane>
+            </children>
+         </Pane>
+        </children>
+    </AnchorPane>
+    <JFXDialog fx:id="dialog">
+        <JFXDialogLayout>
+            <heading>
+                <Label fx:id="dialogTitle" />
+            </heading>
+            <body>
+                <Label fx:id="dialogContent" />
+            </body>
+            <actions>
+                <JFXButton fx:id="acceptButton" onAction="#onDialogAccept" styleClass="dialog-accept">ACEPTAR
+                </JFXButton>
+                <JFXButton fx:id="cancelButton" onAction="#onDialogCancel" styleClass="dialog-accept">CANCELAR
+                </JFXButton>
+            </actions>
+        </JFXDialogLayout>
+    </JFXDialog>
+</StackPane>
