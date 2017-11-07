@@ -131,6 +131,7 @@
                   </font>
                </JFXButton>
                <JFXTextField fx:id="filterFieldGroupUser" disable="true" layoutX="10.0" layoutY="87.0" prefHeight="25.0" prefWidth="189.0" promptText="Buscar" visible="false" />
+               <JFXButton fx:id="printGroupReport" layoutX="500.0" layoutY="125.0" prefHeight="25.0" prefWidth="34.0" visible="false" />
             </children>
          </Pane>
        </children>

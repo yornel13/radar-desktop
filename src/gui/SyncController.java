@@ -22,9 +22,9 @@ public class SyncController extends BaseController {
     @FXML
     @ActionTrigger("employee")
     private JFXButton optionEmployee;
-    @FXML
-    @ActionTrigger("assign")
-    private JFXButton optionAssign;
+    //@FXML
+    //@ActionTrigger("assign")
+    //private JFXButton optionAssign;
 
 
     @PostConstruct
@@ -40,7 +40,7 @@ public class SyncController extends BaseController {
         buttonMap2.setOnMouseExited( event -> buttonMap2.setStyle(" -fx-background-color: #ffc107"));
 
         optionEmployee.setGraphic(new ImageView(new Image(getClass().getResource("img/employee_32.png").toExternalForm())));
-        optionAssign.setGraphic(new ImageView(new Image(getClass().getResource("img/assign_32.png").toExternalForm())));
+        //optionAssign.setGraphic(new ImageView(new Image(getClass().getResource("img/assign_32.png").toExternalForm())));
 
         ImageView mapImage1 = new ImageView(new Image(getClass().getResource("img/control_user.png").toExternalForm()));
         mapImage1.setFitHeight(62);

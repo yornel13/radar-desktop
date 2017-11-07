@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>MyReports</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>net.sf.jasperreports.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.babel.editor.rbeBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>net.sf.jasperreports.nature</nature>
+		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>global_route_details_1.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/global_route_details.jrxml</location>
+		</link>
+		<link>
+			<name>group_details.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/group_details.jrxml</location>
+		</link>
+		<link>
+			<name>route_details_1.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/route_details.jrxml</location>
+		</link>
+		<link>
+			<name>sub_watch_points.jasper</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/sub_watch_points.jasper</location>
+		</link>
+		<link>
+			<name>sub_watch_points_1.jasper</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/sub_watch_points.jasper</location>
+		</link>
+		<link>
+			<name>subrep_group_1.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/subrep_group.jrxml</location>
+		</link>
+		<link>
+			<name>subrep_markers_1.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/subrep_markers.jrxml</location>
+		</link>
+		<link>
+			<name>watch_points.jasper</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/watch_points.jasper</location>
+		</link>
+		<link>
+			<name>watch_points_1.jasper</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/watch_points.jasper</location>
+		</link>
+	</linkedResources>
+</projectDescription>

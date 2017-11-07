@@ -2,13 +2,20 @@ package gui;
 
 
 import com.jfoenix.controls.*;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.MapReadyListener;
+import gui.async.PrintGroupReportTask;
 import io.datafx.controller.ViewController;
+import io.datafx.controller.flow.FlowException;
 import io.datafx.controller.flow.action.ActionTrigger;
+import io.datafx.controller.util.VetoException;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -26,23 +33,27 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.Group;
-import model.User;
+import model.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.joda.time.DateTime;
 import util.Const;
 import util.Password;
+import util.RadarDate;
 import util.RadarFilters;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static javafx.scene.paint.Color.valueOf;
 
 @ViewController("view/user.fxml")
-public class UserController extends BaseController {
+public class UserController extends BaseController implements MapComponentInitializedListener,
+        MapReadyListener, EventHandler<MouseEvent>,PrintGroupReportTask.PrintTask {
 
     /*********Employee Tab Pane**********/
     @FXML
@@ -85,6 +96,8 @@ public class UserController extends BaseController {
     private JFXListView<HBox> groupListView;
     private ObservableList<HBox> groupData;
     private List<Group> groupList;
+    @FXML
+    private JFXButton printGroupReport;
 
     @FXML
     private Label groupLabel;
@@ -102,6 +115,7 @@ public class UserController extends BaseController {
     private JFXTextField groupNameField;
     private Group selectedGroup;
 
+    private List<Group> groups;
 
 
     /**********OTHERS*********/
@@ -136,6 +150,8 @@ public class UserController extends BaseController {
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
 
         cancelGroupButton.setOnAction(event -> {
+            printGroupReport.setVisible(true);
+            printGroupReport.setFocusTraversable(false);
             setTabGroupFields();
             loadAllEmpGroupListView(null);
             editGroup.setVisible(true);
@@ -494,6 +510,7 @@ public class UserController extends BaseController {
     private void editGroup() {
         editGroup.setOnMouseClicked(event -> {
             if(!groupNameField.getText().isEmpty()) {
+                printGroupReport.setVisible(false);
                 setEditGroupFields();
                 loadAllEmpGroupListView(selectedGroup);
                 filterUserGroup();
@@ -625,11 +642,14 @@ public class UserController extends BaseController {
             filterFieldGroupUser.setDisable(false);
             filterFieldGroupUser.setVisible(true);
             filterFieldGroupUser.clear();
+            printGroupReport.setVisible(true);
             selectedGroup = group;
 
             groupNameField.setText(selectedGroup.getName());
             userList = service.findUsersByGroupIdAndCompany(selectedGroup.getId(), getCompany());
 
+            ImageView printGroupIcon = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
+            printGroupReport.setGraphic(printGroupIcon);
             ImageView editIcon = new ImageView(new Image(getClass().getResource("img/bluePencil_16.png").toExternalForm()));
             editGroup.setVisible(true);
             editGroup.setGraphic(editIcon);
@@ -905,30 +925,93 @@ public class UserController extends BaseController {
         groupTab.setText("Grupos");
         groupTab.setContent(groupListView);
         groupTab.setUserData(1);
+        printGroupReport.setOnAction(event -> printReport());
 
-        tabPane.getTabs().addAll(empTab, groupTab);
+        AssignController assignController = new AssignController();
+        Tab assignTab = new Tab();
+        assignTab.setText("Asignar");
+
+        assignTab.setUserData(2);
+
+
+        tabPane.getTabs().addAll(empTab, groupTab, assignTab);
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, t0, t1) -> {
 
             if((int) t1.getUserData() == 0) {
                 initializeFields();
                 setFilterUser();
+
                 floatingButton.setTooltip(
                         new Tooltip("Agregar empleado")
                 );
-            } else {
+            } else if((int)t1.getUserData() == 1){
                 setTabGroupFields();
                 loadGroupListView();
                 editGroup();
-
 
                 setFilterGroup();
                 floatingButton.setTooltip(
                         new Tooltip("Agregar grupo")
                 );
+            } else if ((int)t1.getUserData() == 2){
+                new Timer().schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                cancel();
+                                Platform.runLater(() -> {
+                                    try {
+                                        actionHandler.handle("assign");
+                                    } catch (VetoException e) {
+                                        e.printStackTrace();
+                                    } catch (FlowException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            }
+                        }, 80, 80
+
+                );
+
+
             }
         });
 
+    }
+
+    public void loadPrint(File file){
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("group_name", selectedGroup.getName());
+        parameters.put("date_created", RadarDate.getDateWithMonthAndTime(selectedGroup.getCreateDate()));
+        parameters.put("group_id", selectedGroup.getId().toString());
+        parameters.put("emp_num", selectedGroup.getUsers().size());
+
+
+        //routeReport.setTime(RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
+        List<GroupReport> groupReportList = new ArrayList<>();
+
+        for(User userData: empGroupData) {
+
+            GroupReport groupReport = new GroupReport();
+            groupReport.setDni(userData.getDni());
+            groupReport.setUser_name(userData.getFullName());
+            groupReport.setCompany_name(userData.getCompany().getName());
+
+            groupReportList.add(groupReport);
+        }
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintGroupReportTask(this,
+                new JRBeanCollectionDataSource(groupReportList),file,
+                "Group_"+selectedGroup.getId().toString(), parameters);
+        executor.execute(worker);
+        executor.shutdown();
+    }
+
+    public void printReport() {
+        dialogType = Const.DIALOG_PRINT_BASIC;
+        showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
     }
 
     void setFilterUser() {
@@ -1156,6 +1239,12 @@ public class UserController extends BaseController {
         User user;
         Group group;
         switch (dialogType) {
+            case Const.DIALOG_PRINT_BASIC:
+            File file = selectDirectory();
+            if(file != null){
+                loadPrint(file);
+            }
+            break;
             case Const.DIALOG_SAVE_EDIT:
                 user = service.findUserById(((User)
                         employeeListView.getSelectionModel().getSelectedItem().getUserData()).getId());
@@ -1225,6 +1314,31 @@ public class UserController extends BaseController {
                 showSnackBar("Empleado activado con exito");
                 break;
         }
+    }
+
+    @Override
+    public void mapInitialized() {
+
+    }
+
+    @Override
+    public void mapReady() {
+
+    }
+
+    @Override
+    public void handle(MouseEvent event) {
+
+    }
+
+    @Override
+    public void onPrintCompleted() {
+
+    }
+
+    @Override
+    public void onPrintFailure(String message) {
+
     }
 
     public class InputController {

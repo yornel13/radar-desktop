@@ -38,7 +38,10 @@
             <children>
                <VBox fx:id="drawerBox" prefHeight="540.0" prefWidth="275.0">
                   <children>
-                     <HBox fx:id="headHBox" alignment="BOTTOM_LEFT" cache="true" prefHeight="60.0" prefWidth="275.0" style="-fx-background-color: white;" />
+                     <HBox fx:id="headHBox" alignment="BOTTOM_LEFT" cache="true" prefHeight="60.0" prefWidth="275.0" style="-fx-background-color: white;">
+                        <children>
+                           <JFXButton fx:id="printRouteReport" translateX="200.0" />
+                        </children></HBox>
                      <Pane prefHeight="450.0" prefWidth="275.0">
                         <children>
                            <JFXListView fx:id="controlListView" maxHeight="424.0" prefHeight="447.0" prefWidth="276.0" visible="false" />

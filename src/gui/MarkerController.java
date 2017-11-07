@@ -6,6 +6,7 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.MapReadyListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import gui.async.PrintReportRouteDetailsTask;
 import io.datafx.controller.ViewController;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -31,27 +32,26 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.ControlPosition;
-import model.Route;
-import model.RoutePosition;
+import model.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
 import service.RadarService;
 import util.Const;
+import util.RadarDate;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @ViewController("view/marker.fxml")
 public class MarkerController extends BaseController implements MapComponentInitializedListener,
-        EventHandler<MouseEvent>,MapReadyListener, RadarService.ErrorCases {
+        EventHandler<MouseEvent>,MapReadyListener, RadarService.ErrorCases, PrintReportRouteDetailsTask.PrintTask {
 
     @FXML
     private AnchorPane anchorPane;
@@ -208,6 +208,8 @@ public class MarkerController extends BaseController implements MapComponentInit
         }
     }
 
+    @FXML
+    private JFXButton printRouteReport;
     public void createTabPane() {
 
         markerListView = new JFXListView<>();
@@ -253,6 +255,8 @@ public class MarkerController extends BaseController implements MapComponentInit
                         new Tooltip("Agregar ruta")
                 );
                 openFloatingButton();
+                printRouteReport.setGraphic(new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm())));
+                printRouteReport.setOnAction(event -> printReport());
             }
             if (addPane.isVisible())
                 hideAddPane();
@@ -279,6 +283,59 @@ public class MarkerController extends BaseController implements MapComponentInit
             }
         });
     }
+
+    private Integer getMeters(Position position) {
+
+        double radioEarth = 6371000;
+        double dLat = Math.toRadians(position.getLatitude()
+                - position.getControlPosition().getLatitude());
+        double dLng = Math.toRadians(position.getLongitude()
+                - position.getControlPosition().getLongitude());
+        double sLat = Math.sin(dLat / 2);
+        double sLng = Math.sin(dLng / 2);
+        double va1 = Math.pow(sLat, 2) + Math.pow(sLng, 2)
+                * Math.cos(Math.toRadians(position.getControlPosition().getLatitude()))
+                * Math.cos(Math.toRadians(position.getLatitude()));
+        double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+        Double distance = radioEarth * va2;
+
+        return distance.intValue();
+    }
+
+
+    public void loadPrint(File file){
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("route_name", selectedRoute.getName());
+        parameters.put("created_date", RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
+        parameters.put("route_id", selectedRoute.getId().toString());
+        parameters.put("point_num", selectedRoute.getRoutePositions().size());
+
+        //routeReport.setTime(RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
+        List<RouteReport> routeReportList = new ArrayList<>();
+
+            for(HBox hBoxDrawerData: drawerData) {
+
+                RoutePosition routePosition = (RoutePosition) hBoxDrawerData.getUserData();
+                RouteReport routeReport = new RouteReport();
+
+                routeReport.setPoint_marker(routePosition.getControlPosition().getPlaceName());
+
+                routeReportList.add(routeReport);
+            }
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintReportRouteDetailsTask(this,
+                new JRBeanCollectionDataSource(routeReportList),file,
+                "Ruta_"+selectedRoute.getId().toString(), parameters);
+        executor.execute(worker);
+        executor.shutdown();
+    }
+
+    public void printReport() {
+        dialogType = Const.DIALOG_PRINT_BASIC;
+        showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
+    }
+
 
     void closeEditRoute() {
         barEditRoute.setVisible(false);
@@ -1036,6 +1093,11 @@ public class MarkerController extends BaseController implements MapComponentInit
         Route route;
 
         switch (dialogType) {
+            case Const.DIALOG_PRINT_BASIC:
+                File file = selectDirectory();
+                if (file != null)
+                    loadPrint(file);
+                break;
             case Const.DIALOG_SAVE_EDIT:
                 control = service.findCPById(selectedMarker.getId());
                 control.setPlaceName(nameField.getText());
@@ -1292,6 +1354,16 @@ public class MarkerController extends BaseController implements MapComponentInit
                     }
                 }, 500, 500
         );
+    }
+
+    @Override
+    public void onPrintCompleted() {
+
+    }
+
+    @Override
+    public void onPrintFailure(String message) {
+
     }
 
     public class InputController {
