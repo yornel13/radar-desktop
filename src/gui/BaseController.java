@@ -40,7 +40,7 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BaseController {
+public class BaseController implements RadarService.ErrorCases {
 
     @ActionHandler
     protected FlowActionHandler actionHandler;
@@ -193,17 +193,22 @@ public class BaseController {
 
     protected void setTitle(String title) {
         new Timer().schedule(
-            new TimerTask() {
-                @Override
-                public void run() {
-                    cancel();
-                    Platform.runLater(() -> {
-                        Stage stage = (Stage) flowContext.getRegisteredObject("Stage");
-                        stage.setTitle(title);
-                    });
-                }
-            }, 500, 500
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            Stage stage = (Stage) flowContext.getRegisteredObject("Stage");
+                            stage.setTitle(title);
+                        });
+                    }
+                }, 500, 500
         );
+        flowContext.register("root", root);
+        flowContext.register("dialog", dialog);
+        flowContext.register("dialogTitle", dialogTitle);
+        flowContext.register("dialogContent", dialogContent);
+        service.setListener(this);
     }
 
     protected void setTitleToCompany(String title) {
@@ -217,16 +222,17 @@ public class BaseController {
                             if (title == null || title.isEmpty())
                                 stage.setTitle(getCompany().getName());
                             else
-                            stage.setTitle(getCompany().getName()+" - "+title);
+                                stage.setTitle(getCompany().getName()+" - "+title);
                         });
                     }
                 }, 500, 500
         );
+        flowContext.register("root", root);
     }
 
     protected void setBackButtonImageBlack() {
         backButton.setGraphic(new ImageView(
-                    new Image(getClass().getResource("img/arrow_back_icon16.png").toExternalForm())));
+                new Image(getClass().getResource("img/arrow_back_icon16.png").toExternalForm())));
 
     }
 
@@ -277,6 +283,23 @@ public class BaseController {
         }
     }
 
+    @Override
+    public void onError(String error) {
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            showDialogNotification("Error", error);
+                        });
+                    }
+                }, 500, 500
+        );
+    }
 
+    @Override
+    public void onSuccess(String message) {
 
+    }
 }

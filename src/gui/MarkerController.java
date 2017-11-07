@@ -6,9 +6,11 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.MapReadyListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import gui.async.PrintReportRouteDetailsTask;
 import io.datafx.controller.ViewController;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,10 +20,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,22 +33,25 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import model.ControlPosition;
-import model.Route;
-import model.RoutePosition;
+import model.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import netscape.javascript.JSObject;
 import org.joda.time.DateTime;
+import service.RadarService;
 import util.Const;
+import util.RadarDate;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @ViewController("view/marker.fxml")
 public class MarkerController extends BaseController implements MapComponentInitializedListener,
-        EventHandler<MouseEvent>,MapReadyListener {
+        EventHandler<MouseEvent>,MapReadyListener, RadarService.ErrorCases, PrintReportRouteDetailsTask.PrintTask {
 
     @FXML
     private AnchorPane anchorPane;
@@ -206,20 +208,9 @@ public class MarkerController extends BaseController implements MapComponentInit
         }
     }
 
+    @FXML
+    private JFXButton printRouteReport;
     public void createTabPane() {
-
-        routeListView = new JFXListView<>();
-        routeListView.setPrefWidth(275);
-        routeListView.setExpanded(true);
-        routeListView.setVerticalGap(1.0);
-        routeListView.depthProperty().set(1);
-
-        Tab tabR = new Tab();
-        tabR.setText("Rutas");
-        tabR.setContent(routeListView);
-        tabR.setUserData(0);
-        tabPane.getTabs().add(tabR);
-
 
         markerListView = new JFXListView<>();
         markerListView.setPrefWidth(275);
@@ -233,12 +224,25 @@ public class MarkerController extends BaseController implements MapComponentInit
         tabM.setUserData(1);
         tabPane.getTabs().add(tabM);
 
+        routeListView = new JFXListView<>();
+        routeListView.setPrefWidth(275);
+        routeListView.setExpanded(true);
+        routeListView.setVerticalGap(1.0);
+        routeListView.depthProperty().set(1);
+
+        Tab tabR = new Tab();
+        tabR.setText("Rutas");
+        tabR.setContent(routeListView);
+        tabR.setUserData(0);
+        tabPane.getTabs().add(tabR);
+
         floatingButton = new JFXButton("+");
         floatingButton.setButtonType(JFXButton.ButtonType.RAISED);
         floatingButton.getStyleClass().addAll("floatingButton");
         floatingButton.setLayoutX(210);
         floatingButton.setLayoutY(525);
         anchorPane.getChildren().add(floatingButton);
+        floatingButton.setVisible(false);
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, t, t1) -> {
             if ((int) t1.getUserData() == 1) {
@@ -247,7 +251,12 @@ public class MarkerController extends BaseController implements MapComponentInit
             } else if ((int) t1.getUserData() == 0) {
                 floatingButton.setGraphic(null);
                 floatingButton.setText("+");
+                floatingButton.setTooltip(
+                        new Tooltip("Agregar ruta")
+                );
                 openFloatingButton();
+                printRouteReport.setGraphic(new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm())));
+                printRouteReport.setOnAction(event -> printReport());
             }
             if (addPane.isVisible())
                 hideAddPane();
@@ -275,6 +284,59 @@ public class MarkerController extends BaseController implements MapComponentInit
         });
     }
 
+    private Integer getMeters(Position position) {
+
+        double radioEarth = 6371000;
+        double dLat = Math.toRadians(position.getLatitude()
+                - position.getControlPosition().getLatitude());
+        double dLng = Math.toRadians(position.getLongitude()
+                - position.getControlPosition().getLongitude());
+        double sLat = Math.sin(dLat / 2);
+        double sLng = Math.sin(dLng / 2);
+        double va1 = Math.pow(sLat, 2) + Math.pow(sLng, 2)
+                * Math.cos(Math.toRadians(position.getControlPosition().getLatitude()))
+                * Math.cos(Math.toRadians(position.getLatitude()));
+        double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+        Double distance = radioEarth * va2;
+
+        return distance.intValue();
+    }
+
+
+    public void loadPrint(File file){
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("route_name", selectedRoute.getName());
+        parameters.put("created_date", RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
+        parameters.put("route_id", selectedRoute.getId().toString());
+        parameters.put("point_num", selectedRoute.getRoutePositions().size());
+
+        //routeReport.setTime(RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
+        List<RouteReport> routeReportList = new ArrayList<>();
+
+            for(HBox hBoxDrawerData: drawerData) {
+
+                RoutePosition routePosition = (RoutePosition) hBoxDrawerData.getUserData();
+                RouteReport routeReport = new RouteReport();
+
+                routeReport.setPoint_marker(routePosition.getControlPosition().getPlaceName());
+
+                routeReportList.add(routeReport);
+            }
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintReportRouteDetailsTask(this,
+                new JRBeanCollectionDataSource(routeReportList),file,
+                "Ruta_"+selectedRoute.getId().toString(), parameters);
+        executor.execute(worker);
+        executor.shutdown();
+    }
+
+    public void printReport() {
+        dialogType = Const.DIALOG_PRINT_BASIC;
+        showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
+    }
+
+
     void closeEditRoute() {
         barEditRoute.setVisible(false);
         drawerListView.setVisible(true);
@@ -291,6 +353,9 @@ public class MarkerController extends BaseController implements MapComponentInit
         drawer.close();
         floatingButton.setGraphic(null);
         floatingButton.setText("+");
+        floatingButton.setTooltip(
+                new Tooltip("Agregar ruta")
+        );
         openFloatingButton();
     }
 
@@ -456,6 +521,12 @@ public class MarkerController extends BaseController implements MapComponentInit
                 "¿Estas seguro que deseas activar nuevamente este punto de control?");
     }
 
+    public void deleteControl() {
+        dialogType = Const.DIALOG_DELETE;
+        showDialog("Confirmacion",
+                "¿Estas seguro que deseas borrar este punto de control?");
+    }
+
     private void deleteRoute() {
         dialogType = Const.DIALOG_DELETE;
         showDialog("Confirmacion",
@@ -500,7 +571,7 @@ public class MarkerController extends BaseController implements MapComponentInit
 
             if (!control.getActive()) {
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/popup.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/popup_dual.fxml"));
                 InputController inputController = new InputController(this);
                 loader.setController(inputController);
                 JFXPopup popup = new JFXPopup(loader.load());
@@ -570,7 +641,8 @@ public class MarkerController extends BaseController implements MapComponentInit
 
         routeListView.setItems(routeData);
         routeListView.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && !addPane.isVisible()) {
+            if (event.getButton() == MouseButton.PRIMARY && !addPane.isVisible()
+                    && routeListView.getSelectionModel().getSelectedItem() != null) {
                 selectedRoute = (Route) routeListView
                         .getSelectionModel().getSelectedItem().getUserData();
                 openedDrawer();
@@ -681,6 +753,9 @@ public class MarkerController extends BaseController implements MapComponentInit
                 .getResource("img/pencil_edit_16.png").toExternalForm()));
         floatingButton.setText("");
         floatingButton.setGraphic(editImage);
+        floatingButton.setTooltip(
+                new Tooltip("Editar Ruta")
+        );
         openFloatingButton();
 
         drawerListView.setOnMouseClicked(event -> {
@@ -1012,10 +1087,17 @@ public class MarkerController extends BaseController implements MapComponentInit
     public void onDialogAccept(ActionEvent actionEvent) {
         super.onDialogAccept(actionEvent);
 
+        service.setListener(null);
+
         ControlPosition control;
         Route route;
 
         switch (dialogType) {
+            case Const.DIALOG_PRINT_BASIC:
+                File file = selectDirectory();
+                if (file != null)
+                    loadPrint(file);
+                break;
             case Const.DIALOG_SAVE_EDIT:
                 control = service.findCPById(selectedMarker.getId());
                 control.setPlaceName(nameField.getText());
@@ -1032,8 +1114,14 @@ public class MarkerController extends BaseController implements MapComponentInit
                 service.doEdit();
                 break;
             case Const.DIALOG_DELETE:
-                route = service.findRouteById(selectedRoute.getId());
-                service.deleteRoute(route);
+                service.setListener(this);
+                if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 1) {
+                    control = service.findCPById(selectedMarker.getId());
+                    service.deleteControl(control);
+                } else if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 0) {
+                    route = service.findRouteById(selectedRoute.getId());
+                    service.deleteRoute(route);
+                }
                 break;
         }
 
@@ -1238,6 +1326,46 @@ public class MarkerController extends BaseController implements MapComponentInit
         addMarkers();
     }
 
+    @Override
+    public void onError(String error) {
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            showDialogNotification("Error", error);
+                        });
+                    }
+                }, 500, 500
+        );
+    }
+
+    @Override
+    public void onSuccess(String message) {
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        cancel();
+                        Platform.runLater(() -> {
+                            showSnackBar(message);
+                        });
+                    }
+                }, 500, 500
+        );
+    }
+
+    @Override
+    public void onPrintCompleted() {
+
+    }
+
+    @Override
+    public void onPrintFailure(String message) {
+
+    }
+
     public class InputController {
 
         @FXML
@@ -1245,6 +1373,9 @@ public class MarkerController extends BaseController implements MapComponentInit
 
         @FXML
         private Label popupLabel;
+
+        @FXML
+        private Label popupLabel_delete;
 
         private MarkerController principal;
 
@@ -1261,8 +1392,10 @@ public class MarkerController extends BaseController implements MapComponentInit
             if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 0) {
                 if (popupLabel.getText().equals("Borrar"))
                     principal.deleteRoute();
-                 else
+                else
                     principal.enableControl();
+            } else if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 1) {
+                principal.deleteControl();
             }
         }
 

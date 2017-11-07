@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_-uM6cYYvEeeU47QSqt580g" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_-uM6coYvEeeU47QSqt580g" bindingContexts="_-uNhg4YvEeeU47QSqt580g">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;near_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\near_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/near_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\sub_watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/sub_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;master_watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\master_watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/master_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
-  <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;master_watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\gui\async\report\master_watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/master_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_route_details.jrxml&quot; tooltip=&quot;MyReports/sub_route_details.jrxml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/MyReports/sub_route_details.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;marcadores_rutas.jrxml&quot; tooltip=&quot;MyReports/marcadores_rutas.jrxml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/MyReports/marcadores_rutas.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\gui\async\report\sub_watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/sub_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor.jasper&quot; name=&quot;sub_watch_points.jasper&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\gui\async\report\sub_watch_points.jasper&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/sub_watch_points.jasper&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_watch_points_1.jrxml&quot; tooltip=&quot;MyReports/sub_watch_points_1.jrxml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/MyReports/sub_watch_points_1.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor.jasper&quot; name=&quot;watch_points.jasper&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\src\gui\async\report\watch_points.jasper&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/watch_points.jasper&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;watch_points_2.jrxml&quot; tooltip=&quot;MyReports/watch_points_2.jrxml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/MyReports/watch_points_2.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor.jasper&quot; name=&quot;watch_points.jasper&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\MyReports\watch_points.jasper&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/MyReports/watch_points.jasper&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;watch_points_1.jrxml&quot; tooltip=&quot;MyReports/watch_points_1.jrxml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/MyReports/watch_points_1.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;near_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\near_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/near_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\sub_watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/sub_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;master_watch_points.jrxml&quot; tooltip=&quot;C:\Users\Joshuan Marval\Documents\IntelliJProjects\radar-desktop\report\master_watch_points.jrxml&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/Joshuan%20Marval/Documents/IntelliJProjects/radar-desktop/report/master_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>ModelMigrationProcessor.001</tags>
+  <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_-uM6coYvEeeU47QSqt580g" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_AQudIYYwEeeU47QSqt580g" x="0" y="0" width="1024" height="768">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
@@ -24,8 +24,8 @@
           <tags>persp.actionSet:org.eclipse.ui.externaltools.ExternalToolsSet</tags>
           <tags>persp.actionSet:org.eclipse.search.searchActionSet</tags>
           <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZQYYwEeeU47QSqt580g" selectedElement="_AmaZSIYwEeeU47QSqt580g" horizontal="true">
-            <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZQoYwEeeU47QSqt580g" containerData="2500" selectedElement="_AmaZRoYwEeeU47QSqt580g">
-              <children xsi:type="basic:PartStack" xmi:id="_AmaZQ4YwEeeU47QSqt580g" elementId="com.jaspersoft.studio.RepositoryMStack" containerData="5000" selectedElement="_AmaZRIYwEeeU47QSqt580g">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZQoYwEeeU47QSqt580g" containerData="2500" selectedElement="_AmaZQ4YwEeeU47QSqt580g">
+              <children xsi:type="basic:PartStack" xmi:id="_AmaZQ4YwEeeU47QSqt580g" elementId="com.jaspersoft.studio.RepositoryMStack" containerData="5000" selectedElement="_AmaZRYYwEeeU47QSqt580g">
                 <children xsi:type="advanced:Placeholder" xmi:id="_AmaZRIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.Repository" ref="_AmU5sIYwEeeU47QSqt580g"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_AmaZRYYwEeeU47QSqt580g" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_AmWu4IYwEeeU47QSqt580g"/>
               </children>
@@ -34,13 +34,13 @@
               </children>
             </children>
             <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZSIYwEeeU47QSqt580g" containerData="7500" selectedElement="_AmaZSYYwEeeU47QSqt580g" horizontal="true">
-              <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZSYYwEeeU47QSqt580g" containerData="7000" selectedElement="_AmaZSoYwEeeU47QSqt580g">
+              <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZSYYwEeeU47QSqt580g" containerData="6893" selectedElement="_AmaZSoYwEeeU47QSqt580g">
                 <children xsi:type="advanced:Placeholder" xmi:id="_AmaZSoYwEeeU47QSqt580g" elementId="org.eclipse.ui.editorss" containerData="7500" ref="_AmLIsIYwEeeU47QSqt580g"/>
                 <children xsi:type="basic:PartStack" xmi:id="_AmaZS4YwEeeU47QSqt580g" elementId="com.jaspersoft.studio.editor.preview.reportstateMStack" containerData="2500" selectedElement="_AmaZTIYwEeeU47QSqt580g">
                   <children xsi:type="advanced:Placeholder" xmi:id="_AmaZTIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.editor.preview.reportstate" ref="_AmZyMIYwEeeU47QSqt580g"/>
                 </children>
               </children>
-              <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZTYYwEeeU47QSqt580g" containerData="3000" selectedElement="_AmaZUIYwEeeU47QSqt580g">
+              <children xsi:type="basic:PartSashContainer" xmi:id="_AmaZTYYwEeeU47QSqt580g" containerData="3107" selectedElement="_AmaZToYwEeeU47QSqt580g">
                 <children xsi:type="basic:PartStack" xmi:id="_AmaZToYwEeeU47QSqt580g" elementId="org.eclipse.gef.ui.palette_viewMStack" containerData="4000" selectedElement="_AmaZT4YwEeeU47QSqt580g">
                   <children xsi:type="advanced:Placeholder" xmi:id="_AmaZT4YwEeeU47QSqt580g" elementId="org.eclipse.gef.ui.palette_view" ref="_AmYkEIYwEeeU47QSqt580g"/>
                 </children>
@@ -83,35 +83,35 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_AmLIsIYwEeeU47QSqt580g" elementId="org.eclipse.ui.editorss" selectedElement="_AmLIsYYwEeeU47QSqt580g">
-      <children xsi:type="basic:PartStack" xmi:id="_AmLIsYYwEeeU47QSqt580g" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_BqgkcIY5EeeU47QSqt580g">
+      <children xsi:type="basic:PartStack" xmi:id="_AmLIsYYwEeeU47QSqt580g" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_VP-PkMAKEeeWUo0l7ryWZA">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
         <tags>active</tags>
-        <children xsi:type="basic:Part" xmi:id="_B6yyQIYwEeeU47QSqt580g" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="master_watch_points.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;master_watch_points.jrxml&quot; partName=&quot;master_watch_points.jrxml&quot; title=&quot;master_watch_points.jrxml&quot; tooltip=&quot;MyReports/master_watch_points.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/master_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
+        <children xsi:type="basic:Part" xmi:id="_jHShgMAGEeeWUo0l7ryWZA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="sub_watch_points_1.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_watch_points_1.jrxml&quot; partName=&quot;sub_watch_points_1.jrxml&quot; title=&quot;sub_watch_points_1.jrxml&quot; tooltip=&quot;MyReports/sub_watch_points_1.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/sub_watch_points_1.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
           <tags>removeOnHide</tags>
         </children>
-        <children xsi:type="basic:Part" xmi:id="_tbJBwIYwEeeU47QSqt580g" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="sub_watch_points.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_watch_points.jrxml&quot; partName=&quot;sub_watch_points.jrxml&quot; title=&quot;sub_watch_points.jrxml&quot; tooltip=&quot;MyReports/sub_watch_points.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/sub_watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
-          <tags>Editor</tags>
-          <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
-          <tags>removeOnHide</tags>
-        </children>
-        <children xsi:type="basic:Part" xmi:id="_Vf-P0IY1EeeU47QSqt580g" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="near_points.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;near_points.jrxml&quot; partName=&quot;near_points.jrxml&quot; title=&quot;near_points.jrxml&quot; tooltip=&quot;MyReports/near_points.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/near_points.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
-          <tags>Editor</tags>
-          <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
-          <tags>removeOnHide</tags>
-        </children>
-        <children xsi:type="basic:Part" xmi:id="_BqgkcIY5EeeU47QSqt580g" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="watch_points.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;watch_points.jrxml&quot; partName=&quot;watch_points.jrxml&quot; title=&quot;watch_points.jrxml&quot; tooltip=&quot;MyReports/watch_points.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/watch_points.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
+        <children xsi:type="basic:Part" xmi:id="_VP-PkMAKEeeWUo0l7ryWZA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="marcadores_rutas.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;marcadores_rutas.jrxml&quot; partName=&quot;marcadores_rutas.jrxml&quot; title=&quot;marcadores_rutas.jrxml&quot; tooltip=&quot;MyReports/marcadores_rutas.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/marcadores_rutas.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
           <tags>removeOnHide</tags>
           <tags>active</tags>
           <tags>activeOnClose</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_9r114MAUEeeWUo0l7ryWZA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="master_watch_points_1.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;master_watch_points_1.jrxml&quot; partName=&quot;master_watch_points_1.jrxml&quot; title=&quot;master_watch_points_1.jrxml&quot; tooltip=&quot;MyReports/master_watch_points_1.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/master_watch_points_1.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_SP77IMAMEeeWUo0l7ryWZA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="sub_route_details.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;sub_route_details.jrxml&quot; partName=&quot;sub_route_details.jrxml&quot; title=&quot;sub_route_details.jrxml&quot; tooltip=&quot;MyReports/sub_route_details.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/MyReports/sub_route_details.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
+          <tags>removeOnHide</tags>
         </children>
       </children>
     </sharedElements>
@@ -125,13 +125,19 @@
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_AqZhYYYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.Repository"/>
+      <toolbar xmi:id="_AqZhYYYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.Repository" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_AmWu4IYwEeeU47QSqt580g" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Project Explorer" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.gif" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.eclipse.ui.navigator.resources.ProjectExplorer"/>
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.ui.navigator.resources"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;1&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;/>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
+      <menus xmi:id="_O7WCEMAFEeebwOcDPNI_Bg" elementId="org.eclipse.ui.navigator.ProjectExplorer">
+        <tags>ViewMenu</tags>
+        <tags>menuContribution:menu</tags>
+      </menus>
+      <toolbar xmi:id="_O7WCEcAFEeebwOcDPNI_Bg" elementId="org.eclipse.ui.navigator.ProjectExplorer"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_AmX9AIYwEeeU47QSqt580g" elementId="org.eclipse.ui.views.ContentOutline" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Outline" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/outline_co.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.eclipse.ui.views.contentoutline.ContentOutline"/>
@@ -172,14 +178,14 @@
     <sharedElements xsi:type="basic:Part" xmi:id="_AmZLIIYwEeeU47QSqt580g" elementId="org.eclipse.ui.views.ProblemView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Problems" iconURI="platform:/plugin/org.eclipse.ui.ide/icons/full/eview16/problems_view.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.eclipse.ui.internal.views.markers.ProblemsView"/>
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.ui.ide"/>
-      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view PRIMARY_SORT_FIELD=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot; categoryGroup=&quot;org.eclipse.ui.ide.severity&quot; markerContentGenerator=&quot;org.eclipse.ui.ide.problemsGenerator&quot; partName=&quot;Problems&quot;>&#xD;&#xA;&lt;columnWidths org.eclipse.ui.ide.locationField=&quot;90&quot; org.eclipse.ui.ide.markerType=&quot;90&quot; org.eclipse.ui.ide.pathField=&quot;120&quot; org.eclipse.ui.ide.resourceField=&quot;90&quot; org.eclipse.ui.ide.severityAndDescriptionField=&quot;300&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.resourceField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.pathField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.locationField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.markerType&quot;/>&#xD;&#xA;&lt;/view>"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view PRIMARY_SORT_FIELD=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot; categoryGroup=&quot;org.eclipse.ui.ide.severity&quot; markerContentGenerator=&quot;org.eclipse.ui.ide.problemsGenerator&quot; partName=&quot;Problems&quot;>&#xD;&#xA;&lt;expanded>&#xD;&#xA;&lt;category IMemento.internal.id=&quot;Other (1 item)&quot;/>&#xD;&#xA;&lt;/expanded>&#xD;&#xA;&lt;columnWidths org.eclipse.ui.ide.locationField=&quot;90&quot; org.eclipse.ui.ide.markerType=&quot;90&quot; org.eclipse.ui.ide.pathField=&quot;120&quot; org.eclipse.ui.ide.resourceField=&quot;90&quot; org.eclipse.ui.ide.severityAndDescriptionField=&quot;300&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.resourceField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.pathField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.locationField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.markerType&quot;/>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
       <menus xmi:id="_Byfx4IYwEeeU47QSqt580g" elementId="org.eclipse.ui.views.ProblemView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_Byfx4YYwEeeU47QSqt580g" elementId="org.eclipse.ui.views.ProblemView"/>
+      <toolbar xmi:id="_Byfx4YYwEeeU47QSqt580g" elementId="org.eclipse.ui.views.ProblemView" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_AmZyMIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.editor.preview.reportstate" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Report State" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="com.jaspersoft.studio.editor.preview.ReportStateView"/>
@@ -200,7 +206,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_AeZFsIYwEeeU47QSqt580g" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_AeelQIYwEeeU47QSqt580g" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_-u0luIYvEeeU47QSqt580g"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_dM1VQMAGEeeWUo0l7ryWZA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_-u0luIYvEeeU47QSqt580g"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_AeZFsYYwEeeU47QSqt580g" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -218,12 +224,12 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_AeZswIYwEeeU47QSqt580g" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_AefzYIYwEeeU47QSqt580g" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_-uzXf4YvEeeU47QSqt580g"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_dNbLJcAGEeeWUo0l7ryWZA" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_-uzXf4YvEeeU47QSqt580g"/>
       </children>
-      <children xsi:type="menu:ToolBar" xmi:id="_IFXeIIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.graphic.text" visible="false">
+      <children xsi:type="menu:ToolBar" xmi:id="_IFXeIIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.graphic.text">
         <tags>Draggable</tags>
       </children>
-      <children xsi:type="menu:ToolBar" xmi:id="_IGffgIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.graphic.size" visible="false">
+      <children xsi:type="menu:ToolBar" xmi:id="_IGffgIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.graphic.size">
         <tags>Draggable</tags>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_MuVNUIYwEeeU47QSqt580g" elementId="com.jaspersoft.studio.graphic.image" visible="false">
@@ -1957,7 +1963,7 @@
   <addons xmi:id="_-uNhj4YvEeeU47QSqt580g" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.ui.workbench" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_-uNhkIYvEeeU47QSqt580g" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.workbench" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_-uUPMIYvEeeU47QSqt580g" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_b_-gkcAGEeeWUo0l7ryWZA" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <categories xmi:id="_-uspsIYvEeeU47QSqt580g" elementId="org.eclipse.ui.category.views" name="Views" description="Commands for opening views"/>
   <categories xmi:id="_-uspsYYvEeeU47QSqt580g" elementId="org.eclipse.team.ui.category.team" name="Team" description="Actions that apply when working with a Team"/>
   <categories xmi:id="_-uspsoYvEeeU47QSqt580g" elementId="org.eclipse.ui.category.edit" name="Edit"/>

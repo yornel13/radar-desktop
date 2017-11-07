@@ -17,7 +17,7 @@ import java.util.List;
  * augmented to handle user-managed Spring transactions. Each of these methods
  * provides additional information for how to configure it for the desired type
  * of transaction control.
- * 
+ *
  * @see model.Admin
  * @author MyEclipse Persistence Tools
  */

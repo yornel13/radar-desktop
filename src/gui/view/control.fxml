@@ -8,8 +8,10 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.lynden.gmapsfx.GoogleMapView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -20,21 +22,58 @@
 <StackPane fx:id="root" prefHeight="585.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane prefHeight="585.0" prefWidth="860.0">
       <children>
-         <JFXButton fx:id="searchButton" layoutX="245.0" layoutY="45.0" prefHeight="30.0" prefWidth="30.0" />
-         <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="275.0" style="-fx-background-color: white;" />
-         <JFXTextField fx:id="watchFilterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090" visible="false">
-            <font>
-               <Font size="13.0" />
-            </font>
-         </JFXTextField>
-         <JFXTextField fx:id="markerFilterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090">
-            <font>
-               <Font size="13.0" />
-            </font>
-         </JFXTextField>
-         <JFXDatePicker fx:id="fromPicker" layoutX="10.0" layoutY="45.0" prefHeight="30.0" prefWidth="110.0" />
-         <JFXDatePicker fx:id="toPicker" layoutX="130.0" layoutY="45.0" prefHeight="30.0" prefWidth="110.0" />
-         <JFXListView fx:id="controlListView" layoutX="-2.0" layoutY="75.0" prefHeight="510.0" prefWidth="275.0" />
+         <VBox prefHeight="585.0" prefWidth="275.0">
+            <children>
+               <Pane prefHeight="45.0" prefWidth="275.0">
+                  <children>
+                     <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" prefHeight="45.0" prefWidth="275.0" style="-fx-background-color: white;" />
+                     <JFXTextField fx:id="markerFilterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </JFXTextField>
+                     <JFXTextField fx:id="watchFilterField" alignment="BASELINE_LEFT" labelFloat="true" layoutX="68.0" layoutY="1.0" prefHeight="35.0" prefWidth="200.0" promptText="Buscar" unFocusColor="#909090" visible="false">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </JFXTextField>
+                  </children>
+               </Pane>
+               <Pane prefHeight="30.0" prefWidth="275.0" style="-fx-background-color: white;">
+                  <children>
+                     <HBox alignment="CENTER" prefHeight="30.0" prefWidth="275.0">
+                        <children>
+                           <Label text="Abrir  " />
+                           <JFXButton fx:id="buttonDate" prefHeight="30.0" style="-fx-background-color: rgba(0, 0, 0, 0.05);;" text="Filtro por fecha">
+                              <HBox.margin>
+                                 <Insets />
+                              </HBox.margin>
+                           </JFXButton>
+                           <JFXButton fx:id="buttonDuration" prefHeight="30.0" style="-fx-background-color: rgba(0, 0, 0, 0.05);;" text="Filtro por duración">
+                              <HBox.margin>
+                                 <Insets left="16.0" />
+                              </HBox.margin>
+                           </JFXButton>
+                        </children>
+                     </HBox>
+                  </children>
+               </Pane>
+               <Pane fx:id="paneDate" prefHeight="0.0" prefWidth="275.0" style="-fx-background-color: white;" visible="false">
+                  <children>
+                     <JFXDatePicker fx:id="fromPicker" layoutX="10.0" prefHeight="30.0" prefWidth="110.0" />
+                     <JFXDatePicker fx:id="toPicker" layoutX="120.0" prefHeight="30.0" prefWidth="110.0" />
+                  </children>
+               </Pane>
+               <Pane fx:id="paneDuration" prefHeight="0.0" prefWidth="275.0" style="-fx-background-color: white;" visible="false">
+                  <children>
+                     <TextField fx:id="filterMin" layoutX="20.0" layoutY="3.0" prefHeight="25.0" prefWidth="90.0" promptText="Minutos (min)" />
+                     <TextField fx:id="filterMax" layoutX="130.0" layoutY="3.0" prefWidth="90.0" promptText="Minutos (max)" />
+                  </children>
+               </Pane>
+               <JFXListView fx:id="controlListView" prefHeight="510.0" prefWidth="275.0" />
+            </children>
+         </VBox>
+         <JFXButton fx:id="searchButton" layoutX="240.0" layoutY="75.0" prefHeight="30.0" prefWidth="30.0" visible="false" />
          <GoogleMapView fx:id="mapView" layoutX="273.0" prefHeight="585.0" prefWidth="585.0" />
          <JFXDrawer fx:id="watchDrawer" defaultDrawerSize="300.0" layoutX="-3.0" layoutY="45.0" prefHeight="540.0" prefWidth="275.0" visible="false">
             <children>

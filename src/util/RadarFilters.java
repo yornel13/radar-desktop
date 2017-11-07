@@ -9,7 +9,7 @@ public class RadarFilters {
     public static EventHandler<KeyEvent> numberLetterFilter() {
 
         EventHandler<KeyEvent> aux = (KeyEvent keyEvent) -> {
-            if (!"0123456789abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            if (!"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     .contains(keyEvent.getCharacter())) {
                 keyEvent.consume();
 

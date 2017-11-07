@@ -15,10 +15,16 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.babel.editor.rbeBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>net.sf.jasperreports.nature</nature>
+		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
 	</natures>
 	<linkedResources>
 		<link>
@@ -29,17 +35,17 @@
 		<link>
 			<name>master_watch_points.jrxml</name>
 			<type>1</type>
-			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/report/master_watch_points.jrxml</location>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/master_watch_points.jrxml</location>
+		</link>
+		<link>
+			<name>master_watch_points_1.jrxml</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/master_watch_points.jrxml</location>
 		</link>
 		<link>
 			<name>near_points.jasper</name>
 			<type>1</type>
 			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/report/near_points.jasper</location>
-		</link>
-		<link>
-			<name>near_points.jrxml</name>
-			<type>1</type>
-			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/report/near_points.jrxml</location>
 		</link>
 		<link>
 			<name>sub_watch_points.jasper</name>
@@ -49,7 +55,12 @@
 		<link>
 			<name>sub_watch_points.jrxml</name>
 			<type>1</type>
-			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/report/sub_watch_points.jrxml</location>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/sub_watch_points.jrxml</location>
+		</link>
+		<link>
+			<name>sub_watch_points_1.jasper</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/sub_watch_points.jasper</location>
 		</link>
 		<link>
 			<name>watch_points.jasper</name>
@@ -57,9 +68,14 @@
 			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/report/watch_points.jasper</location>
 		</link>
 		<link>
-			<name>watch_points.jrxml</name>
+			<name>watch_points_1.jasper</name>
 			<type>1</type>
-			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/report/watch_points.jrxml</location>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/MyReports/watch_points.jasper</location>
+		</link>
+		<link>
+			<name>watch_points_2.jasper</name>
+			<type>1</type>
+			<location>C:/Users/Joshuan Marval/Documents/IntelliJProjects/radar-desktop/src/gui/async/report/watch_points.jasper</location>
 		</link>
 	</linkedResources>
 </projectDescription>

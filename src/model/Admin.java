@@ -1,5 +1,10 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Admin entity. @author MyEclipse Persistence Tools
  */
@@ -36,7 +41,12 @@ public class Admin implements java.io.Serializable {
 		this.active = active;
 	}
 
-	// Property accessors
+	public Admin(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+    // Property accessors
 
 	public Long getId() {
 		return this.id;
@@ -108,6 +118,12 @@ public class Admin implements java.io.Serializable {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public static List<Admin> cloneList(List<Admin> list) {
+		List<Admin> clone = new ArrayList<>(list.size());
+		for (Admin item : list) clone.add(RadarService.clone(Admin.class, item));
+		return clone;
 	}
 
 }

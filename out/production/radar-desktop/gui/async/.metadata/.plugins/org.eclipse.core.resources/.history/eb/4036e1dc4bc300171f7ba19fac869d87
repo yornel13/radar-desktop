@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="global_route_details" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3a280ca1-4ad8-4dc2-9291-7d2e69c586a1">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="route_name" class="java.lang.String"/>
+	<parameter name="route_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="551" height="81" backcolor="#2DB0E3" uuid="599f0640-b17b-4c75-9ce9-2235d136b0a1"/>
+				<textField>
+					<reportElement x="20" y="30" width="326" height="30" forecolor="#FFFFFF" uuid="ac9dad4f-2a56-4cfd-84b7-3d34011db46b"/>
+					<textElement>
+						<font fontName="SansSerif" size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{route_name}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement x="374" y="9" width="170" height="30" forecolor="#FFFFFF" uuid="caec9396-4f13-44d6-9edd-438a860433dd">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="444" y="50" width="100" height="20" forecolor="#FFFFFF" uuid="68a0099a-ebe7-4a4c-90c5-1a3dd424910c"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ID: "+$P{route_id}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="224" splitType="Stretch">
+			<subreport>
+				<reportElement x="2" y="3" width="551" height="110" uuid="86c26434-9bcd-411f-bae7-bb1a924ba042"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subrep_markers.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

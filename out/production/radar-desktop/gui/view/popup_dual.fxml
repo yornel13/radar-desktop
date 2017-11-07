@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<JFXListView fx:id="toolbarPopupList" onMouseClicked="#submit" prefWidth="100.0" prefHeight="70.0" styleClass="option-list-view"
+              xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <Label fx:id="popupLabel">
+        Activar
+    </Label>
+    <Label fx:id="popupLabel_delete">
+        Eliminar
+    </Label>
+</JFXListView>

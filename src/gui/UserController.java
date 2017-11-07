@@ -2,13 +2,20 @@ package gui;
 
 
 import com.jfoenix.controls.*;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.MapReadyListener;
+import gui.async.PrintGroupReportTask;
 import io.datafx.controller.ViewController;
+import io.datafx.controller.flow.FlowException;
 import io.datafx.controller.flow.action.ActionTrigger;
+import io.datafx.controller.util.VetoException;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -16,6 +23,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Tab;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,23 +33,27 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.Group;
-import model.User;
+import model.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.joda.time.DateTime;
 import util.Const;
 import util.Password;
+import util.RadarDate;
 import util.RadarFilters;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static javafx.scene.paint.Color.valueOf;
 
 @ViewController("view/user.fxml")
-public class UserController extends BaseController {
+public class UserController extends BaseController implements MapComponentInitializedListener,
+        MapReadyListener, EventHandler<MouseEvent>,PrintGroupReportTask.PrintTask {
 
     /*********Employee Tab Pane**********/
     @FXML
@@ -84,11 +96,17 @@ public class UserController extends BaseController {
     private JFXListView<HBox> groupListView;
     private ObservableList<HBox> groupData;
     private List<Group> groupList;
+    @FXML
+    private JFXButton printGroupReport;
 
     @FXML
     private Label groupLabel;
     @FXML
     private Label createGroupLabel;
+    @FXML
+    private JFXTextField filterFieldGroup;
+    @FXML
+    private JFXTextField filterFieldGroupUser;
     @FXML
     private Label editGroupLabel;
     @FXML
@@ -96,6 +114,8 @@ public class UserController extends BaseController {
     @FXML
     private JFXTextField groupNameField;
     private Group selectedGroup;
+
+    private List<Group> groups;
 
 
     /**********OTHERS*********/
@@ -108,8 +128,7 @@ public class UserController extends BaseController {
     private JFXButton backButton;
     @FXML
     private JFXTextField filterField;
-    @FXML
-    private JFXTextField filterFieldGroup;
+
     private User selectedUser;
     private boolean editingPassword = false;
 
@@ -130,7 +149,14 @@ public class UserController extends BaseController {
         passwordField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberLetterFilter());
         dniField.addEventFilter(KeyEvent.KEY_TYPED, RadarFilters.numberFilter());
 
-        cancelGroupButton.setOnAction(event -> setTabGroupFields());
+        cancelGroupButton.setOnAction(event -> {
+            printGroupReport.setVisible(true);
+            printGroupReport.setFocusTraversable(false);
+            setTabGroupFields();
+            loadAllEmpGroupListView(null);
+            editGroup.setVisible(true);
+            filterFieldGroupUser.setVisible(false);
+         });
     }
 
     @Override
@@ -215,6 +241,9 @@ public class UserController extends BaseController {
         floatingButton.setLayoutX(230);
         floatingButton.setLayoutY(525);
         anchorPane.getChildren().add(floatingButton);
+        floatingButton.setTooltip(
+                new Tooltip("Agregar empleado")
+        );
 
         floatingButton.setOnMouseClicked(event -> {
             if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 0) {
@@ -222,6 +251,8 @@ public class UserController extends BaseController {
             } else if ((int) tabPane.getSelectionModel().getSelectedItem().getUserData() == 1) {
                 setCreateGroupFields();
                 loadAllEmpGroupListView(null);
+                filterUserGroup();
+                filterFieldGroupUser.clear();
             }
         });
     }
@@ -234,6 +265,7 @@ public class UserController extends BaseController {
         createGroupLabel.setVisible(false);
         groupLabel.setVisible(false);
 
+        filterFieldGroupUser.clear();
         groupNameField.setDisable(false);
         groupNameField.setEditable(true);
         dniField.setVisible(false);
@@ -259,6 +291,8 @@ public class UserController extends BaseController {
         addLabel.setVisible(false);
 
         editGroup.setVisible(false);
+        filterFieldGroupUser.setVisible(true);
+        filterFieldGroupUser.setDisable(false);
         groupNameField.clear();
         groupNameField.setDisable(false);
         groupNameField.setEditable(true);
@@ -292,7 +326,7 @@ public class UserController extends BaseController {
         employeeListView.setOnMouseClicked(event -> {
 
             if (event.getButton() == MouseButton.PRIMARY
-                                  && employeeListView.getSelectionModel().getSelectedItem() != null) {
+                    && employeeListView.getSelectionModel().getSelectedItem() != null) {
                 editingPassword = false;
                 nonEditableUser();
 
@@ -335,6 +369,7 @@ public class UserController extends BaseController {
         addLabel.setVisible(false);
         groupLabel.setVisible(false);
 
+        filterFieldGroupUser.setVisible(false);
         editGroup.setVisible(false);
         dniField.setVisible(true);
         dniField.setEditable(false);
@@ -474,8 +509,15 @@ public class UserController extends BaseController {
 
     private void editGroup() {
         editGroup.setOnMouseClicked(event -> {
-            setEditGroupFields();
-            loadAllEmpGroupListView(selectedGroup);
+            if(!groupNameField.getText().isEmpty()) {
+                printGroupReport.setVisible(false);
+                setEditGroupFields();
+                loadAllEmpGroupListView(selectedGroup);
+                filterUserGroup();
+            }else {
+                showDialogNotification("Seleccione un Grupo!",
+                        "Debe seleccionar un grupo para editar");
+            }
         });
     }
 
@@ -492,6 +534,7 @@ public class UserController extends BaseController {
         lastNameField.clear();
         passwordField.clear();
         groupNameField.clear();
+        filterFieldGroupUser.clear();
 
         groupNameField.setVisible(true);
         groupNameField.setDisable(true);
@@ -504,7 +547,7 @@ public class UserController extends BaseController {
         passwordField.setVisible(false);
         passwordField.setDisable(true);
         empGroupListView.setVisible(true);
-        empGroupListView.getItems().clear();
+        //empGroupListView.getItems().clear();
 
         editButton.setVisible(false);
 
@@ -594,19 +637,27 @@ public class UserController extends BaseController {
     }
 
     public void groupListViewClick(MouseEvent event, Group group) {
-        if (event.getButton() == MouseButton.PRIMARY) {
 
+        if (event.getButton() == MouseButton.PRIMARY) {
+            filterFieldGroupUser.setDisable(false);
+            filterFieldGroupUser.setVisible(true);
+            filterFieldGroupUser.clear();
+            printGroupReport.setVisible(true);
             selectedGroup = group;
 
             groupNameField.setText(selectedGroup.getName());
             userList = service.findUsersByGroupIdAndCompany(selectedGroup.getId(), getCompany());
 
+            ImageView printGroupIcon = new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm()));
+            printGroupReport.setGraphic(printGroupIcon);
             ImageView editIcon = new ImageView(new Image(getClass().getResource("img/bluePencil_16.png").toExternalForm()));
             editGroup.setVisible(true);
             editGroup.setGraphic(editIcon);
 
             setTabGroupFields();
             loadEmpGroupListView();
+            filterUserGroup();
+
         }
     }
 
@@ -637,6 +688,7 @@ public class UserController extends BaseController {
             };
             return cell ;
         });
+
     }
 
     private void loadAllEmpGroupListView(Group group) {
@@ -725,7 +777,7 @@ public class UserController extends BaseController {
                 } catch (NullPointerException e ){
                 }
             }else {
-                    groupHBox.getChildren().addAll( iconGroup, groupLabel);
+                groupHBox.getChildren().addAll( iconGroup, groupLabel);
             }
         }
 
@@ -873,23 +925,93 @@ public class UserController extends BaseController {
         groupTab.setText("Grupos");
         groupTab.setContent(groupListView);
         groupTab.setUserData(1);
+        printGroupReport.setOnAction(event -> printReport());
 
-        tabPane.getTabs().addAll(empTab, groupTab);
+        AssignController assignController = new AssignController();
+        Tab assignTab = new Tab();
+        assignTab.setText("Asignar");
+
+        assignTab.setUserData(2);
+
+
+        tabPane.getTabs().addAll(empTab, groupTab, assignTab);
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((ov, t0, t1) -> {
 
             if((int) t1.getUserData() == 0) {
                 initializeFields();
                 setFilterUser();
-            } else {
+
+                floatingButton.setTooltip(
+                        new Tooltip("Agregar empleado")
+                );
+            } else if((int)t1.getUserData() == 1){
                 setTabGroupFields();
                 loadGroupListView();
                 editGroup();
 
                 setFilterGroup();
+                floatingButton.setTooltip(
+                        new Tooltip("Agregar grupo")
+                );
+            } else if ((int)t1.getUserData() == 2){
+                new Timer().schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                cancel();
+                                Platform.runLater(() -> {
+                                    try {
+                                        actionHandler.handle("assign");
+                                    } catch (VetoException e) {
+                                        e.printStackTrace();
+                                    } catch (FlowException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            }
+                        }, 80, 80
+
+                );
+
+
             }
         });
 
+    }
+
+    public void loadPrint(File file){
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("group_name", selectedGroup.getName());
+        parameters.put("date_created", RadarDate.getDateWithMonthAndTime(selectedGroup.getCreateDate()));
+        parameters.put("group_id", selectedGroup.getId().toString());
+        parameters.put("emp_num", selectedGroup.getUsers().size());
+
+
+        //routeReport.setTime(RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
+        List<GroupReport> groupReportList = new ArrayList<>();
+
+        for(User userData: empGroupData) {
+
+            GroupReport groupReport = new GroupReport();
+            groupReport.setDni(userData.getDni());
+            groupReport.setUser_name(userData.getFullName());
+            groupReport.setCompany_name(userData.getCompany().getName());
+
+            groupReportList.add(groupReport);
+        }
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintGroupReportTask(this,
+                new JRBeanCollectionDataSource(groupReportList),file,
+                "Group_"+selectedGroup.getId().toString(), parameters);
+        executor.execute(worker);
+        executor.shutdown();
+    }
+
+    public void printReport() {
+        dialogType = Const.DIALOG_PRINT_BASIC;
+        showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
     }
 
     void setFilterUser() {
@@ -899,8 +1021,16 @@ public class UserController extends BaseController {
         filterFieldGroup.setVisible(false);
     }
 
+
     void setFilterGroup() {
         filterGroup();
+        filterFieldGroup.setOnMouseClicked(event -> {
+            filterFieldGroup.clear();
+            filterFieldGroupUser.clear();
+            loadAllEmpGroupListView(null);
+            filterFieldGroupUser.setVisible(false);
+            setTabGroupFields();
+        });
         filterFieldGroup.clear();
         filterField.setVisible(false);
         filterFieldGroup.setVisible(true);
@@ -971,10 +1101,69 @@ public class UserController extends BaseController {
         checkFilter(filteredData);
     }
 
+    void filterUserGroup() {
+        filterFieldGroup.clear();
+        FilteredList<User> filteredData = new FilteredList<>(empGroupData, p -> true);
+        filterFieldGroupUser.textProperty().addListener((observable, oldValue, newValue) -> {
+            //nonUserInfo();
+            filteredData.setPredicate(user -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                if (user == null)
+                    return false;
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = filterFieldGroupUser.getText().toLowerCase();
+
+                String fullName = user.getLastname()+" "+user.getName();
+                if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        SortedList<User> sortedData = new SortedList<>(filteredData);
+        empGroupListView.setItems(sortedData);
+        checkEmpGroupFilter(filteredData);
+    }
+
+    void checkEmpGroupFilter(FilteredList<User> filteredData){
+        filteredData.setPredicate(user -> {
+            if(filterFieldGroupUser.getText() == null || filterFieldGroupUser.getText() == null ) {
+                return  true;
+            }
+            String lowerCaseFilter = filterFieldGroupUser.getText().toLowerCase();
+
+            String fullName = user.getLastname()+" "+user.getName();
+            if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches first name.
+            } else if (user.getLastname().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            } else if (user.getDni().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            } else if (fullName.toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches last name.
+            }
+            return false; // Does not match.
+
+        });
+    }
+
     private void filterGroup() {
+
         FilteredList<HBox> filteredData = new FilteredList<>(groupData, p -> true);
         filterFieldGroup.textProperty().addListener((observable, oldValue, newValue) -> {
-            nonUserInfo();
+            //nonUserInfo();
+
             filteredData.setPredicate(hBox -> {
                 // If filter text is empty, display all persons.
                 if (newValue == null || newValue.isEmpty()) {
@@ -1050,6 +1239,12 @@ public class UserController extends BaseController {
         User user;
         Group group;
         switch (dialogType) {
+            case Const.DIALOG_PRINT_BASIC:
+            File file = selectDirectory();
+            if(file != null){
+                loadPrint(file);
+            }
+            break;
             case Const.DIALOG_SAVE_EDIT:
                 user = service.findUserById(((User)
                         employeeListView.getSelectionModel().getSelectedItem().getUserData()).getId());
@@ -1119,6 +1314,31 @@ public class UserController extends BaseController {
                 showSnackBar("Empleado activado con exito");
                 break;
         }
+    }
+
+    @Override
+    public void mapInitialized() {
+
+    }
+
+    @Override
+    public void mapReady() {
+
+    }
+
+    @Override
+    public void handle(MouseEvent event) {
+
+    }
+
+    @Override
+    public void onPrintCompleted() {
+
+    }
+
+    @Override
+    public void onPrintFailure(String message) {
+
     }
 
     public class InputController {

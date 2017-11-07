@@ -29,7 +29,7 @@ public class PrintReportWatchsTask implements Runnable {
 
     @Override
     public void run() {
-        FileInputStream inputStreamMaster = null;
+        /*FileInputStream inputStreamMaster = null;
         FileInputStream inputStreamSub = null;
 
         try{
@@ -37,11 +37,11 @@ public class PrintReportWatchsTask implements Runnable {
             inputStreamSub = new FileInputStream("report/sub_watch_points.jrxml");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
 
         try {
-            JasperDesign jasperDesignMaster = JRXmlLoader.load(inputStreamMaster);
-            JasperDesign jasperDesignSub = JRXmlLoader.load(inputStreamSub);
+            JasperDesign jasperDesignMaster = JRXmlLoader.load(getClass().getResourceAsStream("report/master_watch_points.jrxml"));
+            JasperDesign jasperDesignSub = JRXmlLoader.load(getClass().getResourceAsStream("report/sub_watch_points.jrxml"));
             JasperReport jasperMasterReport = JasperCompileManager
                     .compileReport(jasperDesignMaster);
             JasperReport jasperSubReport = JasperCompileManager

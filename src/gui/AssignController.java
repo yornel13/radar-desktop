@@ -178,7 +178,7 @@ public class AssignController extends BaseController implements MapComponentInit
         userListView.depthProperty().set(1);
     }
 
-    private void loadGroupListView() throws FileNotFoundException {
+    public void loadGroupListView() throws FileNotFoundException {
 
         groups = service.getAllGroup();
         groupData = FXCollections.observableArrayList();

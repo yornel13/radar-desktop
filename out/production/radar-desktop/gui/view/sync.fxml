@@ -39,14 +39,6 @@
                      <Cursor fx:constant="HAND" />
                   </cursor>
                </JFXButton>
-               <JFXButton fx:id="optionAssign" focusTraversable="false" layoutX="220.0" layoutY="14.0" text="Asignar" textFill="WHITE">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </JFXButton>
             </children>
          </Pane>
          <JFXButton fx:id="backButton" alignment="BASELINE_LEFT" focusTraversable="false" prefHeight="45.0" prefWidth="45.0" />

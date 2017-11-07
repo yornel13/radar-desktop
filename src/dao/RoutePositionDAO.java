@@ -116,6 +116,15 @@ public class RoutePositionDAO extends BaseHibernateDAO {
 		return (List<RoutePosition>) result;
 	}
 
+	public List<RoutePosition> findAllByControlId(Long controlId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM route_position WHERE " +
+				"control_id = :control_id")
+				.addEntity(RoutePosition.class)
+				.setParameter("control_id", controlId);
+
+		Object result = query.list();
+		return (List<RoutePosition>) result;
+	}
 
 	public RoutePosition merge(RoutePosition detachedInstance) {
 		log.debug("merging RoutePosition instance");

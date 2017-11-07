@@ -60,6 +60,16 @@ public class RouteMarkerDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public List<RouteMarker> findAllByControlId(Long controlId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM route_marker WHERE " +
+				"control_id = :control_id")
+				.addEntity(RouteMarker.class)
+				.setParameter("control_id", controlId);
+
+		Object result = query.list();
+		return (List<RouteMarker>) result;
+	}
+
 	public List findByExample(RouteMarker instance) {
 		log.debug("finding RouteMarker instance by example");
 		try {

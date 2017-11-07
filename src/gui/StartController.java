@@ -15,6 +15,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import model.Company;
 import util.Const;
+import util.HibernateSessionFactory;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
@@ -85,8 +86,8 @@ public class StartController extends BaseController {
 
             if(file.exists()) {
 
-               while((line = br.readLine()) != null) {
-                   json += line+"\n";
+                while((line = br.readLine()) != null) {
+                    json += line+"\n";
                 }
             }
 
@@ -159,6 +160,7 @@ public class StartController extends BaseController {
         } else {
             showSnackBar("error al intentar exporta la informacion!");
         }
+        HibernateSessionFactory.getSession().clear();
     }
 
     public void onSelectCompany(ActionEvent event) {
@@ -172,6 +174,7 @@ public class StartController extends BaseController {
         }  else {
             showSnackBar("Selecciona una empresa primero.");
         }
+        //showDialogLogin("Login");
     }
 }
 

@@ -1,6 +1,10 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -111,5 +115,11 @@ public class Route implements java.io.Serializable {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public static List<Route> cloneList(List<Route> list) {
+		List<Route> clone = new ArrayList<>(list.size());
+		for (Route item : list) clone.add(RadarService.clone(Route.class, item));
+		return clone;
 	}
 }

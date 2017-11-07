@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="route_detail" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="50b0f716-318c-4c59-8bb1-cebd92e909b9">
+	<parameter name="date_created" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="point_num" class="java.lang.String"/>
+	<parameter name="route_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="point_marker" class="java.lang.String"/>
+	<field name="distance" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="550" height="79" backcolor="#2DB0E3" uuid="ecbdb321-1005-4508-b792-0b488ba186ae"/>
+				<textField>
+					<reportElement x="10" y="20" width="270" height="30" forecolor="#FFFFFF" uuid="92525850-c2a6-4698-a940-44e908c17da0"/>
+					<textElement>
+						<font fontName="SansSerif" size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{route_name}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement x="378" y="9" width="170" height="30" forecolor="#FFFFFF" uuid="9f699234-7aa2-447f-b282-b876e2df305b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="180" y="10" width="200" height="25" uuid="d60b9534-dbac-462a-b25a-573ed06d87b6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle de ruta]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="103" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="74" width="549" height="29" backcolor="#2DB0E3" uuid="0e6ba3fe-e977-4741-87eb-189d52384cc3"/>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="180" height="25" uuid="2bc737c7-43b5-499d-a7d7-063377d26acc">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="SansSerif" size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Punto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" x="180" y="3" width="200" height="25" uuid="fccc1f9a-0fa5-4702-80d8-7e47d5e519cc">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="SansSerif" size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Distancia]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="13" width="549" height="20" backcolor="#E8E8E8" uuid="a418cb76-afb4-444a-8997-1a480f267a17">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Fecha de creación: "+$P{date_created}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="34" width="550" height="20" backcolor="#E8E8E8" uuid="e559e646-0c7a-46f2-bd94-5bb98faa4a66">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Numero de puntos: "+$P{point_num}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="100" height="20" uuid="430e69a3-f120-4bd5-a725-4f8c3271f3a9"/>
+				<textFieldExpression><![CDATA[$F{point_marker}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="10" width="100" height="20" uuid="2ae13012-822a-4702-b3b0-48c666493ec3"/>
+				<textFieldExpression><![CDATA[$F{distance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

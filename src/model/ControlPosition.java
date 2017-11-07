@@ -1,6 +1,10 @@
 package model;
 
+import service.RadarService;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -122,5 +126,11 @@ public class ControlPosition implements java.io.Serializable {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public static List<ControlPosition> cloneList(List<ControlPosition> list) {
+		List<ControlPosition> clone = new ArrayList<>(list.size());
+		for (ControlPosition item : list) clone.add(RadarService.clone(ControlPosition.class, item));
+		return clone;
 	}
 }
