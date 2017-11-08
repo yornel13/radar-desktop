@@ -8,11 +8,15 @@
 	<parameter name="point_num" class="java.lang.Integer"/>
 	<parameter name="route_name" class="java.lang.String"/>
 	<parameter name="route_id" class="java.lang.String"/>
+	<parameter name="subReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="point_marker" class="java.lang.String"/>
 	<field name="distance" class="java.lang.String"/>
+	<field name="start" class="java.lang.String"/>
+	<field name="finish" class="java.lang.String"/>
+	<field name="groupReportList" class="java.util.List"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -41,30 +45,32 @@
 					</textElement>
 					<textFieldExpression><![CDATA["Ruta Nro: "+$P{route_id}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="25" y="70" width="125" height="29" forecolor="#FFFFFF" uuid="fef0398f-a4b0-4bd1-a979-a80a50331a0f"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[Reporte completo de ruta y sus grupos]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="180" y="10" width="200" height="25" uuid="d60b9534-dbac-462a-b25a-573ed06d87b6">
+				<reportElement positionType="FixRelativeToBottom" x="80" y="10" width="400" height="25" uuid="d60b9534-dbac-462a-b25a-573ed06d87b6">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Detalle de ruta]]></text>
+				<text><![CDATA[Detalles de la ruta]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="80" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		<band height="103" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="50" width="549" height="29" backcolor="#2DB0E3" uuid="0e6ba3fe-e977-4741-87eb-189d52384cc3">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
+				<reportElement mode="Opaque" x="0" y="74" width="555" height="29" backcolor="#2DB0E3" uuid="0e6ba3fe-e977-4741-87eb-189d52384cc3"/>
 				<staticText>
 					<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="180" height="25" uuid="2bc737c7-43b5-499d-a7d7-063377d26acc">
 						<property name="local_mesure_unitheight" value="pixel"/>
@@ -87,17 +93,15 @@
 				</staticText>
 			</frame>
 			<textField>
-				<reportElement mode="Opaque" x="0" y="10" width="550" height="20" backcolor="#E8E8E8" uuid="a418cb76-afb4-444a-8997-1a480f267a17">
+				<reportElement mode="Opaque" x="0" y="13" width="555" height="20" backcolor="#E8E8E8" uuid="a418cb76-afb4-444a-8997-1a480f267a17">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Fecha de creación: "+$P{created_date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="0" y="30" width="550" height="20" backcolor="#E8E8E8" uuid="e559e646-0c7a-46f2-bd94-5bb98faa4a66">
+				<reportElement mode="Opaque" x="0" y="33" width="555" height="20" backcolor="#E8E8E8" uuid="e559e646-0c7a-46f2-bd94-5bb98faa4a66">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Numero de puntos de control: "+$P{point_num}]]></textFieldExpression>
@@ -105,17 +109,37 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="0" y="5" width="180" height="20" uuid="430e69a3-f120-4bd5-a725-4f8c3271f3a9">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
+				<reportElement x="0" y="5" width="180" height="20" uuid="430e69a3-f120-4bd5-a725-4f8c3271f3a9"/>
 				<textFieldExpression><![CDATA[$F{point_marker}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="180" y="5" width="200" height="20" uuid="2ae13012-822a-4702-b3b0-48c666493ec3"/>
+				<reportElement x="180" y="5" width="200" height="20" uuid="2ae13012-822a-4702-b3b0-48c666493ec3">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
 				<textFieldExpression><![CDATA[$F{distance}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="120">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement positionType="Float" x="-20" y="30" width="549" height="70" isRemoveLineWhenBlank="true" uuid="8bc9e1b7-4bb8-4254-bc1f-c96b0c618d63">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+	                  ($F{groupReportList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{subReport}]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="10" width="554" height="20" backcolor="#E8E8E8" uuid="c0ca855c-cbaa-4a93-9f07-5e94ede29f34">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Numero de empleados: "+$P{emp_num}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

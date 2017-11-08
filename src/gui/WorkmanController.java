@@ -385,6 +385,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         parameters.put("id", selectedWatch.getId().toString());
         parameters.put("date_start", RadarDate.getDateWithMonthAndTime(selectedWatch.getStartTime()));
         parameters.put("date_finish", RadarDate.getDateWithMonthAndTime(selectedWatch.getEndTime()));
+        parameters.put("route_name", selectedWatch.getUser().getGroup().getRoute().getName());
 
         List<PointReport> pointReportList = new ArrayList<>();
         for (HBox hBox : markerListView.getItems()) {
@@ -398,9 +399,19 @@ public class WorkmanController extends BaseController implements MapComponentIni
             pointReportList.add(pointReport);
         }
 
+        ////////////////// invert array //////////////////////////
+        List<PointReport> pointReportListInvert = new ArrayList<>();
+        {
+            if (!pointReportList.isEmpty())
+                for (int i = pointReportList.size(); i > 0; i--) {
+                    pointReportListInvert.add(pointReportList.get(i-1));
+                }
+        }
+        //////////////////////////////////////////////////////////////////////////
+
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportWatchTask(this,
-                new JRBeanCollectionDataSource(pointReportList), parameters, file,
+                new JRBeanCollectionDataSource(pointReportListInvert), parameters, file,
                 "watch_"+selectedWatch.getId().toString());
         executor.execute(worker);
         executor.shutdown();
@@ -425,6 +436,17 @@ public class WorkmanController extends BaseController implements MapComponentIni
                 watchSubReport.setDistanceMeters(getMeters(position));
                 watchMasterReport.getPointReportList().add(watchSubReport);
             }
+            ////////////////// invert array //////////////////////////
+            List<PointReport> pointReportListInvert = new ArrayList<>();
+            {
+                if (!watchMasterReport.getPointReportList().isEmpty())
+                    for (int i = watchMasterReport.getPointReportList().size(); i > 0; i--) {
+                        pointReportListInvert.add(watchMasterReport.getPointReportList().get(i-1));
+                    }
+
+                watchMasterReport.setPointReportList(pointReportListInvert);
+            }
+            //////////////////////////////////////////////////////////////////////////
             dataList.add(watchMasterReport);
         }
 
@@ -432,6 +454,7 @@ public class WorkmanController extends BaseController implements MapComponentIni
         parameters.put("full_name", selectedUser.getFullName());
         parameters.put("company", getCompany().getName());
         parameters.put("dni", selectedUser.getDni());
+        parameters.put("route_name", selectedUser.getGroup().getRoute().getName());
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportWatchsTask(this,

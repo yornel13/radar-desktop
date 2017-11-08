@@ -180,6 +180,11 @@ public class RadarService {
         return groups;
     }
 
+    public List<Group> getAllGroupByRoute(Long routeId) {
+        List<Group> groups = groupDAO.findAllByRouteId(routeId);
+        return groups;
+    }
+
     public List<User> getAllUser() {
         List<User> users = userDao.findAllOrder();
         return users;
@@ -471,6 +476,11 @@ public class RadarService {
 
     public List<RoutePosition> findAllRPByRouteId(Route route) {
         List<RoutePosition> routePositions = rpDAO.findAllByRouteId(route.getId());
+        return routePositions;
+    }
+
+    public List<RoutePosition> findAllRPByControlId(ControlPosition control) {
+        List<RoutePosition> routePositions = rpDAO.findAllByControlId(control.getId());
         return routePositions;
     }
 

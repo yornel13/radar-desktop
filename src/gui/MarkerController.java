@@ -6,7 +6,9 @@ import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.MapReadyListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import gui.async.PrintReportGlobalDetailRoute;
 import gui.async.PrintReportRouteDetailsTask;
+import gui.async.PrintReportWatchsTask;
 import io.datafx.controller.ViewController;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -20,18 +22,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -51,7 +55,8 @@ import java.util.concurrent.Executors;
 
 @ViewController("view/marker.fxml")
 public class MarkerController extends BaseController implements MapComponentInitializedListener,
-        EventHandler<MouseEvent>,MapReadyListener, RadarService.ErrorCases, PrintReportRouteDetailsTask.PrintTask {
+        EventHandler<MouseEvent>,MapReadyListener, RadarService.ErrorCases,
+        PrintReportRouteDetailsTask.PrintTask, PrintReportWatchsTask.PrintTask {
 
     @FXML
     private AnchorPane anchorPane;
@@ -181,7 +186,7 @@ public class MarkerController extends BaseController implements MapComponentInit
 
     public void setDrawer() {
 
-        headHBox.setPadding(new Insets(20));
+        headHBox.setPadding(new Insets(20, -10,20,-20));
         drawer.setSidePane(drawerBox);
         drawer.setOnDrawerClosed(event  ->  {
             drawer.setVisible(false);
@@ -256,7 +261,7 @@ public class MarkerController extends BaseController implements MapComponentInit
                 );
                 openFloatingButton();
                 printRouteReport.setGraphic(new ImageView(new Image(getClass().getResource("img/printer.png").toExternalForm())));
-                printRouteReport.setOnAction(event -> printReport());
+                printRouteReport.setOnAction(event -> showDialogSelectReport());
             }
             if (addPane.isVisible())
                 hideAddPane();
@@ -284,18 +289,18 @@ public class MarkerController extends BaseController implements MapComponentInit
         });
     }
 
-    private Integer getMeters(Position position) {
+    private Integer getMeters(ControlPosition position1, ControlPosition position2) {
 
         double radioEarth = 6371000;
-        double dLat = Math.toRadians(position.getLatitude()
-                - position.getControlPosition().getLatitude());
-        double dLng = Math.toRadians(position.getLongitude()
-                - position.getControlPosition().getLongitude());
+        double dLat = Math.toRadians(position1.getLatitude()
+                - position2.getLatitude());
+        double dLng = Math.toRadians(position1.getLongitude()
+                - position2.getLongitude());
         double sLat = Math.sin(dLat / 2);
         double sLng = Math.sin(dLng / 2);
         double va1 = Math.pow(sLat, 2) + Math.pow(sLng, 2)
-                * Math.cos(Math.toRadians(position.getControlPosition().getLatitude()))
-                * Math.cos(Math.toRadians(position.getLatitude()));
+                * Math.cos(Math.toRadians(position2.getLatitude()))
+                * Math.cos(Math.toRadians(position1.getLatitude()));
         double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
         Double distance = radioEarth * va2;
 
@@ -303,25 +308,35 @@ public class MarkerController extends BaseController implements MapComponentInit
     }
 
 
-    public void loadPrint(File file){
+    public void loadPrintBasic(File file){
+        dialogLoadingPrint();
+
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("route_name", selectedRoute.getName());
         parameters.put("created_date", RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
         parameters.put("route_id", selectedRoute.getId().toString());
         parameters.put("point_num", selectedRoute.getRoutePositions().size());
 
-        //routeReport.setTime(RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
         List<RouteReport> routeReportList = new ArrayList<>();
 
-            for(HBox hBoxDrawerData: drawerData) {
+        int count = 0;
+        ControlPosition positionBefore = null;
+        for(HBox hBoxDrawerData: drawerData) {
 
-                RoutePosition routePosition = (RoutePosition) hBoxDrawerData.getUserData();
-                RouteReport routeReport = new RouteReport();
+            RoutePosition routePosition = (RoutePosition) hBoxDrawerData.getUserData();
+            RouteReport routeReport = new RouteReport();
 
-                routeReport.setPoint_marker(routePosition.getControlPosition().getPlaceName());
-
-                routeReportList.add(routeReport);
+            routeReport.setPoint_marker(routePosition.getControlPosition().getPlaceName());
+            if (count == 0) {
+                routeReport.setDistance("Punto inicial");
+            } else {
+                int meters = getMeters(routePosition.getControlPosition(), positionBefore);
+                routeReport.setDistance("a "+meters+" metros de "+positionBefore.getPlaceName());
             }
+            positionBefore = routePosition.getControlPosition();
+            count++;
+            routeReportList.add(routeReport);
+        }
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportRouteDetailsTask(this,
@@ -331,8 +346,76 @@ public class MarkerController extends BaseController implements MapComponentInit
         executor.shutdown();
     }
 
+    public void loadPrintFull(File file){
+        dialogLoadingPrint();
+
+        Map<String, Object> parameters = new HashMap<>();
+
+        List <Group> groupList = service.getAllGroupByRoute(selectedRoute.getId());
+
+        List<GroupMasterReport> groupMasterReports = new ArrayList<>();
+
+        for (Group group: groupList) {
+            GroupMasterReport groupMasterReport = new GroupMasterReport();
+            groupMasterReport.setId(group.getId().toString());
+            groupMasterReport.setGroup_name(group.getName());
+            List<User> users = service.findUserByGroupId(group.getId());
+            groupMasterReport.setEmp_num(String.valueOf(users.size()));
+            List<GroupReport> groupReportList = new ArrayList<>();
+            for (User user: users) {
+                GroupReport groupReport = new GroupReport();
+                groupReport.setDni(user.getDni());
+                groupReport.setUser_name(user.getFullName());
+                groupReport.setCompany_name(user.getCompany().getName());
+                groupReportList.add(groupReport);
+            }
+            groupMasterReport.setGroupReportList(groupReportList);
+            groupMasterReports.add(groupMasterReport);
+        }
+
+        parameters.put("route_name", selectedRoute.getName());
+        parameters.put("created_date", RadarDate.getDateWithMonthAndTime(selectedRoute.getCreateDate()));
+        parameters.put("route_id", selectedRoute.getId().toString());
+        parameters.put("point_num", selectedRoute.getRoutePositions().size());
+
+        List<RouteReport> routeReportList = new ArrayList<>();
+
+        int count = 0;
+        ControlPosition positionBefore = null;
+        for(HBox hBoxDrawerData: drawerData) {
+
+            RoutePosition routePosition = (RoutePosition) hBoxDrawerData.getUserData();
+            RouteReport routeReport = new RouteReport();
+
+            routeReport.setPoint_marker(routePosition.getControlPosition().getPlaceName());
+            if (count == 0) {
+                routeReport.setDistance("Punto inicial");
+            } else {
+                int meters = getMeters(routePosition.getControlPosition(), positionBefore);
+                routeReport.setDistance("a "+meters+" metros de "+positionBefore.getPlaceName());
+            }
+            positionBefore = routePosition.getControlPosition();
+            count++;
+            routeReportList.add(routeReport);
+        }
+
+        parameters.put("total", String.valueOf(groupList.size()));
+
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        Runnable worker = new PrintReportGlobalDetailRoute(this,
+                new JRBeanCollectionDataSource(groupMasterReports), new JRBeanCollectionDataSource(routeReportList), parameters, file,
+                "Ruta_grupos_"+selectedRoute.getId().toString());
+        executor.execute(worker);
+        executor.shutdown();
+    }
+
     public void printReport() {
         dialogType = Const.DIALOG_PRINT_BASIC;
+        showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
+    }
+
+    public void printReportFull() {
+        dialogType = Const.DIALOG_PRINT_FULL;
         showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
     }
 
@@ -588,6 +671,61 @@ public class MarkerController extends BaseController implements MapComponentInit
         }
         markerListView.setItems(markerData);
         markerListView.setOnMouseClicked(this);
+    }
+
+    public void showDialogSelectReport() {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.setResizable(false);
+        dialogStage.setTitle("");
+        dialogStage.getIcons().add(new Image(getClass().getResource("img/radar_splash.png").toExternalForm()));
+        Button buttonReport = new Button("REPORTE RUTA");
+        Button buttonReportFull = new Button("REPORTE COMPLETO");
+        HBox hBox = HBoxBuilder.create()
+                .spacing(10.0) //In case you are using HBoxBuilder
+                .padding(new Insets(5, 5, 5, 5))
+                .alignment(Pos.CENTER)
+                .children(buttonReport, buttonReportFull)
+                .build();
+        hBox.maxWidth(120);
+        dialogStage.setScene(new Scene(VBoxBuilder.create().spacing(15).
+                children(new Text("Selecione el reporte a imprimir"), hBox).
+                alignment(Pos.CENTER).padding(new Insets(20)).build()));
+
+        buttonReport.setStyle("-fx-background-color: #039BE5; "
+                + "-fx-text-fill: white;");
+        buttonReport.setMinHeight(55);
+        buttonReport.setMaxWidth(170);
+        buttonReport.setOnAction((ActionEvent e) -> {
+            dialogStage.close();
+            printReport();
+        });
+        buttonReport.setOnMouseEntered((MouseEvent t) -> {
+            buttonReport.setStyle("-fx-background-color: #E0E0E0; "
+                    + "-fx-text-fill: white;");
+        });
+        buttonReport.setOnMouseExited((MouseEvent t) -> {
+            buttonReport.setStyle("-fx-background-color: #039BE5; "
+                    + "-fx-text-fill: white;");
+        });
+
+        buttonReportFull.setStyle("-fx-background-color: #039BE5; "
+                + "-fx-text-fill: white;");
+        buttonReportFull.setMinHeight(55);
+        buttonReportFull.setMaxWidth(170);
+        buttonReportFull.setOnAction((ActionEvent e) -> {
+            dialogStage.close();
+            printReportFull();
+        });
+        buttonReportFull.setOnMouseEntered((MouseEvent t) -> {
+            buttonReportFull.setStyle("-fx-background-color: #E0E0E0; "
+                    + "-fx-text-fill: white;");
+        });
+        buttonReportFull.setOnMouseExited((MouseEvent t) -> {
+            buttonReportFull.setStyle("-fx-background-color: #039BE5; "
+                    + "-fx-text-fill: white;");
+        });
+        dialogStage.show();
     }
 
     public void loadRouteListView() throws IOException {
@@ -1092,12 +1230,21 @@ public class MarkerController extends BaseController implements MapComponentInit
         ControlPosition control;
         Route route;
 
+        boolean reset = true;
+
         switch (dialogType) {
-            case Const.DIALOG_PRINT_BASIC:
+            case Const.DIALOG_PRINT_BASIC: {
                 File file = selectDirectory();
                 if (file != null)
-                    loadPrint(file);
-                break;
+                    loadPrintBasic(file);
+                reset = false;
+            }  break;
+            case Const.DIALOG_PRINT_FULL: {
+                File file = selectDirectory();
+                if (file != null)
+                    loadPrintFull(file);
+                reset = false;
+            }   break;
             case Const.DIALOG_SAVE_EDIT:
                 control = service.findCPById(selectedMarker.getId());
                 control.setPlaceName(nameField.getText());
@@ -1125,11 +1272,13 @@ public class MarkerController extends BaseController implements MapComponentInit
                 break;
         }
 
-        selectedMarker = null;
-        selectedRoute = null;
-        hideMarkerBar(null);
-        loadListView();
-        addMarkers();
+        if (reset) {
+            selectedMarker = null;
+            selectedRoute = null;
+            hideMarkerBar(null);
+            loadListView();
+            addMarkers();
+        }
     }
 
     private void filterMarkerData() {
@@ -1358,12 +1507,14 @@ public class MarkerController extends BaseController implements MapComponentInit
 
     @Override
     public void onPrintCompleted() {
-
+        closeDialogLoading();
+        showSnackBar("Guardado completado");
     }
 
     @Override
     public void onPrintFailure(String message) {
-
+        closeDialogLoading();
+        showSnackBar("Guardado fallido");
     }
 
     public class InputController {

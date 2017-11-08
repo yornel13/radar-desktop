@@ -534,6 +534,7 @@ public class ControlController  extends BaseController implements MapComponentIn
             parameters.put("date_finish", "Duración: Cualquier duración.");
         }
 
+        String routeName = "Ruta...";
         List<PointReport> pointReportList = new ArrayList<>();
         for (HBox hBox : watchListView.getItems()) {
             Position position = (Position) hBox.getUserData();
@@ -545,11 +546,29 @@ public class ControlController  extends BaseController implements MapComponentIn
             pointReport.setDistanceMeters(getMeters(position));
             pointReport.setTime(RadarDate.getDayMonthHour(position.getTime()));
             pointReportList.add(pointReport);
+
+
+            List<RoutePosition> routePositions = service.findAllRPByControlId(position.getControlPosition());
+            if (!routePositions.isEmpty()) {
+                routeName = routePositions.get(0).getRoute().getName();
+            }
         }
+
+        ////////////////// invert array //////////////////////////
+        List<PointReport> pointReportListInvert = new ArrayList<>();
+        {
+            if (!pointReportList.isEmpty())
+                for (int i = pointReportList.size(); i > 0; i--) {
+                    pointReportListInvert.add(pointReportList.get(i-1));
+                }
+        }
+        //////////////////////////////////////////////////////////////////////////
+
+        parameters.put("route_name", routeName);
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
         Runnable worker = new PrintReportPointsTask(this,
-                new JRBeanCollectionDataSource(pointReportList), parameters, file,
+                new JRBeanCollectionDataSource(pointReportListInvert), parameters, file,
                 "points_"+new DateTime().getMillis());
         executor.execute(worker);
         executor.shutdown();

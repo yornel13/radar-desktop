@@ -20,11 +20,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.Tab;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -33,6 +31,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.joda.time.DateTime;
@@ -131,6 +132,8 @@ public class UserController extends BaseController implements MapComponentInitia
 
     private User selectedUser;
     private boolean editingPassword = false;
+
+    private javafx.scene.control.Dialog<Void> dialogLoading;
 
 
 
@@ -981,6 +984,8 @@ public class UserController extends BaseController implements MapComponentInitia
     }
 
     public void loadPrint(File file){
+        dialogLoadingPrint();
+
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("group_name", selectedGroup.getName());
         parameters.put("date_created", RadarDate.getDateWithMonthAndTime(selectedGroup.getCreateDate()));
@@ -1013,6 +1018,8 @@ public class UserController extends BaseController implements MapComponentInitia
         dialogType = Const.DIALOG_PRINT_BASIC;
         showDialogPrint("Debe seleccionar una ruta para guardar el reporte");
     }
+
+
 
     void setFilterUser() {
         filterUser();
@@ -1333,12 +1340,14 @@ public class UserController extends BaseController implements MapComponentInitia
 
     @Override
     public void onPrintCompleted() {
-
+        closeDialogLoading();
+        showSnackBar("Guardado completado");
     }
 
     @Override
     public void onPrintFailure(String message) {
-
+        closeDialogLoading();
+        showSnackBar("Guardado fallido");
     }
 
     public class InputController {

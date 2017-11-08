@@ -122,6 +122,16 @@ public class GroupDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public List<Group> findAllByRouteId(Long routeId) {
+		Query query = getSession()
+				.createSQLQuery("SELECT * FROM `group` WHERE `route_id` = :route_id")
+				.addEntity(Group.class)
+				.setParameter("route_id", routeId);
+
+		Object result = query.list();
+		return (List<Group>) result;
+	}
+
 	public List<Group> findAllOrder() {
 		Query query = getSession()
 				.createSQLQuery("SELECT * FROM group ORDER BY active DESC")

@@ -61,6 +61,7 @@
 	<parameter name="company" class="java.lang.String"/>
 	<parameter name="date_start" class="java.lang.String"/>
 	<parameter name="date_finish" class="java.lang.String"/>
+	<parameter name="route_name" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -173,12 +174,19 @@
 					<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement mode="Transparent" x="30" y="35" width="280" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="b5dedc24-b884-4dec-841e-f577d6043544"/>
+					<reportElement mode="Transparent" x="30" y="30" width="280" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="b5dedc24-b884-4dec-841e-f577d6043544"/>
 					<textElement>
 						<font size="20" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Guardias en punto de control]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="30" y="61" width="326" height="20" forecolor="#FFFFFF" uuid="86d6eca7-bec0-4006-ae0d-130068088398"/>
+					<textElement>
+						<font fontName="SansSerif" size="15"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Ruta: "+$P{route_name}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<textField>
 				<reportElement mode="Opaque" x="0" y="153" width="555" height="20" backcolor="#E8E8E8" uuid="07f28a65-5c2b-480d-9cef-f7dde92cb12f">
