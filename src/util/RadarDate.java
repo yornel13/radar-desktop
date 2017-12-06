@@ -217,6 +217,11 @@ public class RadarDate {
         }
         return hours+"h "+minutes+"m "+seconds+"s";
     }
+
+    public static String getDateShort(Long time) {
+        DateTime dateTime = new DateTime(time);
+        return dateTime.toString("dd/MM/yyyy");
+    }
     
     public static String getDateShort(Timestamp timestamp) {
         DateTime dateTime = new DateTime(timestamp.getTime());

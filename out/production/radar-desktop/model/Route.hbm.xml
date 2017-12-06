@@ -34,5 +34,11 @@
             </key>
             <one-to-many class="model.RoutePosition" />
         </set>
+        <set name="watchs" inverse="true">
+            <key>
+                <column name="route_id" not-null="true" />
+            </key>
+            <one-to-many class="model.Watch" />
+        </set>
     </class>
 </hibernate-mapping>

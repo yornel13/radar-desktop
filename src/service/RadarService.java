@@ -261,6 +261,17 @@ public class RadarService {
         return watches;
     }
 
+    public List<Watch> findAllWatchByRoute(Route route) {
+        List<Watch> watches = watchDAO.findAllByRouteId(route.getId());
+        return watches;
+    }
+
+    public List<Watch> findAllWatchByRouteBetween(Route route, Date dateFrom, Date dateTo) {
+        List<Watch> watches = watchDAO.findAllByRouteIdBetween(route.getId(), dateFrom.getTime(),
+                new DateTime(dateTo.getTime()).plusDays(1).getMillis());
+        return watches;
+    }
+
     public List<Position> findAllPositionsByWatchUpdateTime(Watch watch) {
         List<Position> positions = posDAO.findAllByWatchId(watch.getId());
         for (Position position :

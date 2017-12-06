@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="route_detail" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="50b0f716-318c-4c59-8bb1-cebd92e909b9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="route_name" class="java.lang.String"/>
+	<parameter name="route_id" class="java.lang.String"/>
+	<parameter name="subReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="date" class="java.lang.String"/>
+	<field name="watchsReportList" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<frame>
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="-20" y="-20" width="595" height="99" backcolor="#2DB0E3" uuid="ecbdb321-1005-4508-b792-0b488ba186ae"/>
+				<textField>
+					<reportElement x="20" y="30" width="280" height="30" forecolor="#FFFFFF" uuid="92525850-c2a6-4698-a940-44e908c17da0"/>
+					<textElement>
+						<font fontName="SansSerif" size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{route_name}]]></textFieldExpression>
+				</textField>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement x="400" y="11" width="170" height="30" forecolor="#FFFFFF" uuid="9f699234-7aa2-447f-b282-b876e2df305b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="469" y="58" width="100" height="20" forecolor="#FFFFFF" uuid="ba427855-4e6b-4551-965a-202dcd9421f7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Ruta Nro: "+$P{route_id}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="25" y="70" width="125" height="29" forecolor="#FFFFFF" uuid="fef0398f-a4b0-4bd1-a979-a80a50331a0f"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[Reporte de guardias realizadas en la ruta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="10" width="190" height="20" forecolor="#FFFFFF" uuid="dbfee9b3-53aa-4408-8d78-03c45c75cb47"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[Ruta:]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="80" y="10" width="400" height="25" uuid="d60b9534-dbac-462a-b25a-573ed06d87b6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalles de guardias]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="120">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement x="3" y="30" width="551" height="90" isRemoveLineWhenBlank="true" uuid="8bc9e1b7-4bb8-4254-bc1f-c96b0c618d63">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+	                  ($F{watchsReportList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{subReport}]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement mode="Opaque" x="-10" y="10" width="564" height="20" backcolor="#E8E8E8" uuid="c0ca855c-cbaa-4a93-9f07-5e94ede29f34">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Fecha: "+$F{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="180" y="15" width="100" height="30" uuid="4886124b-9d71-4442-a98f-f567882a4614"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="280" y="15" width="100" height="30" uuid="f2286a8e-e8bb-44cf-9ac9-38130156983c"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

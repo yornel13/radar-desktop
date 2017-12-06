@@ -451,7 +451,7 @@ public class ControlController  extends BaseController implements MapComponentIn
                 positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), from, to, min, max);
             } else {
                 watchDrawer.close();
-                showSnackBar("Seleccionar lo rangos correctamente y luego presione buscar.");
+                showSnackBar("Seleccionar los rangos correctamente y luego presione buscar.");
                 return;
             }
         } else if (paneDate.isVisible()) {
@@ -459,7 +459,7 @@ public class ControlController  extends BaseController implements MapComponentIn
                 positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), from, to);
             } else {
                 watchDrawer.close();
-                showSnackBar("Seleccionar lo rangos correctamente y luego presione buscar.");
+                showSnackBar("Seleccionar los rangos correctamente y luego presione buscar.");
                 return;
             }
         } else if (paneDuration.isVisible()) {
@@ -469,7 +469,7 @@ public class ControlController  extends BaseController implements MapComponentIn
                 positionsUser = service.findAllPositionsByControlAndCompany(selectedControl, getCompany(), min, max);
             } else {
                 watchDrawer.close();
-                showSnackBar("Seleccionar lo rangos correctamente y luego presione buscar.");
+                showSnackBar("Seleccionar los rangos correctamente y luego presione buscar.");
                 return;
             }
         } else {

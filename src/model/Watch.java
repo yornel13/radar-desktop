@@ -19,6 +19,7 @@ public class Watch implements java.io.Serializable {
 	private User user;
 	private Long startTime;
 	private Long endTime;
+	private Route route;
 	private Set positions = new HashSet(0);
 
 	//Local Fields
@@ -93,6 +94,14 @@ public class Watch implements java.io.Serializable {
 
 	public void setPositionsList(List<Position> positionsList) {
 		this.positionsList = positionsList;
+	}
+
+	public Route getRoute() {
+		return route;
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
 	}
 
 	public static List<Watch> cloneList(List<Watch> list) {

@@ -83,6 +83,28 @@ public class WatchDAO extends BaseHibernateDAO {
 		return (List<Watch>) result;
 	}
 
+	public List<Watch> findAllByRouteId(Long routeId) {
+		Query query = getSession().createSQLQuery("SELECT * FROM watch WHERE " +
+				"route_id = :route_id ORDER BY start_time DESC")
+				.addEntity(Watch.class)
+				.setParameter("route_id", routeId);
+
+		Object result = query.list();
+		return (List<Watch>) result;
+	}
+
+	public List<Watch> findAllByRouteIdBetween(Long routeId, Long from, Long to) {
+		Query query = getSession().createSQLQuery("SELECT * FROM watch WHERE " +
+				"route_id = :route_id AND start_time >= :from AND start_time <= :to ORDER BY start_time DESC")
+				.addEntity(Watch.class)
+				.setParameter("route_id", routeId)
+				.setParameter("to", to)
+				.setParameter("from", from);
+
+		Object result = query.list();
+		return (List<Watch>) result;
+	}
+
 	public List findByExample(Watch instance) {
 		log.debug("finding Watch instance by example");
 		try {

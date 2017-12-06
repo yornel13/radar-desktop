@@ -6,8 +6,11 @@ import io.datafx.controller.flow.action.ActionTrigger;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.Watch;
+import util.HibernateSessionFactory;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @ViewController("view/sync.fxml")
 public class SyncController extends BaseController {
@@ -18,6 +21,9 @@ public class SyncController extends BaseController {
     @FXML
     @ActionTrigger("control")
     private JFXButton buttonMap2;
+    @FXML
+    @ActionTrigger("route")
+    private JFXButton buttonMap3;
 
     @FXML
     @ActionTrigger("employee")
@@ -39,8 +45,10 @@ public class SyncController extends BaseController {
         buttonMap2.setOnMouseEntered(event -> buttonMap2.setStyle(" -fx-background-color: #d6d6d6"));
         buttonMap2.setOnMouseExited( event -> buttonMap2.setStyle(" -fx-background-color: #ffc107"));
 
+        buttonMap3.setOnMouseEntered(event -> buttonMap3.setStyle(" -fx-background-color: #d6d6d6"));
+        buttonMap3.setOnMouseExited( event -> buttonMap3.setStyle(" -fx-background-color: #ffc107"));
+
         optionEmployee.setGraphic(new ImageView(new Image(getClass().getResource("img/employee_32.png").toExternalForm())));
-        //optionAssign.setGraphic(new ImageView(new Image(getClass().getResource("img/assign_32.png").toExternalForm())));
 
         ImageView mapImage1 = new ImageView(new Image(getClass().getResource("img/control_user.png").toExternalForm()));
         mapImage1.setFitHeight(62);
@@ -53,6 +61,26 @@ public class SyncController extends BaseController {
         mapImage2.setFitWidth(62);
         buttonMap2.setGraphic(mapImage2);
         buttonMap2.setText("Control por\nUBICACIONES");
+
+        ImageView mapImage3 = new ImageView(new Image(getClass().getResource("img/route_control_64.png").toExternalForm()));
+        mapImage3.setFitHeight(62);
+        mapImage3.setFitWidth(62);
+        buttonMap3.setGraphic(mapImage3);
+        buttonMap3.setText("Control por\nRUTAS");
+
+        {
+            List<Watch> watchList = service.findAllWatch();
+            for (Watch watch: watchList) {
+                if (watch.getRoute() == null) {
+                    if (watch.getUser().getGroup() != null &&
+                            watch.getUser().getGroup().getRoute() != null ) {
+                        watch.setRoute(watch.getUser().getGroup().getRoute());
+                        HibernateSessionFactory.getSession().flush();
+                    }
+
+                }
+            }
+        }
 
     }
 

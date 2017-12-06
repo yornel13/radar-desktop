@@ -22,6 +22,7 @@ public class Route implements java.io.Serializable {
 	private Boolean active;
 	private Set groups = new HashSet(0);
 	private Set routePositions = new HashSet(0);
+	private Set watchs = new HashSet(0);
 
 	// Uso local
 	private boolean selected;
@@ -115,6 +116,14 @@ public class Route implements java.io.Serializable {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public Set getWatchs() {
+		return watchs;
+	}
+
+	public void setWatchs(Set watchs) {
+		this.watchs = watchs;
 	}
 
 	public static List<Route> cloneList(List<Route> list) {

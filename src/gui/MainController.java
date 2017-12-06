@@ -39,6 +39,7 @@ public class MainController {
         innerFlow.withGlobalLink("employee", UserController.class);
         innerFlow.withGlobalLink("assign", AssignController.class);
         innerFlow.withGlobalLink("company", CompanyController.class);
+        innerFlow.withGlobalLink("route", RouteController.class);
         innerFlow.withGlobalBackAction("back");
 
         flowHandler = innerFlow.createHandler(flowContext);
