@@ -432,9 +432,9 @@ public class RouteController extends BaseController implements MapComponentIniti
 
         if (fromPicker.getValue() == null
                 && toPicker.getValue() == null) {
-            drawerList = service.findAllWatchByRoute(selectedRoute);
+            drawerList = service.findAllWatchByRoute(selectedRoute, company);
         } else {
-            drawerList = service.findAllWatchByRouteBetween(selectedRoute, from, to);
+            drawerList = service.findAllWatchByRouteBetween(selectedRoute, from, to, company);
         }
 
         for (Watch watch: drawerList) {

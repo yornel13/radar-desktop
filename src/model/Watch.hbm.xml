@@ -26,7 +26,7 @@
             <one-to-many class="model.Position" />
         </set>
         <many-to-one name="route" class="model.Route" fetch="select">
-            <column name="route_id" not-null="true" />
+            <column name="route_id" />
         </many-to-one>
     </class>
 </hibernate-mapping>

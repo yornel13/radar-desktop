@@ -41,6 +41,11 @@
 					</textElement>
 					<textFieldExpression><![CDATA["Ruta Nro: "+$P{route_id}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="20" y="10" width="190" height="20" forecolor="#FFFFFF" uuid="1ba9fea7-02d7-4ae2-8b4a-882901ade7c2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[Ruta:]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</title>

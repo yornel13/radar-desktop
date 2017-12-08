@@ -156,6 +156,7 @@ public class RadarService {
             for (Route route: routes) {
                 route.setGroups(null);
                 route.setRoutePositions(null);
+                route.setWatchs(null);
             }
             List<RoutePosition> routePositions = rpDAO.findAll();
             List<Admin> admins = adminDAO.findAll();
@@ -261,15 +262,27 @@ public class RadarService {
         return watches;
     }
 
-    public List<Watch> findAllWatchByRoute(Route route) {
+    public List<Watch> findAllWatchByRoute(Route route, Company company) {
         List<Watch> watches = watchDAO.findAllByRouteId(route.getId());
-        return watches;
+        List<Watch> watchesFilter = new ArrayList<>();
+        for (Watch watch: watches) {
+            if (watch.getUser().getCompany().getId().equals(company.getId())) {
+                watchesFilter.add(watch);
+            }
+        }
+        return watchesFilter;
     }
 
-    public List<Watch> findAllWatchByRouteBetween(Route route, Date dateFrom, Date dateTo) {
+    public List<Watch> findAllWatchByRouteBetween(Route route, Date dateFrom, Date dateTo, Company company) {
         List<Watch> watches = watchDAO.findAllByRouteIdBetween(route.getId(), dateFrom.getTime(),
                 new DateTime(dateTo.getTime()).plusDays(1).getMillis());
-        return watches;
+        List<Watch> watchesFilter = new ArrayList<>();
+        for (Watch watch: watches) {
+            if (watch.getUser().getCompany().getId().equals(company.getId())) {
+                watchesFilter.add(watch);
+            }
+        }
+        return watchesFilter;
     }
 
     public List<Position> findAllPositionsByWatchUpdateTime(Watch watch) {
